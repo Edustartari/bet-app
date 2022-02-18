@@ -15,8 +15,8 @@ class App extends Component {
     }
 
     render() {
-        console.log('Testing 2')
-        console.log(this.state.count)
+        // console.log('render APP')
+        // console.log(content)
         return (
             <div onClick={this.counting}>
                 <div>App</div>
