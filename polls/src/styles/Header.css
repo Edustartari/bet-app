@@ -1,0 +1,20 @@
+.header-background {
+    background-color: #e1521d;
+    padding: 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+.header-background .material-icons {
+    color: white;
+}
+.header-background .css-1e6y48t-MuiButtonBase-root-MuiButton-root{
+    justify-content: flex-start;
+}
+.header-title {
+    font-family: sans-serif;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+}

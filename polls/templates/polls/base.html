@@ -8,14 +8,59 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>Bet App</title>
     <style>
-        
+        body {
+            margin: 0px;
+        }
+        .desktop-background {
+            padding: 30px 100px 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .desktop-background-title {
+            font-size: 60px;
+        }
+        .desktop-background-subtitle {
+            font-size: 30px;
+            margin: 20px 0 0 0;
+        }
+        .desktop-background-steps ol li{
+            font-size: 23px;
+            margin: 0 0 15px 0;
+        }
+        .desktop-background-steps ol li img{
+            margin: 15px 0 0 0;
+            width: 90%;
+        }
+
+        @media screen and (max-width: 479px) {
+            .desktop-background {
+                display: none;
+            }
+        }
     </style>
     {% block links %}
     {% endblock %}
 </head>
 <body>
     <div>
-        Hello World!
+        <div class="desktop-background">
+            <div class="desktop-background-title">Hey, this is an APP!</div>
+            <div class="desktop-background-subtitle">You can open this application following this steps:</div>
+            <div  class="desktop-background-steps">
+                <ol>
+                    <li>Click with the mouse right button and select option "Inspect"</li>
+                    <li>A sidebar will open with the development options</li>
+                    <li>
+                        <span>Click at the icon below</span>
+                        <img src="{% static 'img/mobile-icon-indicator.JPG' %}" alt="">
+                    </li>
+                    <li>Refresh the page</li>
+                    <li>And there you go!</li>
+                </ol>
+            </div>
+        </div>
 
         {% block content %}
         {% endblock %}
