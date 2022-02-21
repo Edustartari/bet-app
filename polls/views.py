@@ -23,3 +23,23 @@ def index(request):
         'user': json.dumps(users_list)
     }
     return render(request, 'polls/index.html', context)
+
+def login(request):
+    context = {}
+    return render(request, 'polls/index.html', context)
+
+def my_polls(request):
+    context = {}
+    return render(request, 'polls/index.html', context)
+
+def new_poll(request):
+    context = {}
+    return render(request, 'polls/index.html', context)
+
+def search_polls(request):
+    context = {}
+    return render(request, 'polls/index.html', context)
+
+def settings(request):
+    context = {}
+    return render(request, 'polls/index.html', context)

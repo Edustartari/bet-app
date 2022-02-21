@@ -7,7 +7,7 @@ import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import '../styles/Header.css'
+import './styles/Header.css'
 
 function SwipeableTemporaryDrawer() {
     const [state, setState] = React.useState({
@@ -31,25 +31,25 @@ function SwipeableTemporaryDrawer() {
             <List>
                 <ListItem button key={'Home'}>
                     <ListItemIcon>
-                        <span class="material-icons">home</span>
+                        <span className="material-icons">home</span>
                     </ListItemIcon>
                     <ListItemText primary={'Home'} />
                 </ListItem>
                 <ListItem button key={'My pools'}>
                     <ListItemIcon>
-                        <span class="material-icons">list</span>
+                        <span className="material-icons">list</span>
                     </ListItemIcon>
                     <ListItemText primary={'My pools'} />
                 </ListItem>
                 <ListItem button key={'New pool'}>
                     <ListItemIcon>
-                        <span class="material-icons">add</span>
+                        <span className="material-icons">add</span>
                     </ListItemIcon>
                     <ListItemText primary={'New pool'} />
                 </ListItem>
                 <ListItem button key={'Search pools'}>
                     <ListItemIcon>
-                        <span class="material-icons">search</span>
+                        <span className="material-icons">search</span>
                     </ListItemIcon>
                     <ListItemText primary={'Search pools'} />
                 </ListItem>
@@ -58,13 +58,13 @@ function SwipeableTemporaryDrawer() {
             <List>
                 <ListItem button key={'Settings'}>
                     <ListItemIcon>
-                        <span class="material-icons">settings</span>
+                        <span className="material-icons">settings</span>
                     </ListItemIcon>
                     <ListItemText primary={'Settings'} />
                 </ListItem>
                 <ListItem button key={'Logout'}>
                     <ListItemIcon>
-                        <span class="material-icons">logout</span>
+                        <span className="material-icons">logout</span>
                     </ListItemIcon>
                     <ListItemText primary={'Logout'} />
                 </ListItem>
