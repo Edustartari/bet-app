@@ -27,47 +27,60 @@ function SwipeableTemporaryDrawer() {
             role="presentation"
             onClick={toggleDrawer(anchor, false)}
             onKeyDown={toggleDrawer(anchor, false)}
+            className="header-box"
         >
             <List>
-                <ListItem button key={'Home'}>
-                    <ListItemIcon>
-                        <span className="material-icons">home</span>
-                    </ListItemIcon>
-                    <ListItemText primary={'Home'} />
-                </ListItem>
-                <ListItem button key={'My pools'}>
-                    <ListItemIcon>
-                        <span className="material-icons">list</span>
-                    </ListItemIcon>
-                    <ListItemText primary={'My pools'} />
-                </ListItem>
-                <ListItem button key={'New pool'}>
-                    <ListItemIcon>
-                        <span className="material-icons">add</span>
-                    </ListItemIcon>
-                    <ListItemText primary={'New pool'} />
-                </ListItem>
-                <ListItem button key={'Search pools'}>
-                    <ListItemIcon>
-                        <span className="material-icons">search</span>
-                    </ListItemIcon>
-                    <ListItemText primary={'Search pools'} />
-                </ListItem>
+                <a href="/">
+                    <ListItem button key={'Home'}>
+                        <ListItemIcon>
+                            <span className="material-icons">home</span>
+                        </ListItemIcon>
+                        <ListItemText primary={'Home'} />
+                    </ListItem>
+                </a>
+                <a href="/my-polls">
+                    <ListItem button key={'My pools'}>
+                        <ListItemIcon>
+                            <span className="material-icons">list</span>
+                        </ListItemIcon>
+                        <ListItemText primary={'My pools'} />
+                    </ListItem>
+                </a>
+                <a href="/new-poll">
+                    <ListItem button key={'New pool'}>
+                        <ListItemIcon>
+                            <span className="material-icons">add</span>
+                        </ListItemIcon>
+                        <ListItemText primary={'New pool'} />
+                    </ListItem>
+                </a>
+                <a href="/search-polls">
+                    <ListItem button key={'Search pools'}>
+                        <ListItemIcon>
+                            <span className="material-icons">search</span>
+                        </ListItemIcon>
+                        <ListItemText primary={'Search pools'} />
+                    </ListItem>
+                </a>
             </List>
             <Divider />
             <List>
-                <ListItem button key={'Settings'}>
-                    <ListItemIcon>
-                        <span className="material-icons">settings</span>
-                    </ListItemIcon>
-                    <ListItemText primary={'Settings'} />
-                </ListItem>
-                <ListItem button key={'Logout'}>
-                    <ListItemIcon>
-                        <span className="material-icons">logout</span>
-                    </ListItemIcon>
-                    <ListItemText primary={'Logout'} />
-                </ListItem>
+                <a href="/settings">
+                    <ListItem button key={'Settings'}>
+                        <ListItemIcon>
+                            <span className="material-icons">settings</span>
+                        </ListItemIcon>
+                        <ListItemText primary={'Settings'} />
+                    </ListItem>
+                </a>
+                <a href="/">
+                    <ListItem button key={'Logout'}>
+                        <ListItemIcon>
+                            <span className="material-icons">logout</span>
+                        </ListItemIcon>
+                        <ListItemText primary={'Logout'} />
+                    </ListItem>
+                </a>
             </List>
         </Box>
     );

@@ -25,7 +25,7 @@ class App extends Component {
         return (
             <div>
                 <Router>
-                    {path_location !== '/login' && <Header/>}                    
+                    {path_location !== '/login' && <Header/>}
                     <Routes>
                         <Route path="/login" element={<Login />} />
                         <Route path="/my-polls" element={<MyPolls />} />

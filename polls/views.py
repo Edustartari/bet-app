@@ -26,20 +26,28 @@ def index(request):
 
 def login(request):
     context = {}
-    return render(request, 'polls/index.html', context)
+    return render(request, 'polls/login.html', context)
 
 def my_polls(request):
+    print('')
+    print('my_polls')
     context = {}
-    return render(request, 'polls/index.html', context)
+    return render(request, 'polls/my-polls.html', context)
 
 def new_poll(request):
+    print('')
+    print('new_poll')
     context = {}
-    return render(request, 'polls/index.html', context)
+    return render(request, 'polls/new-poll.html', context)
 
 def search_polls(request):
+    print('')
+    print('search_polls')
     context = {}
-    return render(request, 'polls/index.html', context)
+    return render(request, 'polls/search-polls.html', context)
 
 def settings(request):
+    print('')
+    print('settings')
     context = {}
-    return render(request, 'polls/index.html', context)
+    return render(request, 'polls/settings.html', context)

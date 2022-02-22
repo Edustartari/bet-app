@@ -18,3 +18,8 @@
     font-size: 18px;
     font-weight: 600;
 }
+.header-box a {
+    display: flex;
+    text-decoration: none;
+    color: inherit;
+}
