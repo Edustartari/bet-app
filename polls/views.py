@@ -51,3 +51,9 @@ def settings(request):
     print('settings')
     context = {}
     return render(request, 'polls/settings.html', context)
+
+def poll(request, slug):
+    print('')
+    print('poll')
+    context = {}
+    return render(request, 'polls/poll.html', context)

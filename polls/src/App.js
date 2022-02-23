@@ -3,6 +3,7 @@ import { render } from "react-dom";
 import {isMobile} from 'react-device-detect';
 import Main from './pages/Main';
 import MyPolls from './pages/MyPolls';
+import Poll from './pages/Poll';
 import NewPoll from './pages/NewPoll';
 import SearchPolls from './pages/SearchPolls';
 import Settings from './pages/Settings';
@@ -32,6 +33,7 @@ class App extends Component {
                         <Route path="/new-poll" element={<NewPoll />} />
                         <Route path="/search-polls" element={<SearchPolls />} />
                         <Route path="/settings" element={<Settings />} />
+                        <Route path="/:slug" element={<Poll />} />
                         <Route path="/" element={<Main />} />
                     </Routes>
                 </Router>

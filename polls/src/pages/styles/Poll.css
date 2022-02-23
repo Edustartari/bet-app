@@ -1,0 +1,85 @@
+.poll-background {
+
+}
+.poll-header {
+    background-color: #ad421a;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+.poll-header-image {
+    display: flex;
+}
+.poll-header-image img{
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 70px;
+}
+.poll-header-title {
+    margin: 10px 0;
+    font-weight: bold;
+    font-size: 20px;
+}
+.poll-header-info {
+    
+}
+.poll-header-info span{
+
+}
+.poll-header-button {
+    margin: 10px 0 0 0;
+}
+.poll-header-button .css-sghohy-MuiButtonBase-root-MuiButton-root{
+    background-color: white;
+    color: black;
+    width: 40vw;
+    font-weight: bold;
+    box-shadow: 1px 1px 10px black;
+}
+.poll-table {
+    padding: 10px;
+}
+.poll-table-title {
+    color: dimgray;
+    margin: 0 0 10px 0;
+}
+.poll-table-container {
+
+}
+.poll-table-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #dbdbdb;
+}
+.poll-table-card-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+.poll-table-card-info-position {
+    color: dimgray;
+}
+.poll-table-card-info-image {
+    display: flex;
+    margin: 0 10px;
+}
+.poll-table-card-info-image img{
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 30px;
+}
+.poll-table-card-info-name {
+    color: #e1521d;
+}
+.poll-table-card-number {
+    color: #e1521d;
+}

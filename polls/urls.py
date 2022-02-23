@@ -8,4 +8,5 @@ urlpatterns = [
     path('new-poll', views.new_poll, name='new_poll'),
     path('search-polls', views.search_polls, name='search_polls'),
     path('settings', views.settings, name='settings'),
+    path('<slug:slug>', views.poll, name='poll'),
 ]
