@@ -1,0 +1,54 @@
+.search-background {
+
+}
+.search-bar-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+.search-bar {
+
+}
+.search-button {
+    margin: 0 0 0 15px;
+}
+.search-button .css-sghohy-MuiButtonBase-root-MuiButton-root{
+    padding: 15px 16px !important;
+    background-color: #e1521d !important;
+    font-weight: bold !important;
+}
+.search-results-container {
+
+}
+.search-result-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    border-bottom: 1px solid #dbdbdb;
+    padding: 20px;
+}
+.search-result-card-image {
+    display: flex;
+}
+.search-result-card-image img{
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 30px;
+}
+.search-result-card-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 0 0 0 15px;
+}
+.search-result-card-info-title {
+    font-weight: bold;
+    margin: 0 0 2px 0;
+}
+.search-result-card-info-date {
+    font-size: 14px;
+}
