@@ -2,7 +2,7 @@
 
 }
 .poll-header {
-    background-color: #ad421a;
+    background-color: #3e7ab5;
     color: white;
     display: flex;
     flex-direction: column;
@@ -78,8 +78,10 @@
     border-radius: 30px;
 }
 .poll-table-card-info-name {
-    color: #e1521d;
+    color: dimgray;
 }
 .poll-table-card-number {
-    color: #e1521d;
+    color: dimgray;
+    font-weight: bold;
+    font-size: 15px;
 }

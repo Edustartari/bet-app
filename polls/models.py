@@ -28,10 +28,11 @@ class pool(models.Model):
     hash_id = models.CharField(max_length=200, default=hash_id_generator(), null=True)
     created_at = models.DateField(auto_now=False, auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
-    finish_date = models.DateField()
+    finish_date = models.DateField(default='')
     is_active = models.IntegerField(default=0)
     is_private = models.IntegerField(default=0)
-    theme = models.CharField(max_length=200)
+    password = models.IntegerField(default=0)
+    type = models.CharField(max_length=200)
 
 class questions(models.Model):
     question_title = models.CharField(max_length=150)

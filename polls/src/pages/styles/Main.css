@@ -5,8 +5,8 @@
     margin: 0 0 30px 0;
 }
 .main-title-card {
-    color: #e1521d;
-    border-bottom: 1px solid #e1521d;
+    color: #1976d2;
+    border-bottom: 1px solid #1976d2;
     padding: 0 0 10px 0;
     margin: 0 0 10px 0;
 }
@@ -30,7 +30,7 @@
 .main-highlights-box {
     height: 200px;
     margin: 0 10px 0 0;
-    background-color: #e1521d;
+    background-color: #1976d2;
     min-width: calc(100vw - 180px);
 }
 .main-highlights-box:nth-last-child(1) {

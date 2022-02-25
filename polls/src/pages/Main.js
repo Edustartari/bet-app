@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './styles/Main.css'
 
+/* AT PENDING BETS, COULD BE USEFUL TO INFORM A NUMBER ASIDE THE TITLE INFORMING THE TOTAL OF PENDINGS USER STILL HAVE TO ACCOMPLISH (could be bets or in case admin could be confirm answers) */
+
 export default class Main extends Component {
     render() {
         return (
@@ -13,7 +15,7 @@ export default class Main extends Component {
                     </div>
                 </div>
                 <div className="main-pending-container">
-                    <div className="main-title-card">Peding bets</div>
+                    <div className="main-title-card">Pending bets</div>
                     <div className="main-pending-card">
                         <div>You have to bet "Name of bet" for "Name of poll" until "Date"</div>
                     </div>
