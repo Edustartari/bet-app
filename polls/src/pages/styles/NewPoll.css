@@ -31,3 +31,101 @@
 .new-poll-first-step-button {
     width: 100%;
 }
+.new-poll-second-step-background {
+
+}
+.new-poll-second-step-header {
+    padding: 20px;
+    border: 1px solid #1976d2;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.new-poll-second-step-header-title {
+    font-weight: bold;
+}
+.new-poll-second-step-header-button {
+
+}
+.new-poll-second-step-card {
+    margin: 40px 20px 20px;
+    border: 1px solid dimgray;
+    padding: 20px;
+    position: relative;
+}
+.new-poll-second-step-card-title{
+    position: absolute;
+    top: -20px;
+    color: #df1212;
+    padding: 5px 8px;
+    background-color: white;
+    border: 1px solid dimgray;
+}
+.new-poll-second-step-card-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 20px 0;
+}
+.new-poll-second-step-card-header-title {
+
+}
+.new-poll-second-step-card-header-icon {
+
+}
+.new-poll-second-step-card-container {
+
+}
+.new-poll-second-step-card-field {
+    margin: 0 0 25px 0;
+}
+.new-poll-second-step-card-field:nth-last-child(1){
+    margin-bottom: 0px;
+}
+.new-poll-second-step-card-toggle-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.new-poll-second-step-card-toggle-title {
+
+}
+.new-poll-second-step-card-toggle-button {
+
+}
+.new-poll-second-step-card-field-textfield {
+
+}
+.new-poll-second-step-card-field-textfield-description {
+
+}
+.new-poll-second-step-card-field-textfield-button {
+
+}
+.new-poll-second-step-card-answers-options {
+    border: 1px solid #dbdbdb;
+}
+.new-poll-second-step-card-answers-options-container {
+
+}
+.new-poll-second-step-card-answers-options-title{
+    margin: 0 0 10px 0;
+}
+.new-poll-second-step-card-answers-options-textfield {
+
+}
+.new-poll-second-step-card-answers-options-component {
+
+}
+.new-poll-second-step-buttons-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+.new-poll-second-step-button {
+    width: 40%;
+}
