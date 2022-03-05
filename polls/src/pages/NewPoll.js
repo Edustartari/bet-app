@@ -10,16 +10,16 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Switch from '@mui/material/Switch';
-
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import { TransitionGroup } from 'react-transition-group';
+import Snackbar from '@mui/material/Snackbar';
+import Divider from '@mui/material/Divider';
 
-
-function renderItem({ item, handleRemoveFruit }) {
+function renderItem({ item, remove_answer }) {
 	return (
 	<ListItem
 		secondaryAction={
@@ -27,7 +27,7 @@ function renderItem({ item, handleRemoveFruit }) {
 			edge="end"
 			aria-label="delete"
 			title="Delete"
-			onClick={() => handleRemoveFruit(item)}
+			onClick={() => remove_answer(item)}
 		>
 			<span className="material-icons">delete</span>
 		</IconButton>
@@ -42,54 +42,47 @@ function AnswerOptions(props) {
 	const [answer_options, setAnswerList] = React.useState(props.answer_options);
 	const [answer, setAnswer] = React.useState('');
 
-	const handleAddFruit = () => {
-		console.log('')
-		console.log('handleAddFruit')
-		console.log(props.answer_options)
+	const add_answer = () => {
+		if(answer.length === 0){
+			props.open_snackbar('Cannot add empty answer');
+			return
+		}
 		const nextHiddenItem = props.answer_options.find((i) => i === answer);
-		console.log(nextHiddenItem)
-		console.log(answer)
 		if (nextHiddenItem) {
-			console.log('if')
-			console.log('answer already saved')
+			props.open_snackbar('Answer already added');
 		} else {
-			console.log('else')
 			setAnswerList((prev) => [answer, ...prev]);
 			props.save_answer(answer, 'add')
 		}
 		setAnswer('')
 	};
 
-	const handleRemoveFruit = (answer) => {
+	const remove_answer = (answer) => {
 		props.save_answer(answer, 'remove')
 		setAnswerList((prev) => [...prev.filter((i) => i !== answer)]);
 	};
 
-	const addFruitButton = (
+	const add_answer_button = (
 		<Button
 			fullWidth
 			variant="contained"
-			onClick={handleAddFruit}
+			onClick={add_answer}
 		>
 			Add answer
 		</Button>
 	);
 
-	console.log('')
-	console.log('AnswerOptions')
-	console.log(props)
-
 	return (
 		<div>
 			<TextField fullWidth id="outlined-basic" label="Answer Option" variant="outlined" value={answer} onChange={(event) => setAnswer(event.target.value)}/>
-			{addFruitButton}
+			{add_answer_button}
 			{props.answer_options.length > 0 &&
 				<Box sx={{ mt: 1 }}>
 					<List>
 						<TransitionGroup>
 							{props.answer_options.map((item) => (
 								<Collapse key={item}>
-								{renderItem({ item, handleRemoveFruit })}
+								{renderItem({ item, remove_answer })}
 								</Collapse>
 							))}
 						</TransitionGroup>
@@ -125,12 +118,16 @@ export default class NewPoll extends Component {
 			correct_answer: '',
 			correct_answer_switch: true,
 			correct_answer_confirmed: false,
-			answer_options: []
-			// answer_options: ['edu test one', 'edu test two', 'edu test three']
+			answer_options: [],
+			snackbar_open: false,
+			snackbar_message: '',
 		}
 		this.edit_bet = this.edit_bet.bind(this);
 		this.save_answer = this.save_answer.bind(this);
 		this.erase_all_fields = this.erase_all_fields.bind(this);
+		this.add_bet = this.add_bet.bind(this);
+		this.open_snackbar = this.open_snackbar.bind(this);
+		this.remove_bet = this.remove_bet.bind(this);
 	}
 
 	edit_bet(key, value){
@@ -155,16 +152,18 @@ export default class NewPoll extends Component {
 		console.log('')
 		console.log('save_answer')
 		console.log(answer)
+		let temporary_list;
 		if(action === 'add'){
 			console.log('if')
-			this.setState({answer_options: [...this.state.answer_options, answer]})
+			temporary_list = [...this.state.answer_options, answer]
 		} else {
 			console.log('else')
-			this.setState({answer_options: [...this.state.answer_options.filter((i) => i !== answer)]})
+			temporary_list = [...this.state.answer_options.filter((i) => i !== answer)]
 		}
+		this.setState({answer_options: temporary_list})
 		console.log(this.state.answer_options)
 		let temporary_dict = Object.assign({}, this.state.bet)
-		temporary_dict.question_data['answer_options'] = this.state.answer_options
+		temporary_dict.question_data['answer_options'] = temporary_list
 		this.setState({bet: temporary_dict})		
 	}
 
@@ -189,12 +188,39 @@ export default class NewPoll extends Component {
 		}
 	}
 
+	add_bet(){
+		if(this.state.bet.question_title.length === 0){
+			this.open_snackbar('You must give a bet name')
+			return
+		} else if(this.state.bet.question_type.length === 0){
+			this.open_snackbar('You must choose a type')
+			this.setState({snackbar_messae: 'You must choose a type'})
+			return
+		}
+		let temporary_dict = Object.assign({}, this.state.bet);
+		temporary_dict.correct_answer = this.state.correct_answer;
+
+		this.setState({bets: [...this.state.bets, temporary_dict]});
+		this.erase_all_fields();
+		this.setState({create_bet_card: false})
+	}
+
+	open_snackbar(message){
+		this.setState({snackbar_message: message})
+		this.setState({snackbar_open: true})
+	}
+
+	remove_bet(bet){
+		let temporary_list = [...this.state.bets.filter((i) => i.question_title !== bet.question_title)]
+		this.setState({bets: temporary_list})
+	}
+
     render() {
 		console.log('render')
 		console.log('this.state.bet')
 		console.log(this.state.bet)
-		console.log('this.state.answer_options')
-		console.log(this.state.answer_options)
+		console.log('this.state.bets')
+		console.log(this.state.bets)
 		if(this.state.step === 'first'){
 			return (
 				<div className='new-poll-first-step-background'>
@@ -309,7 +335,6 @@ export default class NewPoll extends Component {
 										{this.state.correct_answer_switch &&
 											<div className='new-poll-second-step-card-field-textfield'>
 												<div className='new-poll-second-step-card-field-textfield-description'>
-													{/* <TextField fullWidth id="outlined-basic" label="Correct answer" variant="outlined" onChange={(event) => this.setState({correct_answer: event.target.value})}/> */}
 													<TextField 
 														disabled={this.state.correct_answer_confirmed ? true : false} 
 														fullWidth 
@@ -341,45 +366,52 @@ export default class NewPoll extends Component {
 									<div className='new-poll-second-step-card-answers-options-title'>List here your answer options:</div>
 									<div className='new-poll-second-step-card-field new-poll-second-step-card-answers-options'>{/* If user already added the real answer, include at the list options of answers available */}
 										<div className='new-poll-second-step-card-answers-options-container'>
-											<div className='new-poll-second-step-card-answers-options-textfield'>
-												{/* <TextField fullWidth id="outlined-basic" label="Answer Option" variant="outlined" onChange={(event) => this.setState({answer_option: event.target.value})}/> */}
-											</div>
 											<div className='new-poll-second-step-card-answers-options-component'>
-												<AnswerOptions save_answer={this.save_answer} answer_options={this.state.answer_options}/>
-												{/* transition group component to show several bet answer options */}
+												<AnswerOptions save_answer={this.save_answer} answer_options={this.state.answer_options} open_snackbar={this.open_snackbar}/>
 											</div>
 										</div>
-										{/* <div className='new-poll-second-step-card-answers-options'>
-											<div>add button text</div>
-											<div>button</div>
-										</div>
-										<div className='new-poll-second-step-card-answers-options'>answer 1</div>
-										<div className='new-poll-second-step-card-answers-options'>answer 2</div>
-										<div className='new-poll-second-step-card-answers-options'>answer 3</div> */}
 									</div>
+								</div>
+								<Divider variant="middle" />
+								<div className='new-poll-second-step-card-button'>
+									<Button fullWidth variant="contained" onClick={this.add_bet}>ADD BET</Button>
 								</div>
 							</div>
 						</React.Fragment>
 					}
-					<div className='new-poll-second-step-list'>
-						<div>
-							<div>list of bets</div>
-							<div>
-								<span className="material-icons">delete</span>
+					{(this.state.bets.length > 0) &&
+						<React.Fragment>
+							<div className='new-poll-second-step-list'>
+								<div className='new-poll-second-step-list-title'>List of Bets</div>
+								{this.state.bets.map((bet) => {
+									return(
+										<div key={bet.question_title} className='new-poll-second-step-list-card'>
+											<div className='new-poll-second-step-list-card-title'>{bet.question_title}</div>
+											<div className='new-poll-second-step-list-card-icon' onClick={() => this.remove_bet(bet)}>
+												<span className="material-icons">delete</span>
+											</div>
+										</div>
+									)
+								})}
 							</div>
-						</div>
-					</div>
+						</React.Fragment>
+					}
 					<div className='new-poll-second-step-buttons-container'>
 						<div className='new-poll-second-step-button' onClick={() => this.setState({step: 'first'})}>
 							<Button fullWidth variant="contained">BACK</Button>
 						</div>
-						{/* ONLY DISPLAY NEXT BUTTON IF THERE IS AT LEAST ONE BET ADDED */}
 						{this.state.bets.length !== 0 &&
 							<div className='new-poll-second-step-button' onClick={() => this.setState({step: 'third'})}>
 								<Button fullWidth variant="contained">NEXT</Button>
 							</div>
 						}
 					</div>
+					<Snackbar
+						autoHideDuration={2000}
+						open={this.state.snackbar_open}
+						message={this.state.snackbar_message}
+						onClose={() => this.setState({snackbar_open: false})}
+					/>
 				</div>
 			)
 		} else if (this.state.step === 'third'){

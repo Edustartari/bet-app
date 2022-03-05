@@ -49,8 +49,9 @@
 
 }
 .new-poll-second-step-card {
-    margin: 40px 20px 20px;
+    margin: 40px 20px 0px;
     border: 1px solid dimgray;
+    border-radius: 5px;
     padding: 20px;
     position: relative;
 }
@@ -113,11 +114,11 @@
 .new-poll-second-step-card-answers-options-title{
     margin: 0 0 10px 0;
 }
-.new-poll-second-step-card-answers-options-textfield {
-
-}
 .new-poll-second-step-card-answers-options-component {
 
+}
+.new-poll-second-step-card .css-ft4jij-MuiDivider-root{
+    margin: 20px 0;
 }
 .new-poll-second-step-buttons-container {
     display: flex;
@@ -128,4 +129,44 @@
 }
 .new-poll-second-step-button {
     width: 40%;
+}
+.new-poll-second-step-card-button {
+    margin: 0px 0px 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.new-poll-second-step-card-button .css-1fu7jd5-MuiButtonBase-root-MuiButton-root{
+    background-color: #cd0c0c;
+    color: #fff;
+    font-weight: bold;
+    padding: 12px 16px;
+    font-size: 1rem;
+    box-shadow: 5px 5px 5px dimgray;
+    margin: 0 2px;
+}
+.new-poll-second-step-list {
+    margin: 20px;
+}
+.new-poll-second-step-list-title{
+
+}
+.new-poll-second-step-list-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #dbdbdb;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 0 0px 12px 0;
+}
+.new-poll-second-step-list-card-title {
+    font-weight: 700;
+}
+.new-poll-second-step-list-card-icon {
+
+}
+.new-poll-second-step-list-card-icon .material-icons{
+
 }
