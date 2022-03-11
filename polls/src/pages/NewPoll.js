@@ -18,6 +18,8 @@ import ListItemText from '@mui/material/ListItemText';
 import { TransitionGroup } from 'react-transition-group';
 import Snackbar from '@mui/material/Snackbar';
 import Divider from '@mui/material/Divider';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 function renderItem({ item, remove_answer }) {
 	return (
@@ -39,7 +41,7 @@ function renderItem({ item, remove_answer }) {
 }
   
 function AnswerOptions(props) {
-	const [answer_options, setAnswerList] = React.useState(props.answer_options);
+	// const [answer_options, setAnswerList] = React.useState(props.answer_options);
 	const [answer, setAnswer] = React.useState('');
 
 	const add_answer = () => {
@@ -51,7 +53,7 @@ function AnswerOptions(props) {
 		if (nextHiddenItem) {
 			props.open_snackbar('Answer already added');
 		} else {
-			setAnswerList((prev) => [answer, ...prev]);
+			// setAnswerList((prev) => [answer, ...prev]);
 			props.save_answer(answer, 'add')
 		}
 		setAnswer('')
@@ -59,7 +61,7 @@ function AnswerOptions(props) {
 
 	const remove_answer = (answer) => {
 		props.save_answer(answer, 'remove')
-		setAnswerList((prev) => [...prev.filter((i) => i !== answer)]);
+		// setAnswerList((prev) => [...prev.filter((i) => i !== answer)]);
 	};
 
 	const add_answer_button = (
@@ -98,7 +100,7 @@ export default class NewPoll extends Component {
 		super(props)
 		this.state = {
 			step: 'first', // can be first, second, third...
-			name: '',
+			poll_name: '',
 			poll_type: false,
 			password: '',
 			finish_date_active: false,
@@ -121,6 +123,7 @@ export default class NewPoll extends Component {
 			answer_options: [],
 			snackbar_open: false,
 			snackbar_message: '',
+			backdrop: false,
 		}
 		this.edit_bet = this.edit_bet.bind(this);
 		this.save_answer = this.save_answer.bind(this);
@@ -128,6 +131,7 @@ export default class NewPoll extends Component {
 		this.add_bet = this.add_bet.bind(this);
 		this.open_snackbar = this.open_snackbar.bind(this);
 		this.remove_bet = this.remove_bet.bind(this);
+		this.create_poll = this.create_poll.bind(this);
 	}
 
 	edit_bet(key, value){
@@ -206,8 +210,16 @@ export default class NewPoll extends Component {
 	}
 
 	open_snackbar(message){
+		console.log('')
+		console.log('open_snackbar 4')
+		console.log(this.state.snackbar_message)
+		console.log(this.state.snackbar_open)
 		this.setState({snackbar_message: message})
 		this.setState({snackbar_open: true})
+		this.state.snackbar_message = message
+		this.state.snackbar_open = true
+		console.log(this.state.snackbar_message)
+		console.log(this.state.snackbar_open)
 	}
 
 	remove_bet(bet){
@@ -215,52 +227,91 @@ export default class NewPoll extends Component {
 		this.setState({bets: temporary_list})
 	}
 
+	create_poll(){
+		this.setState({backdrop: true})
+		console.log('')
+		console.log('create_poll 6')
+		let data_dict = {}
+		data_dict['poll_name'] = this.state.poll_name
+		data_dict['poll_type'] = this.state.poll_type
+		data_dict['password'] = this.state.password
+		data_dict['finish_date'] = this.state.finish_date
+		data_dict['bets'] = this.state.bets
+
+		$.ajax({
+			context: this,
+			type: 'POST',
+			url: '/create-poll',
+			data: {
+				poll_info: JSON.stringify(data_dict)
+			},
+			success: function(data){
+				if(data.status === 'success'){
+					this.setState({backdrop: false})
+				}
+				console.log('success')
+				console.log(data)
+			}
+		})
+	}
+
     render() {
-		console.log('render')
-		console.log('this.state.bet')
-		console.log(this.state.bet)
-		console.log('this.state.bets')
-		console.log(this.state.bets)
-		if(this.state.step === 'first'){
-			return (
-				<div className='new-poll-first-step-background'>
-					<div className='new-poll-first-step-container'>
-						<div className='new-poll-first-step-title'>ADD POLL</div>
-						<div className='new-poll-first-step-field'>
-							<TextField fullWidth id="outlined-basic" label="Name" variant="outlined" onChange={(event) => this.setState({name: event.target.value})}/>
+		// console.log('render')
+		// console.log('this.state.step')
+		// console.log(this.state.step)
+		// console.log('this.state.bets')
+		// console.log(this.state.bets)
+		return (
+			<React.Fragment>
+				{this.state.step === 'first' &&
+					<div className='new-poll-first-step-background'>
+						<div className='new-poll-first-step-container'>
+							<div className='new-poll-first-step-title'>ADD POLL</div>
+							<div className='new-poll-first-step-field'>
+								<TextField fullWidth id="outlined-basic" label="Name" variant="outlined" value={this.state.poll_name} onChange={(event) => this.setState({poll_name: event.target.value})}/>
+							</div>
+							<div className='new-poll-first-step-field' style={{marginBottom: '0px'}}>
+								<div className='new-poll-first-step-field-text'>Private Poll?</div>
+								<div className='new-poll-first-step-field-toggle'>
+									<Switch onChange={() => {this.setState({poll_type: !this.state.poll_type}), this.setState({password: ''})}}/>
+								</div>
+							</div>
+							{this.state.poll_type &&
+								<div className='new-poll-first-step-password-textfield'>
+									<TextField fullWidth id="outlined-basic" label="Password" variant="outlined" onChange={(event) => this.setState({password: event.target.value})}/>
+								</div>
+							}
+							<div className='new-poll-first-step-field' style={{marginBottom: '0px'}}>
+								<div className='new-poll-first-step-field-text'>Is there a date to end poll?</div>
+								<div className='new-poll-first-step-field-toggle'>
+									<Switch onChange={() => this.setState({finish_date_active: !this.state.finish_date_active})}/>
+								</div>
+							</div>
+							{this.state.finish_date_active &&
+								<div className='new-poll-first-step-password-textfield'>
+									datepicker - Date to end
+								</div>
+							}
 						</div>
-						<div className='new-poll-first-step-field' style={{marginBottom: '0px'}}>
-							<div className='new-poll-first-step-field-text'>Private Poll?</div>
-							<div className='new-poll-first-step-field-toggle'>
-								<Switch onChange={() => {this.setState({poll_type: !this.state.poll_type}), this.setState({password: ''})}}/>
+						<div className='new-poll-first-step-button-container'>
+							<div 
+								className='new-poll-first-step-button' 
+							>
+								<Button 
+									fullWidth 
+									variant="contained"
+									onClick={
+										() => this.state.poll_name.length === 0 ? this.open_snackbar('You must give a name for your poll') : this.setState({step: 'second'})
+									}
+								>
+									NEXT
+								</Button>
 							</div>
 						</div>
-						{this.state.poll_type &&
-							<div className='new-poll-first-step-password-textfield'>
-								<TextField fullWidth id="outlined-basic" label="Password" variant="outlined" onChange={(event) => this.setState({password: event.target.value})}/>
-							</div>
-						}
-						<div className='new-poll-first-step-field' style={{marginBottom: '0px'}}>
-							<div className='new-poll-first-step-field-text'>Is there a date to end poll?</div>
-							<div className='new-poll-first-step-field-toggle'>
-								<Switch onChange={() => this.setState({finish_date_active: !this.state.finish_date_active})}/>
-							</div>
-						</div>
-						{this.state.finish_date_active &&
-							<div className='new-poll-first-step-password-textfield'>
-								datepicker - Date to end
-							</div>
-						}
 					</div>
-					<div className='new-poll-first-step-button-container'>
-						<div className='new-poll-first-step-button' onClick={() => this.setState({step: 'second'})}>
-							<Button fullWidth variant="contained">NEXT</Button>
-						</div>
-					</div>
-				</div>
-			)
-		} else if (this.state.step === 'second'){
-			return (
+				}
+			
+			{this.state.step === 'second' &&
 				<div className='new-poll-second-step-background'>
 					{/* Make the title and add button a fixed component */}
 					<div className='new-poll-second-step-header'>
@@ -352,8 +403,8 @@ export default class NewPoll extends Component {
 															fullWidth variant="contained" 
 															onClick={() => {
 																this.setState({answer_options: this.state.answer_options.filter((item) => item !== this.state.correct_answer)}),
-															 	this.setState({correct_answer_confirmed: false}),
-															 	this.setState({correct_answer: ''})
+																this.setState({correct_answer_confirmed: false}),
+																this.setState({correct_answer: ''})
 															}}
 														>
 															ERASE
@@ -406,27 +457,38 @@ export default class NewPoll extends Component {
 							</div>
 						}
 					</div>
-					<Snackbar
-						autoHideDuration={2000}
-						open={this.state.snackbar_open}
-						message={this.state.snackbar_message}
-						onClose={() => this.setState({snackbar_open: false})}
-					/>
 				</div>
-			)
-		} else if (this.state.step === 'third'){
-			return (
-				<div>
-					<div>
+			}
+			{this.state.step === 'third' &&
+				<div className='new-poll-third-step-background'>
+					<div className='new-poll-third-step-photo'>
 						<div>Poll photo</div>
 						<div>react avatar editor</div>
 					</div>
-					<div>
-						<div onClick={() => this.setState({step: 'second'})}>back BUTTON</div>
-						<div onClick={() => this.setState({step: 'finish'})}>CONFIRM BUTTON</div>
+					<div className='new-poll-third-step-buttons-container'>
+						<div className='new-poll-third-step-button' onClick={() => this.setState({step: 'second'})}>
+							<Button fullWidth variant="contained">BACK</Button>
+						</div>
+						{this.state.bets.length !== 0 &&
+							<div className='new-poll-third-step-button' onClick={() => this.setState({step: 'finish'})}>
+								<Button fullWidth variant="contained" onClick={this.create_poll}>CONFIRM</Button>
+							</div>
+						}
 					</div>
 				</div>
-			)
-		} 
+			}
+			<Snackbar
+				autoHideDuration={2000}
+				open={this.state.snackbar_open}
+				message={this.state.snackbar_message}
+				onClose={() => this.setState({snackbar_open: false})}
+			/>
+			<Backdrop
+				open={this.state.backdrop}
+			>
+				<CircularProgress color="inherit" />
+			</Backdrop>
+			</React.Fragment>
+		)
     }
 }

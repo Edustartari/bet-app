@@ -128,7 +128,10 @@
     padding: 20px;
 }
 .new-poll-second-step-button {
-    width: 40%;
+    width: 100%;
+}
+.new-poll-second-step-button:nth-child(2){
+    margin: 0 0 0 20px
 }
 .new-poll-second-step-card-button {
     margin: 0px 0px 10px;
@@ -149,7 +152,7 @@
     margin: 20px;
 }
 .new-poll-second-step-list-title{
-
+    margin: 0 0 5px 0;
 }
 .new-poll-second-step-list-card {
     display: flex;
@@ -169,4 +172,26 @@
 }
 .new-poll-second-step-list-card-icon .material-icons{
 
+}
+.new-poll-third-step-background {
+
+}
+.new-poll-third-step-photo {
+
+}
+.new-poll-third-step-buttons-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+.new-poll-third-step-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+}
+.new-poll-third-step-button:nth-child(2){
+    margin: 0 0 0 20px
 }
