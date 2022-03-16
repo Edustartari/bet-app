@@ -5,6 +5,7 @@ import oscar from '../../static/img/oscar.jpg';
 import profile_picture_1 from '../../static/img/profile-picture-1.jpg';
 import profile_picture_2 from '../../static/img/profile-picture-2.jpg';
 import Avatar from '@mui/material/Avatar';
+import { CardContent } from '@mui/material';
 
 /* IF USER IS ADMIN, INCLUDE AT HEADER THE THREE DOTS OPTION SO HE CAN EDIT THE POLL BY CHANGING NAME OR ADDING MORE QUESTIONS */
 /* for all other users, create option at three dots on header to display group info, such as name, admins, number of participants, and also options(get of from group - and in case admin, delete group, specific users or alter password) */
@@ -19,7 +20,7 @@ export default class Poll extends Component {
                 <div className="poll-header-image">
                     <img src={oscar}/>
                 </div>
-                <div className="poll-header-title">Oscar Prize</div>
+                <div className="poll-header-title">{content.poll_dict.name}</div>
                 <div className="poll-header-info">
                     <span>2º position</span>
                     <span> / 13 pts</span>
@@ -31,16 +32,20 @@ export default class Poll extends Component {
             <div className="poll-table">
                 <div className="poll-table-title">Ranking</div>
                 <div className="poll-table-container">
-                    <div className="poll-table-card">
-                        <div className="poll-table-card-info">
-                            <div className="poll-table-card-info-position">1º</div>
-                            <div className="poll-table-card-info-image">
-                                <img src={profile_picture_1}/>
+                    {/* {content.poll_dict.map((element) => {
+                        return (
+                            <div className="poll-table-card">
+                                <div className="poll-table-card-info">
+                                    <div className="poll-table-card-info-position">1º</div>
+                                    <div className="poll-table-card-info-image">
+                                        <img src={profile_picture_1}/>
+                                    </div>
+                                    <div className="poll-table-card-info-name">Eduardo Startari</div>
+                                </div>
+                                <div className="poll-table-card-number">15pts</div>
                             </div>
-                            <div className="poll-table-card-info-name">Eduardo Startari</div>
-                        </div>
-                        <div className="poll-table-card-number">15pts</div>
-                    </div>
+                        )
+                    })} */}
                     <div className="poll-table-card">
                         <div className="poll-table-card-info">
                             <div className="poll-table-card-info-position">2º</div>

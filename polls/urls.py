@@ -9,5 +9,5 @@ urlpatterns = [
     path('settings', views.settings, name='settings'),
     path('search-polls', views.search_polls, name='search_polls'),
     path('create-poll', views.create_poll, name='create_poll'),
-    path('<slug:slug>', views.poll, name='poll'),
+    path('<slug:hash_id>', views.poll, name='poll'),
 ]

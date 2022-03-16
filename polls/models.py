@@ -1,20 +1,16 @@
 from django.db import models
-import uuid
-
-def hash_id_generator():
-    return str(uuid.uuid1()).replace('-', '')
 
 # Create your models here.
 class user(models.Model):
     name = models.CharField(max_length=200)
     email = models.CharField(max_length=100)
     image = models.CharField(max_length=200, default='')
-    hash_id = models.CharField(max_length=200, default=hash_id_generator(), null=True)
+    hash_id = models.CharField(max_length=200, null=True)
     created_at = models.DateField(auto_now=False, auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
 
 class bet(models.Model):
-    hash_id = models.CharField(max_length=200, default=hash_id_generator(), null=True)
+    hash_id = models.CharField(max_length=200, null=True)
     pool_id = models.IntegerField(default=0)
     user_id = models.IntegerField(default=0)
     question_id = models.IntegerField(default=0)
@@ -25,10 +21,10 @@ class bet(models.Model):
 class pool(models.Model):
     name = models.CharField(max_length=200)
     image = models.CharField(max_length=200, default='', null=True)
-    hash_id = models.CharField(max_length=200, default=hash_id_generator(), null=True)
+    hash_id = models.CharField(max_length=200, null=True)
+    poll_data = models.TextField(default='')
     created_at = models.DateField(auto_now=False, auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
-    finish_date = models.DateField(default='')
     is_active = models.IntegerField(default=0)
     is_private = models.IntegerField(default=0)
     password = models.IntegerField(default=0)
@@ -39,7 +35,7 @@ class questions(models.Model):
     question_description = models.CharField(max_length=500, default='')
     question_data = models.TextField(default='')
     image = models.CharField(max_length=200, default='', null=True)
-    hash_id = models.CharField(max_length=200, default=hash_id_generator(), null=True)
+    hash_id = models.CharField(max_length=200, null=True)
     created_at = models.DateField(auto_now=False, auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
     question_type = models.CharField(max_length=200)
@@ -50,7 +46,7 @@ class questions(models.Model):
 class pool_admins(models.Model):
     pool_id = models.IntegerField(default=0)
     user_id = models.IntegerField(default=0)
-    hash_id = models.CharField(max_length=200, default=hash_id_generator(), null=True)
+    hash_id = models.CharField(max_length=200, null=True)
     is_admin = models.IntegerField(default=0)
     created_at = models.DateField(auto_now=False, auto_now_add=True)
     updated_at = models.DateField(auto_now=True)

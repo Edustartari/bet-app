@@ -10,8 +10,13 @@
     
 {% block javascript %}
 <script>
-    // console.log('index.html')
-    // var content = {{user|safe}}
-    // console.log(content)
+    console.log('index.html')
+    var content = {}
+    content.poll_dict = {{poll_dict|safe}}
+    content.poll_exists = {{poll_exists|safe}}
+    console.log(content)
+    if(content.poll_exists === false){
+        window.location.href = '/'
+    }
 </script>
 {% endblock %}

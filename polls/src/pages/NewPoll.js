@@ -248,6 +248,7 @@ export default class NewPoll extends Component {
 			success: function(data){
 				if(data.status === 'success'){
 					this.setState({backdrop: false})
+					window.location.href = '/' + data.new_poll_hash
 				}
 				console.log('success')
 				console.log(data)
