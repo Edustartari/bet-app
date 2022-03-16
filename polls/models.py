@@ -11,14 +11,14 @@ class user(models.Model):
 
 class bet(models.Model):
     hash_id = models.CharField(max_length=200, null=True)
-    pool_id = models.IntegerField(default=0)
+    poll_id = models.IntegerField(default=0)
     user_id = models.IntegerField(default=0)
     question_id = models.IntegerField(default=0)
     bet_data = models.TextField(default='')
     created_at = models.DateField(auto_now=False, auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
 
-class pool(models.Model):
+class poll(models.Model):
     name = models.CharField(max_length=200)
     image = models.CharField(max_length=200, default='', null=True)
     hash_id = models.CharField(max_length=200, null=True)
@@ -39,12 +39,12 @@ class questions(models.Model):
     created_at = models.DateField(auto_now=False, auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
     question_type = models.CharField(max_length=200)
-    pool_id = models.IntegerField(default=0)
+    poll_id = models.IntegerField(default=0)
     answer = models.CharField(max_length=200)
     is_active = models.IntegerField(default=0)
 
-class pool_admins(models.Model):
-    pool_id = models.IntegerField(default=0)
+class poll_admins(models.Model):
+    poll_id = models.IntegerField(default=0)
     user_id = models.IntegerField(default=0)
     hash_id = models.CharField(max_length=200, null=True)
     is_admin = models.IntegerField(default=0)

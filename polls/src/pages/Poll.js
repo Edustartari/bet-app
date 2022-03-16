@@ -32,60 +32,20 @@ export default class Poll extends Component {
             <div className="poll-table">
                 <div className="poll-table-title">Ranking</div>
                 <div className="poll-table-container">
-                    {/* {content.poll_dict.map((element) => {
+                    {content.poll_dict.ranking.map((element) => {
                         return (
-                            <div className="poll-table-card">
+                            <div key={element.user_hash} className="poll-table-card">
                                 <div className="poll-table-card-info">
-                                    <div className="poll-table-card-info-position">1º</div>
+                                    <div className="poll-table-card-info-position">{element.position}º</div>
                                     <div className="poll-table-card-info-image">
                                         <img src={profile_picture_1}/>
                                     </div>
-                                    <div className="poll-table-card-info-name">Eduardo Startari</div>
+                                    <div className="poll-table-card-info-name">{element.user_name}</div>
                                 </div>
-                                <div className="poll-table-card-number">15pts</div>
+                                <div className="poll-table-card-number">{element.total_points}pts</div>
                             </div>
                         )
-                    })} */}
-                    <div className="poll-table-card">
-                        <div className="poll-table-card-info">
-                            <div className="poll-table-card-info-position">2º</div>
-                            <div className="poll-table-card-info-image">
-                                <img src={profile_picture_2}/>
-                            </div>
-                            <div className="poll-table-card-info-name">Random person</div>
-                        </div>
-                        <div className="poll-table-card-number">13pts</div>
-                    </div>
-                    <div className="poll-table-card">
-                        <div className="poll-table-card-info">
-                            <div className="poll-table-card-info-position">3º</div>
-                            <div className="poll-table-card-info-image">
-                                <img src={profile_picture_1}/>
-                            </div>
-                            <div className="poll-table-card-info-name">Random person</div>
-                        </div>
-                        <div className="poll-table-card-number">9pts</div>
-                    </div>
-                    <div className="poll-table-card">
-                        <div className="poll-table-card-info">
-                            <div className="poll-table-card-info-position">4º</div>
-                            <div className="poll-table-card-info-image">
-                                <img src={profile_picture_2}/>
-                            </div>
-                            <div className="poll-table-card-info-name">Random person</div>
-                        </div>
-                        <div className="poll-table-card-number">8pts</div>
-                    </div>
-                    <div className="poll-table-card">
-                        <div className="poll-table-card-info">
-                            <div className="poll-table-card-info-position">5º</div>
-                            <div className="poll-table-card-info-image">
-                                <img src={profile_picture_1}/>
-                            </div>
-                            <div className="poll-table-card-info-name">Random person</div>
-                        </div>
-                        <div className="poll-table-card-number">2pts</div>
-                    </div>
+                    })}
                 </div>
             </div>
         </div>

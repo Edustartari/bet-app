@@ -10,8 +10,7 @@
     
 {% block javascript %}
 <script>
-    // console.log('index.html')
-    // var content = {{user|safe}}
-    // console.log(content)
+    var content = {}
+    content.poll_list = {{poll_list|safe}}
 </script>
 {% endblock %}

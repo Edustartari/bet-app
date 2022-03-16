@@ -37,7 +37,34 @@ def login(request):
 def my_polls(request):
     print('')
     print('my_polls')
-    context = {}
+    user_id = 1
+
+    poll_admin_object = poll_admins.objects.filter(user_id=user_id)
+    polls_ids = [poll.poll_id for poll in poll_admin_object]  
+    poll_objects = poll.objects.filter(id__in=polls_ids)
+
+    poll_list = []
+    for element in poll_objects:
+        poll_dict = {}
+        poll_dict['name'] = element.name
+        poll_dict['image'] = element.image
+        poll_dict['hash_id'] = element.hash_id
+        poll_data_json = json.loads(element.poll_data)
+        for e in poll_data_json['ranking']:
+            if e['user_id'] == user_id:
+                poll_dict['position'] = e['position']
+                break
+        poll_dict['created_at'] = element.created_at.strftime('%Y/%m/%d')
+        poll_dict['updated_at'] = element.updated_at.strftime('%Y/%m/%d')
+        poll_dict['is_active'] = element.is_active
+        poll_dict['is_private'] = element.is_private
+        poll_dict['password'] = element.password
+        poll_dict['type'] = element.type
+        poll_list.append(poll_dict)
+
+    context = {
+        'poll_list': json.dumps(poll_list)
+    }
     return render(request, 'polls/my-polls.html', context)
 
 def new_poll(request):
@@ -60,10 +87,10 @@ def settings(request):
     context = {}
     return render(request, 'polls/settings.html', context)
 
-def poll(request, hash_id):
+def poll_view(request, hash_id):
     print('')
     print('poll')
-    poll_object = pool.objects.filter(hash_id=hash_id)
+    poll_object = poll.objects.filter(hash_id=hash_id)
     print(poll_object.count())
 
     poll_exists = False
@@ -74,7 +101,8 @@ def poll(request, hash_id):
         poll_dict['name'] = poll_object.name
         poll_dict['image'] = poll_object.image
         poll_dict['hash_id'] = poll_object.hash_id
-        poll_dict['poll_data'] = poll_object.poll_data
+        poll_data_json = json.loads(poll_object.poll_data)
+        poll_dict['ranking'] = poll_data_json['ranking']
         poll_dict['created_at'] = poll_object.created_at.strftime('%Y/%m/%d')
         poll_dict['updated_at'] = poll_object.updated_at.strftime('%Y/%m/%d')
         poll_dict['is_active'] = poll_object.is_active
@@ -104,7 +132,7 @@ def create_poll(request):
 
     users_objects = user.objects.all()
 
-    new_poll = pool(
+    new_poll = poll(
         name = poll_info['poll_name'],
         hash_id = hash_id_generator(),
         is_active = 1,
@@ -120,27 +148,27 @@ def create_poll(request):
             question_description = bet_dict['question_description'],
             question_data = json.dumps(bet_dict['question_data']),
             question_type = bet_dict['question_type'],
-            pool_id = new_poll.id,
+            poll_id = new_poll.id,
             answer = bet_dict['correct_answer'],
             is_active = 1
         )
         new_question.save()
 
         new_bet = bet(
-            pool_id = new_poll.id,
+            poll_id = new_poll.id,
             hash_id = hash_id_generator(),
             question_id = new_question.id,
             user_id = users_objects[0].id
         )
         new_bet.save()
 
-    new_pool_admin = pool_admins(
-        pool_id = new_poll.id,
+    new_poll_admin = poll_admins(
+        poll_id = new_poll.id,
         hash_id = hash_id_generator(),
         is_admin = 1,
         user_id = users_objects[0].id
     )
-    new_pool_admin.save()
+    new_poll_admin.save()
 
     response_dict = {
         'status': 'success',
