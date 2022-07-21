@@ -66,12 +66,12 @@
 .new-poll-second-step-card-header {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     margin: 0 0 20px 0;
 }
 .new-poll-second-step-card-header-title {
-
+    margin: 0 0 0 6px;
 }
 .new-poll-second-step-card-header-icon {
 

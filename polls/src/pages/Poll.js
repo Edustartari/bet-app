@@ -7,7 +7,7 @@ import profile_picture_2 from '../../static/img/profile-picture-2.jpg';
 import Avatar from '@mui/material/Avatar';
 import { CardContent } from '@mui/material';
 
-/* IF USER IS ADMIN, INCLUDE AT HEADER THE THREE DOTS OPTION SO HE CAN EDIT THE POLL BY CHANGING NAME OR ADDING MORE QUESTIONS */
+/* IF USER IS ADMIN, INCLUDE AT HEADER THE THREE DOTS OPTION SO HE CAN EDIT THE POLL BY CHANGING NAME OR ADDING MORE BETS */
 /* for all other users, create option at three dots on header to display group info, such as name, admins, number of participants, and also options(get of from group - and in case admin, delete group, specific users or alter password) */
 /* USE AVATAR FOR USERS THAT DON'T HAVE PHOTO */
 

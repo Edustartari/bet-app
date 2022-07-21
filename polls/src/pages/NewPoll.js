@@ -107,13 +107,15 @@ export default class NewPoll extends Component {
 			finish_date: false,
 			bets: [],
 			bet: {
-				'question_title': '',
-				'question_description': '',
-				'question_data': {
-					'answer_options': []
+				'bet_title': '',
+				'bet_description': '',
+				'bet_data': {
+					'answer_options': [],
+					'finish_date': '',
+					'users_answers': []
 				},
 				'image': '',
-				'question_type': '', /* select field - bet type could be radio (one answer), several checks (several answers) or free text */
+				'bet_type': '', /* select field - bet type could be radio (one answer), several checks (several answers) or free text */
 				'correct_answer': ''
 			},
 			create_bet_card: false,
@@ -139,7 +141,7 @@ export default class NewPoll extends Component {
 		console.log('edit_bet')
 		console.log(this.state.bet)
 		let temporary_dict = Object.assign({}, this.state.bet)
-		if(key === 'question_data'){
+		if(key === 'bet_data'){
 			if('answer_options' in temporary_dict[key]){
 				temporary_dict[key]['answer_options'].push(value)
 			} else {
@@ -167,7 +169,7 @@ export default class NewPoll extends Component {
 		this.setState({answer_options: temporary_list})
 		console.log(this.state.answer_options)
 		let temporary_dict = Object.assign({}, this.state.bet)
-		temporary_dict.question_data['answer_options'] = temporary_list
+		temporary_dict.bet_data['answer_options'] = temporary_list
 		this.setState({bet: temporary_dict})		
 	}
 
@@ -177,13 +179,13 @@ export default class NewPoll extends Component {
 		this.setState({correct_answer: ''});
 		this.setState({answer_options: []});
 		let empty_bet = {
-			'question_title': '',
-			'question_description': '',
-			'question_data': {
+			'bet_title': '',
+			'bet_description': '',
+			'bet_data': {
 				'answer_options': []
 			},
 			'image': '',
-			'question_type': '',
+			'bet_type': '',
 			'correct_answer': ''
 		}
 		this.setState({bet: empty_bet});
@@ -193,10 +195,10 @@ export default class NewPoll extends Component {
 	}
 
 	add_bet(){
-		if(this.state.bet.question_title.length === 0){
+		if(this.state.bet.bet_title.length === 0){
 			this.open_snackbar('You must give a bet name')
 			return
-		} else if(this.state.bet.question_type.length === 0){
+		} else if(this.state.bet.bet_type.length === 0){
 			this.open_snackbar('You must choose a type')
 			this.setState({snackbar_messae: 'You must choose a type'})
 			return
@@ -223,7 +225,7 @@ export default class NewPoll extends Component {
 	}
 
 	remove_bet(bet){
-		let temporary_list = [...this.state.bets.filter((i) => i.question_title !== bet.question_title)]
+		let temporary_list = [...this.state.bets.filter((i) => i.bet_title !== bet.bet_title)]
 		this.setState({bets: temporary_list})
 	}
 
@@ -329,10 +331,10 @@ export default class NewPoll extends Component {
 							<div className='new-poll-second-step-card'>
 								<div className='new-poll-second-step-card-title'>New Bet</div>
 								<div className='new-poll-second-step-card-header'>
-									<div className='new-poll-second-step-card-header-title'>Erase all fields</div>
 									<div className='new-poll-second-step-card-header-icon' onClick={this.erase_all_fields}>
 										<span className="material-icons">delete</span>
 									</div>							
+									<div className='new-poll-second-step-card-header-title'>Erase all fields</div>
 								</div>
 								<div className='new-poll-second-step-card-container'>
 									<div className='new-poll-second-step-card-field'>
@@ -341,8 +343,8 @@ export default class NewPoll extends Component {
 											id="outlined-basic" 
 											label="Bet name" 
 											variant="outlined" 
-											value={this.state.bet.question_title}
-											onChange={(event) => this.edit_bet('question_title', event.target.value)}
+											value={this.state.bet.bet_title}
+											onChange={(event) => this.edit_bet('bet_title', event.target.value)}
 										/>
 									</div>
 									<div className='new-poll-second-step-card-field'>
@@ -352,8 +354,8 @@ export default class NewPoll extends Component {
 											label="Description"
 											multiline
 											rows={4}
-											value={this.state.bet.question_description}
-											onChange={(event) => this.edit_bet('question_description', event.target.value)}
+											value={this.state.bet.bet_description}
+											onChange={(event) => this.edit_bet('bet_description', event.target.value)}
 										/>
 									</div>
 									<div className='new-poll-second-step-card-field'>
@@ -362,9 +364,9 @@ export default class NewPoll extends Component {
 											<Select
 												labelId="demo-simple-select-label"
 												id="demo-simple-select"
-												value={this.state.bet.question_type}
+												value={this.state.bet.bet_type}
 												label="Type"
-												onChange={(event) => this.edit_bet('question_type', event.target.value)}
+												onChange={(event) => this.edit_bet('bet_type', event.target.value)}
 											>
 											<MenuItem value={'radio'}>One answer only</MenuItem>
 											<MenuItem value={'multiple'}>Multiple answer</MenuItem>
@@ -437,8 +439,8 @@ export default class NewPoll extends Component {
 								<div className='new-poll-second-step-list-title'>List of Bets</div>
 								{this.state.bets.map((bet) => {
 									return(
-										<div key={bet.question_title} className='new-poll-second-step-list-card'>
-											<div className='new-poll-second-step-list-card-title'>{bet.question_title}</div>
+										<div key={bet.bet_title} className='new-poll-second-step-list-card'>
+											<div className='new-poll-second-step-list-card-title'>{bet.bet_title}</div>
 											<div className='new-poll-second-step-list-card-icon' onClick={() => this.remove_bet(bet)}>
 												<span className="material-icons">delete</span>
 											</div>

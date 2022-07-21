@@ -137,28 +137,21 @@ def create_poll(request):
         hash_id = hash_id_generator(),
         is_active = 1,
         type = poll_info['poll_type'],
-        password = poll_info['password'] if len(poll_info['password']) > 0 else 0
+        password = poll_info['password'] if len(poll_info['password']) > 0 else 0,
+        data = json.dumps({'finish_date': poll_info['finish_date'], 'ranking': []})
     )
     new_poll.save()
 
     for bet_dict in poll_info['bets']:
-        new_question = questions(
-            question_title = bet_dict['question_title'],
+        new_bet = bet(
+            bet_title = bet_dict['bet_title'],
             hash_id = hash_id_generator(),
-            question_description = bet_dict['question_description'],
-            question_data = json.dumps(bet_dict['question_data']),
-            question_type = bet_dict['question_type'],
+            bet_description = bet_dict['bet_description'],
+            bet_data = json.dumps(bet_dict['bet_data']),
+            bet_type = bet_dict['bet_type'],
             poll_id = new_poll.id,
             answer = bet_dict['correct_answer'],
             is_active = 1
-        )
-        new_question.save()
-
-        new_bet = bet(
-            poll_id = new_poll.id,
-            hash_id = hash_id_generator(),
-            question_id = new_question.id,
-            user_id = users_objects[0].id
         )
         new_bet.save()
 
