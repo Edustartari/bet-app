@@ -50,10 +50,13 @@ def my_polls(request):
         poll_dict['image'] = element.image
         poll_dict['hash_id'] = element.hash_id
         poll_data_json = json.loads(element.poll_data)
-        for e in poll_data_json['ranking']:
-            if e['user_id'] == user_id:
-                poll_dict['position'] = e['position']
-                break
+        if len(poll_data_json['ranking']) > 0:
+            for e in poll_data_json['ranking']:
+                if e['user_id'] == user_id:
+                    poll_dict['position'] = e['position']
+                    break
+        else:
+            poll_dict['position'] = False
         poll_dict['created_at'] = element.created_at.strftime('%Y/%m/%d')
         poll_dict['updated_at'] = element.updated_at.strftime('%Y/%m/%d')
         poll_dict['is_active'] = element.is_active
@@ -138,7 +141,7 @@ def create_poll(request):
         is_active = 1,
         type = poll_info['poll_type'],
         password = poll_info['password'] if len(poll_info['password']) > 0 else 0,
-        data = json.dumps({'finish_date': poll_info['finish_date'], 'ranking': []})
+        poll_data = json.dumps({'finish_date': poll_info['finish_date'], 'ranking': []})
     )
     new_poll.save()
 
@@ -168,3 +171,10 @@ def create_poll(request):
         'new_poll_hash': new_poll.hash_id
     }
     return JsonResponse(response_dict, safe=False)
+
+
+def bet_page(request):
+    print('')
+    print('bet_page')
+    context = {}
+    return render(request, 'polls/bet-page.html', context)

@@ -334,7 +334,7 @@ export default class NewPoll extends Component {
 									<div className='new-poll-second-step-card-header-icon' onClick={this.erase_all_fields}>
 										<span className="material-icons">delete</span>
 									</div>							
-									<div className='new-poll-second-step-card-header-title'>Erase all fields</div>
+									<div className='new-poll-second-step-card-header-title' onClick={this.erase_all_fields}>Erase all fields</div>
 								</div>
 								<div className='new-poll-second-step-card-container'>
 									<div className='new-poll-second-step-card-field'>

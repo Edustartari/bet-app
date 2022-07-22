@@ -8,6 +8,7 @@ import NewPoll from './pages/NewPoll';
 import SearchPolls from './pages/SearchPolls';
 import Settings from './pages/Settings';
 import Login from './pages/Login';
+import BetPage from './pages/BetPage';
 import Header from './components/Header.js'
 import {
     BrowserRouter as Router,
@@ -33,6 +34,7 @@ class App extends Component {
                         <Route path="/new-poll" element={<NewPoll />} />
                         <Route path="/search-polls" element={<SearchPolls />} />
                         <Route path="/settings" element={<Settings />} />
+                        <Route path="/bet-page" element={<BetPage />} />
                         <Route path="/:slug" element={<Poll />} />
                         <Route path="/" element={<Main />} />
                     </Routes>

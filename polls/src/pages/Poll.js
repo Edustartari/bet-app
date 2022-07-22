@@ -17,6 +17,10 @@ export default class Poll extends Component {
         return (
         <div className="poll-background">
             <div className="poll-header">
+                <div className="poll-header-icon">
+                    <span className="material-icons" onClick={() => window.open("/my-polls", '_self')}>arrow_back</span>
+                    <span className="poll-header-icon-text" onClick={() => window.open("/my-polls", '_self')}>BACK</span>
+                </div>
                 <div className="poll-header-image">
                     <img src={oscar}/>
                 </div>
@@ -26,7 +30,7 @@ export default class Poll extends Component {
                     <span> / 13 pts</span>
                 </div>
                 <div className="poll-header-button">
-                    <Button variant="contained">BETS</Button>
+                    <Button variant="contained" onClick={() => window.open('/bet-page', '_self')}>BETS</Button>
                 </div>
             </div>
             <div className="poll-table">

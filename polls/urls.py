@@ -9,5 +9,6 @@ urlpatterns = [
     path('settings', views.settings, name='settings'),
     path('search-polls', views.search_polls, name='search_polls'),
     path('create-poll', views.create_poll, name='create_poll'),
+    path('bet-page', views.bet_page, name='bet_page'),
     path('<slug:hash_id>', views.poll_view, name='poll_view'),
 ]

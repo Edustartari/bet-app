@@ -27,7 +27,7 @@ export default class MyPolls extends Component {
 									<div className="my-polls-card-left-title">{element.name}</div>
 								</div>
 								<div className="my-polls-card-right">
-									<div className="my-polls-card-right-number">{element.position}º</div>
+									<div className="my-polls-card-right-number">{element.position ? element.position + 'º' : '-'}</div>
 									<div className="my-polls-card-right-icon">
 										<span className="material-icons">chevron_right</span>
 									</div>

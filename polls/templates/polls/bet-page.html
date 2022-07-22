@@ -10,13 +10,7 @@
     
 {% block javascript %}
 <script>
-    console.log('index.html poll')
+    console.log('index.html bet-page template')
     var content = {}
-    content.poll_dict = {{poll_dict|safe}}
-    content.poll_exists = {{poll_exists|safe}}
-    console.log(content)
-    if(content.poll_exists === false){
-        window.location.href = '/'
-    }
 </script>
 {% endblock %}
