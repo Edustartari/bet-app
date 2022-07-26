@@ -1,0 +1,107 @@
+.bet-page-background {
+    padding: 15px;
+}
+.bet-page-main-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.bet-page-main-header-button {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+.bet-page-main-header-button .material-icons{
+    font-size: 23px;
+}
+.bet-page-main-header-button-details {
+    margin: 0 0 0 5px;
+    font-size: 20px;
+}
+.bet-page-main-header-poll-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+}
+.bet-page-main-header-poll-info-text {
+    width: max-content;
+}
+.bet-page-main-header-poll-info-image {
+    
+}
+.bet-page-main-header-poll-info-image img{
+    width: 60px;
+    object-fit: cover;
+    border-radius: 60px;
+    height: 60px;
+}
+.bet-page-main-container {
+    margin: 30px 0 0 0;
+}
+.bet-page-container-filter {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 15px 0;
+}
+.bet-page-container-filter-details {
+    
+}
+.bet-page-container-filter-details .material-icons{
+    
+}
+.bet-page-container-cards-list {
+    
+}
+.bet-page-container-card {
+    padding: 10px;
+    border: 1px solid #dbdbdb;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 10px 0;
+}
+.bet-page-container-card-info {
+    width: 85%;
+}
+.bet-page-container-card-info-status {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+}
+.bet-page-container-card-info-status .material-icons{
+    
+}
+.bet-page-container-card-info-title {
+    margin: 0 0 0 10px;
+    font-size: 20px;
+    width: calc(100% - 20px);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.bet-page-container-card-info-description {
+    margin: 11px 0 3px 0;
+}
+.bet-page-container-card-info-date {
+    font-size: 12px;
+}
+.bet-page-container-card-button {
+    width: 15%;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+}
+.bet-page-container-card-button .material-icons{
+    
+}
