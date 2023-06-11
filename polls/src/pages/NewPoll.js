@@ -317,17 +317,23 @@ export default class NewPoll extends Component {
 			{this.state.step === 'second' &&
 				<div className='new-poll-second-step-background'>
 					{/* Make the title and add button a fixed component */}
-					<div className='new-poll-second-step-header'>
-						<div className='new-poll-second-step-header-title'>CREATE BET</div>
-						<div className='new-poll-second-step-header-button'>
-							<Button fullWidth variant="contained" onClick={() => this.setState({create_bet_card: true})}>
-								<span className="material-icons">add</span>
-							</Button>
+					{!this.state.create_bet_card &&
+						<div className='new-poll-second-step-header'>
+							<div className='new-poll-second-step-header-title'>CREATE NEW BET</div>
+							<div className='new-poll-second-step-header-button'>
+								<Button fullWidth variant="contained" onClick={() => this.setState({create_bet_card: true})}>
+									<span className="material-icons">add</span>
+								</Button>
+							</div>
 						</div>
-					</div>
+					}
 					{/* Everytime a user clicks to add button, open a card */}
 					{this.state.create_bet_card &&
 						<React.Fragment>
+							<div className='new-poll-second-step-card-close-button' onClick={() => {this.erase_all_fields(), this.setState({create_bet_card: false})}}>
+								<div className='new-poll-second-step-card-close-button-text'>Cancel</div>
+								<span className='material-icons'>close</span>
+							</div>
 							<div className='new-poll-second-step-card'>
 								<div className='new-poll-second-step-card-title'>New Bet</div>
 								<div className='new-poll-second-step-card-header'>
@@ -433,33 +439,39 @@ export default class NewPoll extends Component {
 							</div>
 						</React.Fragment>
 					}
-					{(this.state.bets.length > 0) &&
+					{!this.state.create_bet_card &&
 						<React.Fragment>
-							<div className='new-poll-second-step-list'>
-								<div className='new-poll-second-step-list-title'>List of Bets</div>
-								{this.state.bets.map((bet) => {
-									return(
-										<div key={bet.bet_title} className='new-poll-second-step-list-card'>
-											<div className='new-poll-second-step-list-card-title'>{bet.bet_title}</div>
-											<div className='new-poll-second-step-list-card-icon' onClick={() => this.remove_bet(bet)}>
-												<span className="material-icons">delete</span>
-											</div>
-										</div>
-									)
-								})}
-							</div>
+							{(this.state.bets.length > 0) &&
+								<React.Fragment>
+									<div className='new-poll-second-step-list'>
+										<div className='new-poll-second-step-list-title'>List of Bets</div>
+										{this.state.bets.map((bet) => {
+											return(
+												<div key={bet.bet_title} className='new-poll-second-step-list-card'>
+													<div className='new-poll-second-step-list-card-title'>{bet.bet_title}</div>
+													<div className='new-poll-second-step-list-card-icon' onClick={() => this.remove_bet(bet)}>
+														<span className="material-icons">delete</span>
+													</div>
+												</div>
+											)
+										})}
+									</div>
+								</React.Fragment>
+							}
 						</React.Fragment>
 					}
-					<div className='new-poll-second-step-buttons-container'>
-						<div className='new-poll-second-step-button' onClick={() => this.setState({step: 'first'})}>
-							<Button fullWidth variant="contained">BACK</Button>
-						</div>
-						{this.state.bets.length !== 0 &&
-							<div className='new-poll-second-step-button' onClick={() => this.setState({step: 'third'})}>
-								<Button fullWidth variant="contained">NEXT</Button>
+					{!this.state.create_bet_card &&
+						<div className='new-poll-second-step-buttons-container'>
+							<div className='new-poll-second-step-button' onClick={() => this.setState({step: 'first'})}>
+								<Button fullWidth variant="contained">BACK</Button>
 							</div>
-						}
-					</div>
+							{this.state.bets.length !== 0 &&
+								<div className='new-poll-second-step-button' onClick={() => this.setState({step: 'third'})}>
+									<Button fullWidth variant="contained">NEXT</Button>
+								</div>
+							}
+						</div>
+					}
 				</div>
 			}
 			{this.state.step === 'third' &&

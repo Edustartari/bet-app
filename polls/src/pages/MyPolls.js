@@ -14,45 +14,35 @@ export default class MyPolls extends Component {
 	}
 	render() {
 		console.log(content.poll_list)
-		return (
-			<div className="my-polls-background">
-				<div className="my-polls-container">
-					{content.poll_list.map((element) => {
-						return(
-							<a key={element.hash_id} href={"/" + element.hash_id} className="my-polls-card">
-								<div className="my-polls-card-left">
-									<div className="my-polls-card-left-image">
-										<img src={f1}/>
+		if (content.poll_list.length === 0){
+			return (
+				<div className="my-polls-background-empty">No bets yet...</div>
+			)
+		} else {
+			return (
+				<div className="my-polls-background">
+					<div className="my-polls-container">
+						{content.poll_list.map((element) => {
+							return(
+								<a key={element.hash_id} href={"/" + element.hash_id} className="my-polls-card">
+									<div className="my-polls-card-left">
+										<div className="my-polls-card-left-image">
+											<img src={f1}/>
+										</div>
+										<div className="my-polls-card-left-title">{element.name}</div>
 									</div>
-									<div className="my-polls-card-left-title">{element.name}</div>
-								</div>
-								<div className="my-polls-card-right">
-									<div className="my-polls-card-right-number">{element.position ? element.position + 'º' : '-'}</div>
-									<div className="my-polls-card-right-icon">
-										<span className="material-icons">chevron_right</span>
+									<div className="my-polls-card-right">
+										<div className="my-polls-card-right-number">{element.position ? element.position + 'º' : '-'}</div>
+										<div className="my-polls-card-right-icon">
+											<span className="material-icons">chevron_right</span>
+										</div>
 									</div>
-								</div>
-							</a>
-							// <a href={"/" + element.hash_id}>
-							// 	<div key={element.hash_id} className="my-polls-card">
-							// 		<div className="my-polls-card-left">
-							// 			<div className="my-polls-card-left-image">
-							// 				<img src={f1}/>
-							// 			</div>
-							// 			<div className="my-polls-card-left-title">{element.name}</div>
-							// 		</div>
-							// 		<div className="my-polls-card-right">
-							// 			<div className="my-polls-card-right-number">{element.position}º</div>
-							// 			<div className="my-polls-card-right-icon">
-							// 				<span className="material-icons">chevron_right</span>
-							// 			</div>
-							// 		</div>
-							// 	</div>
-							// </a>
-						)
-					})}
+								</a>
+							)
+						})}
+					</div>
 				</div>
-			</div>
-		)
+			)
+		}
 	}
 }

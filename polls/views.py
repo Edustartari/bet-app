@@ -37,6 +37,7 @@ def login(request):
 def my_polls(request):
     print('')
     print('my_polls')
+    print(hash_id_generator())
     user_id = 1
 
     poll_admin_object = poll_admins.objects.filter(user_id=user_id)

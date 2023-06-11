@@ -1,5 +1,5 @@
 .new-poll-first-step-background {
-    padding: 20px;
+    padding: 72px 20px 20px;
 }
 .new-poll-first-step-container {
 
@@ -32,15 +32,20 @@
     width: 100%;
 }
 .new-poll-second-step-background {
-
+    height: calc(100vh - 50px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 52px 0px 0px;
 }
 .new-poll-second-step-header {
     padding: 20px;
-    border: 1px solid #1976d2;
+    border-bottom: 1px solid #1976d2;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.75);
 }
 .new-poll-second-step-header-title {
     font-weight: bold;
@@ -49,11 +54,12 @@
 
 }
 .new-poll-second-step-card {
-    margin: 40px 20px 0px;
-    border: 1px solid dimgray;
+    margin: 40px 20px;
+    border: 2px solid dimgray;
     border-radius: 5px;
     padding: 20px;
     position: relative;
+    box-shadow: 0px 2px 26px 20px rgba(0,0,0,0.75);
 }
 .new-poll-second-step-card-title{
     position: absolute;
@@ -150,6 +156,7 @@
 }
 .new-poll-second-step-list {
     margin: 20px;
+    flex: 1;
 }
 .new-poll-second-step-list-title{
     margin: 0 0 5px 0;
@@ -174,7 +181,7 @@
 
 }
 .new-poll-third-step-background {
-
+    padding: 52px 0px 0px;
 }
 .new-poll-third-step-photo {
 
@@ -194,4 +201,23 @@
 }
 .new-poll-third-step-button:nth-child(2){
     margin: 0 0 0 20px
+}
+.new-poll-second-step-card-close-button{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 10px;
+    border: 1px solid black;
+    background-color: #dbdbdb;
+    color: black;
+    position: sticky;
+    top: 50px;
+    z-index: 2;
+}
+.new-poll-second-step-card-close-button-text{
+    
+}
+.new-poll-second-step-card-close-button .material-icons{
+
 }
