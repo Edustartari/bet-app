@@ -25,10 +25,12 @@
     "webpack-cli": "^4.9.2"
   },
   "dependencies": {
-    "@emotion/react": "^11.7.1",
-    "@emotion/styled": "^11.6.0",
-    "@mui/material": "^5.4.2",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.13.5",
+    "@mui/x-date-pickers": "^6.8.0",
     "@reduxjs/toolkit": "^1.9.5",
+    "dayjs": "^1.11.8",
     "react-device-detect": "^2.1.2",
     "react-fast-marquee": "^1.6.0",
     "react-redux": "^8.1.0",

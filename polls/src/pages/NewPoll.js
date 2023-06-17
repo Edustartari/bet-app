@@ -20,6 +20,10 @@ import Snackbar from '@mui/material/Snackbar';
 import Divider from '@mui/material/Divider';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs, { Dayjs } from 'dayjs';
 
 function renderItem({ item, remove_answer }) {
 	return (
@@ -104,7 +108,7 @@ export default class NewPoll extends Component {
 			poll_type: false,
 			password: '',
 			finish_date_active: false,
-			finish_date: false,
+			finish_date: dayjs(new Date()),
 			bets: [],
 			bet: {
 				'bet_title': '',
@@ -273,10 +277,10 @@ export default class NewPoll extends Component {
 							<div className='new-poll-first-step-field'>
 								<TextField fullWidth id="outlined-basic" label="Name" variant="outlined" value={this.state.poll_name} onChange={(event) => this.setState({poll_name: event.target.value})}/>
 							</div>
-							<div className='new-poll-first-step-field' style={{marginBottom: '0px'}}>
+							<div className='new-poll-first-step-field' style={{marginBottom: '0px'}} onClick={() => {this.setState({poll_type: !this.state.poll_type}), this.setState({password: ''})}}>
 								<div className='new-poll-first-step-field-text'>Private Poll?</div>
 								<div className='new-poll-first-step-field-toggle'>
-									<Switch onChange={() => {this.setState({poll_type: !this.state.poll_type}), this.setState({password: ''})}}/>
+									<Switch checked={this.state.poll_type}/>
 								</div>
 							</div>
 							{this.state.poll_type &&
@@ -284,15 +288,25 @@ export default class NewPoll extends Component {
 									<TextField fullWidth id="outlined-basic" label="Password" variant="outlined" onChange={(event) => this.setState({password: event.target.value})}/>
 								</div>
 							}
-							<div className='new-poll-first-step-field' style={{marginBottom: '0px'}}>
+							<div 
+								className='new-poll-first-step-field' 
+								style={{marginBottom: '0px'}}
+								onClick={() => this.setState({finish_date_active: !this.state.finish_date_active})}
+							>
 								<div className='new-poll-first-step-field-text'>Is there a date to end poll?</div>
 								<div className='new-poll-first-step-field-toggle'>
-									<Switch onChange={() => this.setState({finish_date_active: !this.state.finish_date_active})}/>
+									<Switch checked={this.state.finish_date_active}/>
 								</div>
 							</div>
 							{this.state.finish_date_active &&
 								<div className='new-poll-first-step-password-textfield'>
-									datepicker - Date to end
+									<LocalizationProvider dateAdapter={AdapterDayjs}>
+										<DatePicker
+											label="Basic date picker"
+											value={this.state.finish_date}
+											onChange={(e) => this.setState({finish_date: dayjs(e.$d)})}
+										/>
+									</LocalizationProvider>
 								</div>
 							}
 						</div>

@@ -20,8 +20,11 @@
     color: dimgray;
 }
 .new-poll-first-step-password-textfield {
-    margin: 0px 0 25px 0;
-} 
+    margin: 10px 0 25px 0;
+}
+.new-poll-first-step-password-textfield .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+    width: 100%;
+}
 .new-poll-first-step-button-container {
     margin: 25px 0 0 0;
     position: absolute;

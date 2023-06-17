@@ -31,7 +31,7 @@ class poll(models.Model):
     updated_at = models.DateField(auto_now=True)
     is_active = models.IntegerField(default=0)
     is_private = models.IntegerField(default=0)
-    password = models.IntegerField(default=0)
+    password = models.CharField(max_length=200)
     type = models.CharField(max_length=200)
 
 class poll_admins(models.Model):
