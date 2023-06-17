@@ -107,6 +107,7 @@ def poll_view(request, hash_id):
         poll_dict['hash_id'] = poll_object.hash_id
         poll_data_json = json.loads(poll_object.poll_data)
         poll_dict['ranking'] = poll_data_json['ranking']
+        poll_dict['finish_date'] = poll_data_json['finish_date']
         poll_dict['created_at'] = poll_object.created_at.strftime('%Y/%m/%d')
         poll_dict['updated_at'] = poll_object.updated_at.strftime('%Y/%m/%d')
         poll_dict['is_active'] = poll_object.is_active
@@ -114,6 +115,35 @@ def poll_view(request, hash_id):
         poll_dict['password'] = poll_object.password
         poll_dict['type'] = poll_object.type
         poll_exists = True
+
+        bet_objects = bet.objects.filter(poll_id=poll_object.id) 
+        print(bet_objects.count())
+        bets_list = []
+        for bet_info in bet_objects:
+            bet_dict = {}
+            bet_dict['hash_id'] = bet_info.hash_id
+            bet_data = json.loads(bet_info.bet_data)
+            bet_dict['answers'] = bet_data['answer_options']
+            bet_dict['is_active'] = bet_info.is_active
+            bet_dict['created_at'] = bet_info.created_at.strftime('%-d, %b - %Y')
+            bet_dict['updated_at'] = bet_info.updated_at.strftime('%Y/%m/%d')
+            bet_dict['description'] = bet_info.bet_description
+            bet_dict['title'] = bet_info.bet_title
+            bet_dict['type'] = bet_info.bet_type
+
+            bet_dict['finish_date'] = False
+            if 'finish_date' in bet_data:
+                bet_dict['finish_date'] = bet_data['finish_date']
+
+            bet_dict['users_answers'] = []
+            if 'users_answers' in bet_data:
+                bet_dict['users_answers'] = bet_data['users_answers']
+
+            bet_dict['image'] = bet_info.image
+            bets_list.append(bet_dict)
+        
+        poll_dict['bets'] = bets_list
+
 
     context = {
         'poll_dict': json.dumps(poll_dict),
@@ -174,8 +204,12 @@ def create_poll(request):
     return JsonResponse(response_dict, safe=False)
 
 
+# def bet_page(request, hash_id):
 def bet_page(request):
     print('')
     print('bet_page')
+
+    # poll_object = poll.objects.filter(hash_id=hash_id)
+    # print(poll_object.count())
     context = {}
     return render(request, 'polls/bet-page.html', context)

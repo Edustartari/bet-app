@@ -7,22 +7,30 @@ import profile_picture_2 from '../../static/img/profile-picture-2.jpg';
 import Avatar from '@mui/material/Avatar';
 import { CardContent } from '@mui/material';
 import Marquee from "react-fast-marquee";
+import {
+    BrowserRouter as Router,
+    Link
+} from "react-router-dom";
+import { connect } from "react-redux";
+import { update } from "../redux_folder/global_reducer.js";
 
-export default class BetPage extends Component {    
+class BetPage extends Component {    
 
     render() {
         return (
             <div className="bet-page-background">
                 <div className="bet-page-main-header">
-                    <div className="bet-page-main-header-button">
-                        <span className="material-icons" onClick={() => window.open("/my-polls", '_self')}>arrow_back</span>
-                        <span className="bet-page-main-header-button-details" onClick={() => window.open("/my-polls", '_self')}>BACK</span>
-                    </div>
+                    <Link to={"/" + this.props.poll_dict.hash_id}>
+                        <div className="bet-page-main-header-button">
+                            <span className="material-icons">arrow_back</span>
+                            <span className="bet-page-main-header-button-details">BACK</span>
+                        </div>
+                    </Link>
                     <div className="bet-page-main-header-poll-info">
                         <div className="bet-page-main-header-poll-info-image">
                             <img src={oscar}/>
                         </div>
-                        <div className="bet-page-main-header-poll-info-text">Poll name here</div>
+                        <div className="bet-page-main-header-poll-info-text">{this.props.poll_dict.name}</div>
                     </div>
                 </div>
                 <div className="bet-page-main-container">
@@ -31,6 +39,24 @@ export default class BetPage extends Component {
                         <span className="material-icons">filter_alt</span>
                     </div>
                     <div className="bet-page-container-cards-list">
+                        {this.props.poll_dict.bets.map((bet, index) => {
+                            return (
+                                <div key={bet.hash_id} className="bet-page-container-card">
+                                    <div className="bet-page-container-card-info">
+                                        <div className="bet-page-container-card-info-status">
+                                            <span className="material-icons">done</span>
+                                            <div className="bet-page-container-card-info-title">{bet.title}</div>
+                                        </div>
+                                        <div className="bet-page-container-card-info-description"><Marquee gradient={false}>{bet.description}</Marquee></div>
+                                        <div className="bet-page-container-card-info-date">{bet.created_at}</div>
+                                    </div>
+                                    <div className="bet-page-container-card-button">
+                                        <span className="material-icons">keyboard_arrow_right</span>
+                                    </div>
+                                </div>
+                            )
+                        })
+                        }
                         <div className="bet-page-container-card">
                             <div className="bet-page-container-card-info">
                                 <div className="bet-page-container-card-info-status">
@@ -89,3 +115,11 @@ export default class BetPage extends Component {
         )
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        poll_dict: state.poll_dict
+    };
+}
+
+export default connect(mapStateToProps, { update })(BetPage);

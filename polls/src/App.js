@@ -16,6 +16,9 @@ import {
     Route
 } from "react-router-dom";
 
+import { Provider } from "react-redux";
+import { store } from './redux_folder/global_reducer.js';
+
 class App extends Component {
     constructor(props){
         super(props)
@@ -47,5 +50,10 @@ class App extends Component {
 export default App;
 
 if(isMobile){
-    render(<App/>, document.getElementById("app"));
+    render(
+        <Provider store={store}>
+            <App/>
+        </Provider>
+        , document.getElementById("app")
+    );
 }

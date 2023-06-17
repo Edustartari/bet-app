@@ -7,6 +7,10 @@
     justify-content: space-between;
     align-items: flex-start;
 }
+.bet-page-main-header a {
+    text-decoration: none;
+    color: black;
+}
 .bet-page-main-header-button {
     width: 100%;
     display: flex;
