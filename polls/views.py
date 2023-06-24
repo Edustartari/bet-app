@@ -63,7 +63,7 @@ def my_polls(request):
         poll_dict['is_active'] = element.is_active
         poll_dict['is_private'] = element.is_private
         poll_dict['password'] = element.password
-        poll_dict['type'] = element.type
+        poll_dict['type'] = element.poll_type
         poll_list.append(poll_dict)
 
     context = {
@@ -113,7 +113,7 @@ def poll_view(request, hash_id):
         poll_dict['is_active'] = poll_object.is_active
         poll_dict['is_private'] = poll_object.is_private
         poll_dict['password'] = poll_object.password
-        poll_dict['type'] = poll_object.type
+        poll_dict['type'] = poll_object.poll_type
         poll_exists = True
 
         bet_objects = bet.objects.filter(poll_id=poll_object.id) 
@@ -164,19 +164,28 @@ def create_poll(request):
     print(poll_info)
     print(type(poll_info))
 
+    finish_date = None
+    if poll_info['finish_date']:
+        finish_date = datetime.strptime(poll_info['finish_date'], '%Y-%m-%dT%H:%M:%S.%fZ') # 2023-06-23T22:35:12.226Z
+
     users_objects = user.objects.all()
 
     new_poll = poll(
         name = poll_info['poll_name'],
         hash_id = hash_id_generator(),
         is_active = 1,
-        type = poll_info['poll_type'],
+        poll_type = poll_info['poll_type'],
+        is_private = 1 if poll_info['is_private'] else 0,
         password = poll_info['password'] if len(poll_info['password']) > 0 else 0,
-        poll_data = json.dumps({'finish_date': poll_info['finish_date'], 'ranking': []})
+        poll_data = json.dumps({'finish_date': poll_info['finish_date'], 'ranking': []}),
+        finish_date = finish_date
     )
     new_poll.save()
 
     for bet_dict in poll_info['bets']:
+        finish_date = None
+        if bet_dict['finish_date']:
+            finish_date = datetime.strptime(bet_dict['finish_date'], '%Y-%m-%dT%H:%M:%S.%fZ')
         new_bet = bet(
             bet_title = bet_dict['bet_title'],
             hash_id = hash_id_generator(),
@@ -185,7 +194,8 @@ def create_poll(request):
             bet_type = bet_dict['bet_type'],
             poll_id = new_poll.id,
             answer = bet_dict['correct_answer'],
-            is_active = 1
+            is_active = 1,
+            finish_date = finish_date
         )
         new_bet.save()
 

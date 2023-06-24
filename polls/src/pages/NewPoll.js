@@ -24,6 +24,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs, { Dayjs } from 'dayjs';
+import empty_list from '../../static/img/empty_list.jpg'
 
 function renderItem({ item, remove_answer }) {
 	return (
@@ -106,6 +107,7 @@ export default class NewPoll extends Component {
 			step: 'first', // can be first, second, third...
 			poll_name: '',
 			poll_type: false,
+			is_private: false,
 			password: '',
 			finish_date_active: false,
 			finish_date: dayjs(new Date()),
@@ -115,7 +117,7 @@ export default class NewPoll extends Component {
 				'bet_description': '',
 				'bet_data': {
 					'answer_options': [],
-					'finish_date': '',
+					'finish_date': false,
 					'users_answers': []
 				},
 				'image': '',
@@ -124,7 +126,7 @@ export default class NewPoll extends Component {
 			},
 			create_bet_card: false,
 			correct_answer: '',
-			correct_answer_switch: true,
+			correct_answer_switch: false,
 			correct_answer_confirmed: false,
 			answer_options: [],
 			snackbar_open: false,
@@ -240,8 +242,9 @@ export default class NewPoll extends Component {
 		let data_dict = {}
 		data_dict['poll_name'] = this.state.poll_name
 		data_dict['poll_type'] = this.state.poll_type
+		data_dict['is_private'] = this.state.is_private
 		data_dict['password'] = this.state.password
-		data_dict['finish_date'] = this.state.finish_date
+		data_dict['finish_date'] = this.state.finish_date_active ? this.state.finish_date : false
 		data_dict['bets'] = this.state.bets
 
 		$.ajax({
@@ -277,13 +280,13 @@ export default class NewPoll extends Component {
 							<div className='new-poll-first-step-field'>
 								<TextField fullWidth id="outlined-basic" label="Name" variant="outlined" value={this.state.poll_name} onChange={(event) => this.setState({poll_name: event.target.value})}/>
 							</div>
-							<div className='new-poll-first-step-field' style={{marginBottom: '0px'}} onClick={() => {this.setState({poll_type: !this.state.poll_type}), this.setState({password: ''})}}>
+							<div className='new-poll-first-step-field' style={{marginBottom: '0px'}} onClick={() => {this.setState({is_private: !this.state.is_private}), this.setState({password: ''})}}>
 								<div className='new-poll-first-step-field-text'>Private Poll?</div>
 								<div className='new-poll-first-step-field-toggle'>
-									<Switch checked={this.state.poll_type}/>
+									<Switch checked={this.state.is_private}/>
 								</div>
 							</div>
-							{this.state.poll_type &&
+							{this.state.is_private &&
 								<div className='new-poll-first-step-password-textfield'>
 									<TextField fullWidth id="outlined-basic" label="Password" variant="outlined" onChange={(event) => this.setState({password: event.target.value})}/>
 								</div>
@@ -318,7 +321,9 @@ export default class NewPoll extends Component {
 									fullWidth 
 									variant="contained"
 									onClick={
-										() => this.state.poll_name.length === 0 ? this.open_snackbar('You must give a name for your poll') : this.setState({step: 'second'})
+										() => this.state.poll_name.length === 0 ? this.open_snackbar('You must give a name for your poll') : 
+										(this.state.is_private && this.state.password.length === 0) ? this.open_snackbar('Your private pool needs a password') : 
+										this.setState({step: 'second'})
 									}
 								>
 									NEXT
@@ -339,6 +344,14 @@ export default class NewPoll extends Component {
 									<span className="material-icons">add</span>
 								</Button>
 							</div>
+						</div>
+					}
+					{/* If there's no bet yet, display a message */}
+					{(this.state.bets.length === 0 && !this.state.create_bet_card) &&
+						<div className='new-poll-empty-bets-background'>
+							<div className='new-poll-empty-bets-title'>Your poll has no bets yet.</div>
+							<div className='new-poll-empty-bets-subtitle'>Create your first bet</div>
+							<img className='new-poll-empty-bets-image' src={empty_list}/>
 						</div>
 					}
 					{/* Everytime a user clicks to add button, open a card */}
@@ -394,14 +407,14 @@ export default class NewPoll extends Component {
 											</Select>
 										</FormControl>	
 									</div>
-									<div className='new-poll-second-step-card-field'>datepicker - Date to make bet</div>{/* date limit to participantes give an answer */}
+									<div className='new-poll-second-step-card-field'>datepicker - Date limit to make bet</div>{/* date limit to participantes give an answer */}
 									<div className='new-poll-second-step-card-field'>
 										<div className='new-poll-second-step-card-toggle-container'>
 											<div className='new-poll-second-step-card-toggle-title'>Is there a answer already?</div>
 											<div className='new-poll-second-step-card-toggle-button'>
 												<Switch 
 													disabled={this.state.correct_answer_confirmed ? true : false} 
-													defaultChecked 
+													checked={this.state.correct_answer_switch}
 													onChange={() => {this.setState({correct_answer_switch: !this.state.correct_answer_switch})}}
 												/>
 											</div>

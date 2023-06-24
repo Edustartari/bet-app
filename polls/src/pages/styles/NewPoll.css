@@ -224,3 +224,21 @@
 .new-poll-second-step-card-close-button .material-icons{
 
 }
+.new-poll-empty-bets-background {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+.new-poll-empty-bets-title {
+    font-size: 17px;
+    font-weight: 800;
+}
+.new-poll-empty-bets-subtitle {
+    font-size: 13px;
+    margin: 15px 0;
+}
+.new-poll-empty-bets-image {
+    width: 80px;
+}

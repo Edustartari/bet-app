@@ -21,6 +21,7 @@ class bet(models.Model):
     poll_id = models.IntegerField(default=0)
     answer = models.CharField(max_length=200, default='')
     is_active = models.IntegerField(default=0)
+    finish_date = models.DateField(auto_now=False)
 
 class poll(models.Model):
     name = models.CharField(max_length=200)
@@ -32,7 +33,8 @@ class poll(models.Model):
     is_active = models.IntegerField(default=0)
     is_private = models.IntegerField(default=0)
     password = models.CharField(max_length=200)
-    type = models.CharField(max_length=200)
+    poll_type = models.CharField(max_length=200)
+    finish_date = models.DateField(auto_now=False)
 
 class poll_admins(models.Model):
     poll_id = models.IntegerField(default=0)

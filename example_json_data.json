@@ -1,0 +1,64 @@
+"bet_table_bet_data": {
+    "answer_options": [
+        {
+            "id": 1,
+            "answer": "Foga\u00e7a"
+        },
+        {
+            "id": 2,
+            "answer": "Milho"
+        },
+        {
+            "id": 3,
+            "answer": "Pastel"
+        },
+        {
+            "id": 4,
+            "answer": "Bolinho de bacalhau"
+        }
+    ],
+    "users_answers": [
+        {
+            "user_id": 1,
+            "answer": [1]
+        },
+        {
+            "user_id": 2,
+            "answer": [1]
+        },
+        {
+            "user_id": 3,
+            "answer": [4]
+        },
+        {
+            "user_id": 4,
+            "answer": [3]
+        }
+    ]
+}
+
+"poll_table_poll_data": {
+    "finish_date": false,
+    "ranking": [
+        {
+            "user_id": 1,
+            "points": 4,
+            "position": 1
+        },
+        {
+            "user_id": 2,
+            "points": 3,
+            "position": 2
+        },
+        {
+            "user_id": 3,
+            "points": 2,
+            "position": 3
+        },
+        {
+            "user_id": 4,
+            "points": 1,
+            "position": 4
+        }
+    ]
+}
