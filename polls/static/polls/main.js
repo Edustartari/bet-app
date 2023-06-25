@@ -4558,61 +4558,6 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 /***/ }),
 
-/***/ "./static/img/poll_images/1e10452e139211eeac255cf938973e78.jpg":
-/*!*********************************************************************!*\
-  !*** ./static/img/poll_images/1e10452e139211eeac255cf938973e78.jpg ***!
-  \*********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + \"bb53b411959d45c563099bf54ea392e4.jpg\");\n\n//# sourceURL=webpack://polls/./static/img/poll_images/1e10452e139211eeac255cf938973e78.jpg?");
-
-/***/ }),
-
-/***/ "./static/img/poll_images/7b159e1e138c11ee95275cf938973e78.jpg":
-/*!*********************************************************************!*\
-  !*** ./static/img/poll_images/7b159e1e138c11ee95275cf938973e78.jpg ***!
-  \*********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + \"481b07a10deb7ade6007f138f3b1debe.jpg\");\n\n//# sourceURL=webpack://polls/./static/img/poll_images/7b159e1e138c11ee95275cf938973e78.jpg?");
-
-/***/ }),
-
-/***/ "./static/img/poll_images/9dcd4962139011ee91b55cf938973e78.jpg":
-/*!*********************************************************************!*\
-  !*** ./static/img/poll_images/9dcd4962139011ee91b55cf938973e78.jpg ***!
-  \*********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + \"dc517ca44a0b6d8de5610e8c23a9cc2c.jpg\");\n\n//# sourceURL=webpack://polls/./static/img/poll_images/9dcd4962139011ee91b55cf938973e78.jpg?");
-
-/***/ }),
-
-/***/ "./static/img/poll_images/bda216fe139111eea44d5cf938973e78.jpg":
-/*!*********************************************************************!*\
-  !*** ./static/img/poll_images/bda216fe139111eea44d5cf938973e78.jpg ***!
-  \*********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + \"5ef8949263b3bae4577808deccebc560.jpg\");\n\n//# sourceURL=webpack://polls/./static/img/poll_images/bda216fe139111eea44d5cf938973e78.jpg?");
-
-/***/ }),
-
-/***/ "./static/img/poll_images/f96e8408138f11ee8ab95cf938973e78.jpg":
-/*!*********************************************************************!*\
-  !*** ./static/img/poll_images/f96e8408138f11ee8ab95cf938973e78.jpg ***!
-  \*********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__webpack_require__.p + \"9621974dec5a47c7500ae5e96fe7b3d9.jpg\");\n\n//# sourceURL=webpack://polls/./static/img/poll_images/f96e8408138f11ee8ab95cf938973e78.jpg?");
-
-/***/ }),
-
 /***/ "./static/img/profile-picture-1.jpg":
 /*!******************************************!*\
   !*** ./static/img/profile-picture-1.jpg ***!
@@ -5592,9 +5537,9 @@ eval("\n\nif (false) {} else {\n  module.exports = __webpack_require__(/*! ../cj
 /*!****************************************************!*\
   !*** ./static/img/poll_images/ sync ^\.\/.*\.jpg$ ***!
   \****************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+/***/ ((module) => {
 
-eval("var map = {\n\t\"./1e10452e139211eeac255cf938973e78.jpg\": \"./static/img/poll_images/1e10452e139211eeac255cf938973e78.jpg\",\n\t\"./7b159e1e138c11ee95275cf938973e78.jpg\": \"./static/img/poll_images/7b159e1e138c11ee95275cf938973e78.jpg\",\n\t\"./9dcd4962139011ee91b55cf938973e78.jpg\": \"./static/img/poll_images/9dcd4962139011ee91b55cf938973e78.jpg\",\n\t\"./bda216fe139111eea44d5cf938973e78.jpg\": \"./static/img/poll_images/bda216fe139111eea44d5cf938973e78.jpg\",\n\t\"./f96e8408138f11ee8ab95cf938973e78.jpg\": \"./static/img/poll_images/f96e8408138f11ee8ab95cf938973e78.jpg\"\n};\n\n\nfunction webpackContext(req) {\n\tvar id = webpackContextResolve(req);\n\treturn __webpack_require__(id);\n}\nfunction webpackContextResolve(req) {\n\tif(!__webpack_require__.o(map, req)) {\n\t\tvar e = new Error(\"Cannot find module '\" + req + \"'\");\n\t\te.code = 'MODULE_NOT_FOUND';\n\t\tthrow e;\n\t}\n\treturn map[req];\n}\nwebpackContext.keys = function webpackContextKeys() {\n\treturn Object.keys(map);\n};\nwebpackContext.resolve = webpackContextResolve;\nmodule.exports = webpackContext;\nwebpackContext.id = \"./static/img/poll_images sync recursive ^\\\\.\\\\/.*\\\\.jpg$\";\n\n//# sourceURL=webpack://polls/./static/img/poll_images/_sync_^\\.\\/.*\\.jpg$?");
+eval("function webpackEmptyContext(req) {\n\tvar e = new Error(\"Cannot find module '\" + req + \"'\");\n\te.code = 'MODULE_NOT_FOUND';\n\tthrow e;\n}\nwebpackEmptyContext.keys = () => ([]);\nwebpackEmptyContext.resolve = webpackEmptyContext;\nwebpackEmptyContext.id = \"./static/img/poll_images sync recursive ^\\\\.\\\\/.*\\\\.jpg$\";\nmodule.exports = webpackEmptyContext;\n\n//# sourceURL=webpack://polls/./static/img/poll_images/_sync_^\\.\\/.*\\.jpg$?");
 
 /***/ }),
 
