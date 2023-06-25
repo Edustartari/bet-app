@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './styles/NewPoll.css';
 
-// components suggestions
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
@@ -23,8 +22,72 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+
 import dayjs, { Dayjs } from 'dayjs';
-import empty_list from '../../static/img/empty_list.jpg'
+import empty_list from '../../static/img/empty_list.jpg';
+import default_poll_image from '../../static/img/default_poll_image.png';
+import ImageUploading from "react-images-uploading";
+
+function UploadImageComponent(props) {
+	const [images, setImages] = React.useState(props.image);
+	const maxNumber = 69;
+	const onChange = (imageList, addUpdateIndex) => {
+		// data for submit
+		console.log(imageList, addUpdateIndex);
+		setImages(imageList);
+		props.handle_change('image', imageList)
+	};
+
+	return (
+		<div className="upload-image-container">
+			<ImageUploading
+				multiple
+				value={images}
+				onChange={onChange}
+				maxNumber={maxNumber}
+				dataURLKey="data_url"
+				acceptType={["jpg", "png"]}
+			>
+			{({
+				imageList,
+				onImageUpload,
+				onImageRemoveAll,
+				onImageUpdate,
+				onImageRemove,
+				isDragging,
+				dragProps
+			}) => (
+				<div className="upload__image-wrapper upload-image-container-card">
+					{imageList.length === 0 &&
+						<div
+							style={isDragging ? { color: "red" } : null}
+							onClick={onImageUpload}
+							{...dragProps}
+							className="upload-image-empty"
+						>
+							<img src={default_poll_image} alt="" width="100" />
+							<div className="upload-image-empty-text">Click here to upload your image...</div>
+						</div>
+					}
+					{imageList.length > 0 &&
+						<React.Fragment>
+							{imageList.slice(0,1).map((image, index) => (
+								<div key={index} className="image-item upload-image-object">
+									<img src={image.data_url} alt="" width="100" />
+									<div className="image-item__btn-wrapper upload-image-object-button">
+										<div className="upload-image-object-button-details" onClick={() => onImageUpdate(index)}>Update</div>
+										<div className="upload-image-object-button-details" onClick={onImageRemoveAll}>Remove</div>
+									</div>
+								</div>
+							))}
+						</React.Fragment>
+					}
+				</div>
+			)}
+			</ImageUploading>
+		</div>
+	);
+}
 
 function renderItem({ item, remove_answer }) {
 	return (
@@ -109,6 +172,7 @@ export default class NewPoll extends Component {
 			poll_type: false,
 			is_private: false,
 			password: '',
+			image: [],
 			finish_date_active: false,
 			finish_date: dayjs(new Date()),
 			bets: [],
@@ -140,6 +204,11 @@ export default class NewPoll extends Component {
 		this.open_snackbar = this.open_snackbar.bind(this);
 		this.remove_bet = this.remove_bet.bind(this);
 		this.create_poll = this.create_poll.bind(this);
+		this.handle_change = this.handle_change.bind(this);
+	}
+
+	handle_change(key, value){
+		this.setState({[key]: value})
 	}
 
 	edit_bet(key, value){
@@ -243,6 +312,7 @@ export default class NewPoll extends Component {
 		data_dict['poll_name'] = this.state.poll_name
 		data_dict['poll_type'] = this.state.poll_type
 		data_dict['is_private'] = this.state.is_private
+		data_dict['image'] = this.state.image
 		data_dict['password'] = this.state.password
 		data_dict['finish_date'] = this.state.finish_date_active ? this.state.finish_date : false
 		data_dict['bets'] = this.state.bets
@@ -504,16 +574,17 @@ export default class NewPoll extends Component {
 			{this.state.step === 'third' &&
 				<div className='new-poll-third-step-background'>
 					<div className='new-poll-third-step-photo'>
-						<div>Poll photo</div>
-						<div>react avatar editor</div>
+						<div className='new-poll-third-step-photo-title'>Last step...</div>
+						<div className='new-poll-third-step-photo-subtitle'>Upload an image for your poll (OPTIONAL)</div>
+						<UploadImageComponent handle_change={this.handle_change} {...this.state}/>
 					</div>
 					<div className='new-poll-third-step-buttons-container'>
 						<div className='new-poll-third-step-button' onClick={() => this.setState({step: 'second'})}>
 							<Button fullWidth variant="contained">BACK</Button>
 						</div>
 						{this.state.bets.length !== 0 &&
-							<div className='new-poll-third-step-button' onClick={() => this.setState({step: 'finish'})}>
-								<Button fullWidth variant="contained" onClick={this.create_poll}>CONFIRM</Button>
+							<div className='new-poll-third-step-button new-poll-third-step-button-confirm' onClick={() => this.setState({step: 'finish'})}>
+								<Button fullWidth variant="contained" onClick={this.create_poll}>SAVE POLL</Button>
 							</div>
 						}
 					</div>

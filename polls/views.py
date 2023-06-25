@@ -4,6 +4,7 @@ from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from polls.models import *
 import uuid
+from datetime import datetime
 
 # Create your procedures here.
 def hash_id_generator():
@@ -184,7 +185,7 @@ def create_poll(request):
 
     for bet_dict in poll_info['bets']:
         finish_date = None
-        if bet_dict['finish_date']:
+        if 'finish_date' in bet_dict and bet_dict['finish_date']:
             finish_date = datetime.strptime(bet_dict['finish_date'], '%Y-%m-%dT%H:%M:%S.%fZ')
         new_bet = bet(
             bet_title = bet_dict['bet_title'],

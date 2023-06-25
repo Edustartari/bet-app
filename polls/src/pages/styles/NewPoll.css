@@ -185,9 +185,16 @@
 }
 .new-poll-third-step-background {
     padding: 52px 0px 0px;
+    height: calc(100vh - 50px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .new-poll-third-step-photo {
-
+    margin: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 .new-poll-third-step-buttons-container {
     display: flex;
@@ -204,6 +211,9 @@
 }
 .new-poll-third-step-button:nth-child(2){
     margin: 0 0 0 20px
+}
+.new-poll-third-step-button-confirm .css-1fu7jd5-MuiButtonBase-root-MuiButton-root{
+    background-color: #b5173b;
 }
 .new-poll-second-step-card-close-button{
     display: flex;
@@ -241,4 +251,74 @@
 }
 .new-poll-empty-bets-image {
     width: 80px;
+}
+.new-poll-third-step-photo-title {
+    font-weight: 800;
+    font-size: 20px;
+}
+.new-poll-third-step-photo-subtitle {
+    margin: 5px 0 0 0;
+    color: #5c5c5c;
+}
+.upload-image-container {
+    flex: 1;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.upload-image-container-card {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.upload-image-empty {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border: 5px dashed #dbdbdb;
+}
+.upload-image-empty-text {
+    font-size: 14px;
+    margin: 15px 0 0 0;
+    color: #ababab;
+}
+.upload-image-object {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.upload-image-object img{
+    width: 100%;
+    height: 100%;
+    max-height: 300px;
+    object-fit: cover;
+}
+.upload-image-object-button {
+    margin: 20px 0 0 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.upload-image-object-button-details {
+    background-color: #dbdbdb;
+    padding: 10px 20px;
+    width: 100%;
+    text-align: center;
+    color: #5c5c5c;
+    box-shadow: 2px 2px 4px 0px #000000;
+}
+.upload-image-object-button-details:nth-child(1){
+    margin-right: 20px;
 }
