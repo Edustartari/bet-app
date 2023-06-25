@@ -12,6 +12,7 @@ import {
 } from "react-router-dom";
 import { connect } from "react-redux";
 import { update } from "../redux_folder/global_reducer.js";
+import default_poll_image from '../../static/img/default_poll_image.png';
 
 /* IF USER IS ADMIN, INCLUDE AT HEADER THE THREE DOTS OPTION SO HE CAN EDIT THE POLL BY CHANGING NAME OR ADDING MORE BETS */
 /* for all other users, create option at three dots on header to display group info, such as name, admins, number of participants, and also options(get of from group - and in case admin, delete group, specific users or alter password) */
@@ -42,7 +43,13 @@ class Poll extends Component {
                 <div>Loading...</div>
             )
         } else {
-            console.log('else')
+            let poll_image = "";
+            try {
+                poll_image = require('../../static/img/poll_images/' + this.props.poll_dict.image + '.jpg');
+                poll_image = poll_image.default;
+            } catch (error) {
+                poll_image = default_poll_image;
+            }
             return (
                 <div className="poll-background">
                     <div className="poll-header">
@@ -51,7 +58,7 @@ class Poll extends Component {
                             <span className="poll-header-icon-text" onClick={() => window.open("/my-polls", '_self')}>BACK</span>
                         </div>
                         <div className="poll-header-image">
-                            <img src={oscar}/>
+                            <img src={poll_image}/>
                         </div>
                         <div className="poll-header-title">{this.props.poll_dict.name}</div>
                         <div className="poll-header-info">

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import './styles/BetPage.css'
 import Button from '@mui/material/Button';
-import oscar from '../../static/img/oscar.jpg';
 import profile_picture_1 from '../../static/img/profile-picture-1.jpg';
 import profile_picture_2 from '../../static/img/profile-picture-2.jpg';
 import Avatar from '@mui/material/Avatar';
@@ -13,10 +12,20 @@ import {
 } from "react-router-dom";
 import { connect } from "react-redux";
 import { update } from "../redux_folder/global_reducer.js";
+import default_poll_image from '../../static/img/default_poll_image.png';
 
 class BetPage extends Component {    
 
     render() {
+
+        let poll_image = "";
+        try {
+            poll_image = require('../../static/img/poll_images/' + this.props.poll_dict.image + '.jpg');
+            poll_image = poll_image.default;
+        } catch (error) {
+            poll_image = default_poll_image;
+        }
+
         return (
             <div className="bet-page-background">
                 <div className="bet-page-main-header">
@@ -28,7 +37,7 @@ class BetPage extends Component {
                     </Link>
                     <div className="bet-page-main-header-poll-info">
                         <div className="bet-page-main-header-poll-info-image">
-                            <img src={oscar}/>
+                            <img src={poll_image}/>
                         </div>
                         <div className="bet-page-main-header-poll-info-text">{this.props.poll_dict.name}</div>
                     </div>

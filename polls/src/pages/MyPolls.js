@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import './styles/MyPolls.css';
 import new_baby from '../../static/img/new-baby.jpg'
-import f1 from '../../static/img/f1.jpg'
-import oscar from '../../static/img/oscar.jpg'
-import recipe from '../../static/img/recipe.jpg'
+import default_poll_image from '../../static/img/default_poll_image.png';
 
 /* INCLUDE OPTIONS AT HEADER: 3 DOTS AT RIGHT TO DISPLAY: ACTIVE POLLS, ALL, FINISHED POLLS */
 
@@ -23,11 +21,20 @@ export default class MyPolls extends Component {
 				<div className="my-polls-background">
 					<div className="my-polls-container">
 						{content.poll_list.map((element) => {
+
+							let poll_image = "";
+							try {
+								poll_image = require('../../static/img/poll_images/' + element.image + '.jpg');
+								poll_image = poll_image.default;
+							} catch (error) {
+								poll_image = default_poll_image;
+							}
+
 							return(
 								<a key={element.hash_id} href={"/" + element.hash_id} className="my-polls-card">
 									<div className="my-polls-card-left">
 										<div className="my-polls-card-left-image">
-											<img src={f1}/>
+											<img src={poll_image}/>
 										</div>
 										<div className="my-polls-card-left-title">{element.name}</div>
 									</div>

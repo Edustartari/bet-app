@@ -5,6 +5,8 @@ from django.views.decorators.csrf import csrf_exempt
 from polls.models import *
 import uuid
 from datetime import datetime
+import base64
+import os
 
 # Create your procedures here.
 def hash_id_generator():
@@ -104,7 +106,7 @@ def poll_view(request, hash_id):
         poll_object = poll_object[0]
         print('if')
         poll_dict['name'] = poll_object.name
-        poll_dict['image'] = poll_object.image
+        poll_dict['image'] = poll_object.image        
         poll_dict['hash_id'] = poll_object.hash_id
         poll_data_json = json.loads(poll_object.poll_data)
         poll_dict['ranking'] = poll_data_json['ranking']
@@ -159,11 +161,22 @@ def create_poll(request):
     print('')
     print('create_poll')
     poll_info = request.POST['poll_info']
-    print(poll_info)
+    # print(poll_info)
     print(type(poll_info))
     poll_info = json.loads(poll_info)
     print(poll_info)
     print(type(poll_info))
+
+    # Get current path
+    current_path = os.path.dirname(os.path.realpath(__file__))
+
+    image_base64 = poll_info['image'][0]['data_url'].replace('data:image/png;base64,', '')
+    image_base64 = image_base64.replace('data:image/jpeg;base64,', '')
+   
+    poll_hash_id = hash_id_generator()
+
+    with open(current_path + "/static/img/poll_images/" + poll_hash_id + ".jpg", "wb") as fh:
+        fh.write(base64.b64decode(image_base64))
 
     finish_date = None
     if poll_info['finish_date']:
@@ -173,8 +186,9 @@ def create_poll(request):
 
     new_poll = poll(
         name = poll_info['poll_name'],
-        hash_id = hash_id_generator(),
+        hash_id = poll_hash_id,
         is_active = 1,
+        image = poll_hash_id,
         poll_type = poll_info['poll_type'],
         is_private = 1 if poll_info['is_private'] else 0,
         password = poll_info['password'] if len(poll_info['password']) > 0 else 0,
