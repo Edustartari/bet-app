@@ -24,7 +24,7 @@ export default class MyPolls extends Component {
 
 							let poll_image = "";
 							try {
-								poll_image = require('../../static/img/poll_images/' + element.image + '.jpg');
+								poll_image = require('../../static/img/' + element.image + '.jpg');
 								poll_image = poll_image.default;
 							} catch (error) {
 								poll_image = default_poll_image;

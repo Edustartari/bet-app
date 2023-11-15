@@ -175,7 +175,7 @@ def create_poll(request):
    
     poll_hash_id = hash_id_generator()
 
-    with open(current_path + "/static/img/poll_images/" + poll_hash_id + ".jpg", "wb") as fh:
+    with open(current_path + "/static/img/" + poll_hash_id + ".jpg", "wb") as fh:
         fh.write(base64.b64decode(image_base64))
 
     finish_date = None

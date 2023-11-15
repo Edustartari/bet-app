@@ -20,7 +20,7 @@ class BetPage extends Component {
 
         let poll_image = "";
         try {
-            poll_image = require('../../static/img/poll_images/' + this.props.poll_dict.image + '.jpg');
+            poll_image = require('../../static/img/' + this.props.poll_dict.image + '.jpg');
             poll_image = poll_image.default;
         } catch (error) {
             poll_image = default_poll_image;

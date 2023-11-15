@@ -89,18 +89,23 @@ function UploadImageComponent(props) {
 	);
 }
 
-function renderItem({ item, remove_answer }) {
+function renderItem({ item, remove_answer, correct_answer }) {
+	console.log('')
+	console.log('item: ', item)
+	console.log('correct_answer: ', correct_answer)
 	return (
 	<ListItem
 		secondaryAction={
-		<IconButton
-			edge="end"
-			aria-label="delete"
-			title="Delete"
-			onClick={() => remove_answer(item)}
-		>
-			<span className="material-icons">delete</span>
-		</IconButton>
+			correct_answer === item ? 
+			'correct answer' :
+			<IconButton
+				edge="end"
+				aria-label="delete"
+				title="Delete"
+				onClick={() => remove_answer(item)}
+			>
+				<span className="material-icons">delete</span>
+			</IconButton>
 		}
 	>
 		<ListItemText primary={item} />
@@ -109,7 +114,6 @@ function renderItem({ item, remove_answer }) {
 }
   
 function AnswerOptions(props) {
-	// const [answer_options, setAnswerList] = React.useState(props.answer_options);
 	const [answer, setAnswer] = React.useState('');
 
 	const add_answer = () => {
@@ -142,6 +146,8 @@ function AnswerOptions(props) {
 		</Button>
 	);
 
+	let correct_answer = props.bet.correct_answer
+
 	return (
 		<div>
 			<TextField fullWidth id="outlined-basic" label="Answer Option" variant="outlined" value={answer} onChange={(event) => setAnswer(event.target.value)}/>
@@ -152,7 +158,7 @@ function AnswerOptions(props) {
 						<TransitionGroup>
 							{props.answer_options.map((item) => (
 								<Collapse key={item}>
-								{renderItem({ item, remove_answer })}
+									{renderItem({ item, remove_answer, correct_answer })}
 								</Collapse>
 							))}
 						</TransitionGroup>
@@ -185,18 +191,20 @@ export default class NewPoll extends Component {
 					'users_answers': []
 				},
 				'image': '',
-				'bet_type': '', /* select field - bet type could be radio (one answer), several checks (several answers) or free text */
-				'correct_answer': ''
+				'bet_type': '', /* select field - bet type could be radio (one answer), several checks (several answers) */
+				'correct_answer': '',
+				'correct_answer_confirmed': false,
+				'bet_hash': false
 			},
 			create_bet_card: false,
-			correct_answer: '',
 			correct_answer_switch: false,
 			correct_answer_confirmed: false,
-			answer_options: [],
 			snackbar_open: false,
 			snackbar_message: '',
 			backdrop: false,
 		}
+		this.set_bet = this.set_bet.bind(this);
+		this.update_bet = this.update_bet.bind(this);
 		this.edit_bet = this.edit_bet.bind(this);
 		this.save_answer = this.save_answer.bind(this);
 		this.erase_all_fields = this.erase_all_fields.bind(this);
@@ -227,6 +235,18 @@ export default class NewPoll extends Component {
 			console.log(this.state.bet)
 		}
 		this.setState({bet: temporary_dict})
+		console.log('edit_bet finish')
+	}
+
+	set_bet(bet){
+		console.log('')
+		console.log('set_bet')
+		console.log(bet)
+		this.setState({create_bet_card: true})
+		this.setState({bet: bet})
+		if(bet.correct_answer.length > 0 && bet.correct_answer_confirmed){
+			this.setState({correct_answer_confirmed: true})
+		}
 	}
 
 	save_answer(answer, action){
@@ -236,13 +256,11 @@ export default class NewPoll extends Component {
 		let temporary_list;
 		if(action === 'add'){
 			console.log('if')
-			temporary_list = [...this.state.answer_options, answer]
+			temporary_list = [...this.state.bet.bet_data.answer_options, answer]
 		} else {
 			console.log('else')
-			temporary_list = [...this.state.answer_options.filter((i) => i !== answer)]
+			temporary_list = [...this.state.bet.bet_data.answer_options.filter((i) => i !== answer)]
 		}
-		this.setState({answer_options: temporary_list})
-		console.log(this.state.answer_options)
 		let temporary_dict = Object.assign({}, this.state.bet)
 		temporary_dict.bet_data['answer_options'] = temporary_list
 		this.setState({bet: temporary_dict})		
@@ -252,7 +270,6 @@ export default class NewPoll extends Component {
 		console.log('')
 		console.log('erase_all_fields')
 		this.setState({correct_answer: ''});
-		this.setState({answer_options: []});
 		let empty_bet = {
 			'bet_title': '',
 			'bet_description': '',
@@ -261,7 +278,8 @@ export default class NewPoll extends Component {
 			},
 			'image': '',
 			'bet_type': '',
-			'correct_answer': ''
+			'correct_answer': '',
+			'correct_answer_confirmed': false
 		}
 		this.setState({bet: empty_bet});
 		if(this.state.correct_answer_confirmed){
@@ -273,16 +291,35 @@ export default class NewPoll extends Component {
 		if(this.state.bet.bet_title.length === 0){
 			this.open_snackbar('You must give a bet name')
 			return
-		} else if(this.state.bet.bet_type.length === 0){
+		} else if(this.state.bet.bet_type.length < 1){
 			this.open_snackbar('You must choose a type')
-			this.setState({snackbar_messae: 'You must choose a type'})
+			return
+		} else if (this.state.bet.bet_data.answer_options.length === 0){
+			this.open_snackbar('You must choose at least 2 answer')
 			return
 		}
 		let temporary_dict = Object.assign({}, this.state.bet);
-		temporary_dict.correct_answer = this.state.correct_answer;
+		if(this.state.correct_answer_confirmed){
+			temporary_dict['correct_answer'] = this.state.bet.correct_answer;
+			temporary_dict['correct_answer_confirmed'] = true;
+		}
+
+		// Create random hash with 32 characters
+		let random_hash = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+		temporary_dict['bet_hash'] = random_hash;
 
 		this.setState({bets: [...this.state.bets, temporary_dict]});
 		this.erase_all_fields();
+		this.setState({create_bet_card: false})
+	}
+
+	update_bet(){
+		console.log('')
+		console.log('update_bet')
+		console.log(this.state.bet)
+		let temporary_list = [...this.state.bets.filter((i) => i.bet_hash !== this.state.bet.bet_hash)]
+		this.setState({bets: [...temporary_list, this.state.bet]})
+		this.erase_all_fields()		
 		this.setState({create_bet_card: false})
 	}
 
@@ -338,8 +375,9 @@ export default class NewPoll extends Component {
 	}
 
     render() {
-		// console.log('render')
-		// console.log('this.state.step')
+		console.log('')
+		console.log('render')
+		console.log('this.state.bet: ', this.state.bet)
 		// console.log(this.state.step)
 		// console.log('this.state.bets')
 		// console.log(this.state.bets)
@@ -377,7 +415,7 @@ export default class NewPoll extends Component {
 								<div className='new-poll-first-step-password-textfield'>
 									<LocalizationProvider dateAdapter={AdapterDayjs}>
 										<DatePicker
-											label="Basic date picker"
+											label="Poll finish date"
 											value={this.state.finish_date}
 											onChange={(e) => this.setState({finish_date: dayjs(e.$d)})}
 										/>
@@ -463,7 +501,7 @@ export default class NewPoll extends Component {
 											onChange={(event) => this.edit_bet('bet_description', event.target.value)}
 										/>
 									</div>
-									<div className='new-poll-second-step-card-field'>
+									<div className='new-poll-second-step-card-field new-poll-selectfield-container'>
 										<FormControl fullWidth>
 											<InputLabel id="demo-simple-select-label">Type</InputLabel>
 											<Select
@@ -475,19 +513,17 @@ export default class NewPoll extends Component {
 											>
 											<MenuItem value={'radio'}>One answer only</MenuItem>
 											<MenuItem value={'multiple'}>Multiple answer</MenuItem>
-											<MenuItem value={'free'}>Free text</MenuItem>
 											</Select>
 										</FormControl>	
 									</div>
-									<div className='new-poll-second-step-card-field'>datepicker - Date limit to make bet</div>{/* date limit to participantes give an answer */}
+									<div className='new-poll-second-step-card-field new-poll-datepicker-container'>datepicker - Date limit to make bet</div>{/* date limit to participantes give an answer */}
 									<div className='new-poll-second-step-card-field'>
-										<div className='new-poll-second-step-card-toggle-container'>
+										<div className='new-poll-second-step-card-toggle-container' onClick={this.state.correct_answer_confirmed ? () => {} : () => {this.setState({correct_answer_switch: !this.state.correct_answer_switch})}}>
 											<div className='new-poll-second-step-card-toggle-title'>Is there a answer already?</div>
 											<div className='new-poll-second-step-card-toggle-button'>
 												<Switch 
 													disabled={this.state.correct_answer_confirmed ? true : false} 
 													checked={this.state.correct_answer_switch}
-													onChange={() => {this.setState({correct_answer_switch: !this.state.correct_answer_switch})}}
 												/>
 											</div>
 										</div>
@@ -500,19 +536,19 @@ export default class NewPoll extends Component {
 														id="outlined-basic" 
 														label="Correct answer" 
 														variant="outlined"
-														value={this.state.correct_answer}
-														onChange={(event) => this.setState({correct_answer: event.target.value})}
+														value={this.state.bet.correct_answer}
+														onChange={(event) => this.edit_bet('correct_answer', event.target.value)}
 													/>
 												</div>
 												<div>
-													<Button disabled={this.state.correct_answer_confirmed ? true : false} fullWidth variant="contained" onClick={() => {this.setState({answer_options: [...this.state.answer_options, this.state.correct_answer]}), this.setState({correct_answer_confirmed: true})}}>CONFIRM</Button>
+													<Button disabled={this.state.correct_answer_confirmed ? true : false} fullWidth variant="contained" onClick={() => {this.save_answer(this.state.bet.correct_answer, 'add'), this.setState({correct_answer_confirmed: true})}}>CONFIRM</Button>
 													{this.state.correct_answer_confirmed &&
 														<Button 
 															fullWidth variant="contained" 
 															onClick={() => {
-																this.setState({answer_options: this.state.answer_options.filter((item) => item !== this.state.correct_answer)}),
+																this.save_answer(this.state.bet.correct_answer, 'remove'),
 																this.setState({correct_answer_confirmed: false}),
-																this.setState({correct_answer: ''})
+																this.setState({bet: {...this.state.bet, correct_answer: ''}})
 															}}
 														>
 															ERASE
@@ -526,14 +562,18 @@ export default class NewPoll extends Component {
 									<div className='new-poll-second-step-card-field new-poll-second-step-card-answers-options'>{/* If user already added the real answer, include at the list options of answers available */}
 										<div className='new-poll-second-step-card-answers-options-container'>
 											<div className='new-poll-second-step-card-answers-options-component'>
-												<AnswerOptions save_answer={this.save_answer} answer_options={this.state.answer_options} open_snackbar={this.open_snackbar}/>
+												<AnswerOptions {...this.state} save_answer={this.save_answer} answer_options={this.state.bet.bet_data.answer_options} open_snackbar={this.open_snackbar}/>
 											</div>
 										</div>
 									</div>
 								</div>
 								<Divider variant="middle" />
 								<div className='new-poll-second-step-card-button'>
-									<Button fullWidth variant="contained" onClick={this.add_bet}>ADD BET</Button>
+									{this.state.bet.bet_hash ?
+										<Button fullWidth variant="contained" onClick={this.update_bet}>UPDATE BET</Button>
+										:
+										<Button fullWidth variant="contained" onClick={this.add_bet}>ADD BET</Button>
+									}
 								</div>
 							</div>
 						</React.Fragment>
@@ -546,7 +586,7 @@ export default class NewPoll extends Component {
 										<div className='new-poll-second-step-list-title'>List of Bets</div>
 										{this.state.bets.map((bet) => {
 											return(
-												<div key={bet.bet_title} className='new-poll-second-step-list-card'>
+												<div key={bet.bet_hash} className='new-poll-second-step-list-card' onClick={() => this.set_bet(bet)}>
 													<div className='new-poll-second-step-list-card-title'>{bet.bet_title}</div>
 													<div className='new-poll-second-step-list-card-icon' onClick={() => this.remove_bet(bet)}>
 														<span className="material-icons">delete</span>
