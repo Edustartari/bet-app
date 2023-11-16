@@ -169,14 +169,17 @@ def create_poll(request):
 
     # Get current path
     current_path = os.path.dirname(os.path.realpath(__file__))
-
-    image_base64 = poll_info['image'][0]['data_url'].replace('data:image/png;base64,', '')
-    image_base64 = image_base64.replace('data:image/jpeg;base64,', '')
-   
     poll_hash_id = hash_id_generator()
 
-    with open(current_path + "/static/img/" + poll_hash_id + ".jpg", "wb") as fh:
-        fh.write(base64.b64decode(image_base64))
+    try:
+        poll_image_hash = poll_hash_id
+        image_base64 = poll_info['image'][0]['data_url'].replace('data:image/png;base64,', '')
+        image_base64 = image_base64.replace('data:image/jpeg;base64,', '')
+
+        with open(current_path + "/static/img/" + poll_image_hash + ".jpg", "wb") as fh:
+            fh.write(base64.b64decode(image_base64))
+    except:
+        poll_image_hash = ''
 
     finish_date = None
     if poll_info['finish_date']:
@@ -188,7 +191,7 @@ def create_poll(request):
         name = poll_info['poll_name'],
         hash_id = poll_hash_id,
         is_active = 1,
-        image = poll_hash_id,
+        image = poll_image_hash,
         poll_type = poll_info['poll_type'],
         is_private = 1 if poll_info['is_private'] else 0,
         password = poll_info['password'] if len(poll_info['password']) > 0 else 0,
@@ -218,7 +221,8 @@ def create_poll(request):
         poll_id = new_poll.id,
         hash_id = hash_id_generator(),
         is_admin = 1,
-        user_id = users_objects[0].id
+        # user_id = users_objects[0].id
+        user_id = 1
     )
     new_poll_admin.save()
 
@@ -238,3 +242,75 @@ def bet_page(request):
     # print(poll_object.count())
     context = {}
     return render(request, 'polls/bet-page.html', context)
+
+
+
+"""
+poll table
+poll_data field with json example:
+{
+    "finish_date": false,
+    "ranking": [
+        {
+            "user_id": 1,
+            "user_hash": 1,
+            "position": 1,
+            "profile_picture_1": "",
+            "user_name": "Name 1",
+            "total_points": 9
+        },
+        {
+            "user_id": 2,
+            "user_hash": 2,
+            "position": 2,
+            "profile_picture_2": "",
+            "user_name": "Name 2",
+            "total_points": 6
+        },
+        {
+            "user_id": 3,
+            "user_hash": 3,
+            "position": 3,
+            "profile_picture_3": "",
+            "user_name": "Name 3",
+            "total_points": 3
+        },
+        {
+            "user_id": 4,
+            "user_hash": 4,
+            "position": 4,
+            "profile_picture_4": "",
+            "user_name": "Name 4",
+            "total_points": 0
+        }
+    ]
+}
+"""
+
+"""
+bet table
+bet_data field with json example:
+{
+  "answer_options": ["1", "2"],
+  "finish_date": "2023-11-15T23:57:49.263Z",
+  "users_answers": [
+    {
+      "user_id": 1,
+      "answer": "string1"
+    },
+    {
+      "user_id": 2,
+      "answer": "string2"
+    },
+    {
+      "user_id": 3,
+      "answer": "string3"
+    },
+    {
+      "user_id": 4,
+      "answer": "string4"
+    }
+  ]
+}
+
+"""

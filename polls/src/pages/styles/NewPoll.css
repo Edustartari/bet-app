@@ -96,6 +96,9 @@
 }
 .new-poll-datepicker-container {
     margin-top: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 .new-poll-second-step-card-field:nth-last-child(1){
     margin-bottom: 0px;

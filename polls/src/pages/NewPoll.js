@@ -90,9 +90,9 @@ function UploadImageComponent(props) {
 }
 
 function renderItem({ item, remove_answer, correct_answer }) {
-	console.log('')
-	console.log('item: ', item)
-	console.log('correct_answer: ', correct_answer)
+	// console.log('')
+	// console.log('item: ', item)
+	// console.log('correct_answer: ', correct_answer)
 	return (
 	<ListItem
 		secondaryAction={
@@ -133,7 +133,6 @@ function AnswerOptions(props) {
 
 	const remove_answer = (answer) => {
 		props.save_answer(answer, 'remove')
-		// setAnswerList((prev) => [...prev.filter((i) => i !== answer)]);
 	};
 
 	const add_answer_button = (
@@ -182,13 +181,14 @@ export default class NewPoll extends Component {
 			finish_date_active: false,
 			finish_date: dayjs(new Date()),
 			bets: [],
+			bet_finish_date_active: false,
 			bet: {
 				'bet_title': '',
 				'bet_description': '',
 				'bet_data': {
 					'answer_options': [],
 					'finish_date': false,
-					'users_answers': []
+					'users_answers': [],
 				},
 				'image': '',
 				'bet_type': '', /* select field - bet type could be radio (one answer), several checks (several answers) */
@@ -230,6 +230,8 @@ export default class NewPoll extends Component {
 			} else {
 				temporary_dict[key]['answer_options'] = [value]
 			}
+		} else if (key === 'bet_finish_date') {
+			temporary_dict[key]['finish_date'] = value
 		} else {
 			temporary_dict[key] = value
 			console.log(this.state.bet)
@@ -269,17 +271,20 @@ export default class NewPoll extends Component {
 	erase_all_fields(){
 		console.log('')
 		console.log('erase_all_fields')
-		this.setState({correct_answer: ''});
+		this.setState({correct_answer: '', bet_finish_date_active: false});
 		let empty_bet = {
 			'bet_title': '',
 			'bet_description': '',
 			'bet_data': {
-				'answer_options': []
+				'answer_options': [],
+				'finish_date': false,
+				'users_answers': [],
 			},
 			'image': '',
 			'bet_type': '',
 			'correct_answer': '',
-			'correct_answer_confirmed': false
+			'correct_answer_confirmed': false,
+			'bet_hash': false
 		}
 		this.setState({bet: empty_bet});
 		if(this.state.correct_answer_confirmed){
@@ -291,10 +296,10 @@ export default class NewPoll extends Component {
 		if(this.state.bet.bet_title.length === 0){
 			this.open_snackbar('You must give a bet name')
 			return
-		} else if(this.state.bet.bet_type.length < 1){
+		} else if(this.state.bet.bet_type.length === 0){
 			this.open_snackbar('You must choose a type')
 			return
-		} else if (this.state.bet.bet_data.answer_options.length === 0){
+		} else if (this.state.bet.bet_data.answer_options.length < 2){
 			this.open_snackbar('You must choose at least 2 answer')
 			return
 		}
@@ -377,6 +382,7 @@ export default class NewPoll extends Component {
     render() {
 		console.log('')
 		console.log('render')
+		console.log('this.state.bets: ', this.state.bets)
 		console.log('this.state.bet: ', this.state.bet)
 		// console.log(this.state.step)
 		// console.log('this.state.bets')
@@ -516,7 +522,32 @@ export default class NewPoll extends Component {
 											</Select>
 										</FormControl>	
 									</div>
-									<div className='new-poll-second-step-card-field new-poll-datepicker-container'>datepicker - Date limit to make bet</div>{/* date limit to participantes give an answer */}
+									<div 
+										className='new-poll-second-step-card-field new-poll-datepicker-container' 
+										style={{marginBottom: '0px'}}
+										onClick={
+											this.state.bet_finish_date_active ?
+											() => this.setState({bet: {...this.state.bet, bet_data: {...this.state.bet.bet_data, finish_date: false}}, bet_finish_date_active: false})
+											:
+											() => this.setState({bet: {...this.state.bet, bet_data: {...this.state.bet.bet_data, finish_date: dayjs(new Date())}}, bet_finish_date_active: true})
+										}
+									>
+										<div className='new-poll-second-step-card-toggle-title'>Set deadline to make this bet</div>
+										<div className='new-poll-first-step-field-toggle'>
+											<Switch checked={this.state.bet_finish_date_active}/>
+										</div>
+									</div>
+									{this.state.bet_finish_date_active &&
+										<div className='new-poll-second-step-card-field new-poll-datepicker-container'>
+											<LocalizationProvider dateAdapter={AdapterDayjs}>
+												<DatePicker
+													label="Bet finish date"
+													value={this.state.bet.bet_data.finish_date}
+													onChange={(e) => this.edit_bet('bet_finish_date', dayjs(e.$d))}
+												/>
+											</LocalizationProvider>	
+										</div>
+									}
 									<div className='new-poll-second-step-card-field'>
 										<div className='new-poll-second-step-card-toggle-container' onClick={this.state.correct_answer_confirmed ? () => {} : () => {this.setState({correct_answer_switch: !this.state.correct_answer_switch})}}>
 											<div className='new-poll-second-step-card-toggle-title'>Is there a answer already?</div>
