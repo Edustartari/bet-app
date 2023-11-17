@@ -44,3 +44,9 @@ class poll_admins(models.Model):
     created_at = models.DateField(auto_now=False, auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
 
+class session(models.Model):
+	user_id = models.IntegerField(default=0)
+	hash_id = models.CharField(max_length=200, default=None)
+	created_at = models.DateTimeField(auto_now=False, auto_now_add=True)
+	origin_ip = models.CharField(max_length=200, default='')
+	location = models.CharField(max_length=200, default='')

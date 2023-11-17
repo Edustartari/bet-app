@@ -222,7 +222,8 @@ export default class NewPoll extends Component {
 	edit_bet(key, value){
 		console.log('')
 		console.log('edit_bet')
-		console.log(this.state.bet)
+		console.log('key: ', key)
+		console.log('value: ', value)
 		let temporary_dict = Object.assign({}, this.state.bet)
 		if(key === 'bet_data'){
 			if('answer_options' in temporary_dict[key]){
@@ -231,12 +232,13 @@ export default class NewPoll extends Component {
 				temporary_dict[key]['answer_options'] = [value]
 			}
 		} else if (key === 'bet_finish_date') {
-			temporary_dict[key]['finish_date'] = value
+			temporary_dict['bet_data']['finish_date'] = value
 		} else {
 			temporary_dict[key] = value
 			console.log(this.state.bet)
 		}
 		this.setState({bet: temporary_dict})
+		console.log('this.state.bet: ', this.state.bet)
 		console.log('edit_bet finish')
 	}
 
@@ -384,6 +386,7 @@ export default class NewPoll extends Component {
 		console.log('render')
 		console.log('this.state.bets: ', this.state.bets)
 		console.log('this.state.bet: ', this.state.bet)
+		console.log('this.state.finish_date: ', this.state.finish_date)
 		// console.log(this.state.step)
 		// console.log('this.state.bets')
 		// console.log(this.state.bets)
