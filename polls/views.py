@@ -57,9 +57,9 @@ def index(request):
 	# print(users_list)
 
 	# Set current session to have user_id = 1
-	current_session = session.objects.get(hash_id = request.session['session_hash'])
-	current_session.user_id = 1
-	current_session.save()
+	# current_session = session.objects.get(hash_id = request.session['session_hash'])
+	# current_session.user_id = 1
+	# current_session.save()
 
 	context = {
 		'user': json.dumps(users_list)
@@ -304,12 +304,35 @@ def bet_page(request):
 	return render(request, 'polls/bet-page.html', context)
 
 
+def save_bet(request):
+	print('')
+	print('save_bet')
+	bet_info = request.POST.get('bet_info')
+	option_selected = request.POST.get('option_selected')
+
+	bet_info = json.loads(bet_info)
+
+	try:
+		# Get the current session
+		session_hash = request.session['session_hash']
+		current_session = session.objects.get(hash_id = session_hash)
+		users_object = user.objects.get(id = current_session.user_id)
+		user_id = users_object.id
+	except Exception as e:
+		print(e)
+		return JsonResponse({'status': 'error', 'reason': 'user_not_found'}, safe=False)
+
+	bet_object = bet.objects.get(hash_id=bet_info['hash_id'])
+	bet_data = json.loads(bet_object.bet_data)
+
+
+	return JsonResponse({'status': 'success'}, safe=False)
 
 """
 poll table
 poll_data field with json example:
 {
-	"finish_date": false,
+	"finish_date": "2024-12-10T00:26:28.000Z",
 	"ranking": [
 		{
 			"user_id": 1,

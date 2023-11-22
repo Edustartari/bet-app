@@ -109,3 +109,69 @@
 .bet-page-container-card-button .material-icons{
     
 }
+.bet-card-background{
+    padding: 72px 15px 15px;
+}
+.bet-card-title{
+    font-size: 25px;
+    text-align: center;
+    padding: 5px 0;
+}
+.bet-card-description{
+
+}
+.bet-card-options{
+    margin: 20px 0 45px 0;
+    overflow-y: scroll;
+}
+.bet-card-option-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #979696;
+    border-radius: 5px;
+    padding: 5px 5px 5px 15px;
+    margin: 0 0 15px 0;
+}
+.bet-card-option-item-text{
+
+}
+.bet-card-option-item-checkbox{
+
+}
+.bet-card-warning{
+
+}
+.bet-card-buttons{
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    width: calc(100% - 30px);
+    background-color: blue;
+}
+.bet-card-button-details{
+    padding: 10px 20px;
+    text-align: center;
+    width: 50%;
+    box-shadow: 2px 2px 8px 0px #000000;
+}
+.bet-card-button-cancel{
+    background-color: white;
+    color: rgb(255, 73, 73);
+    margin-right: 15px;
+}
+.bet-card-button-confirm{
+    background-color: #126912;
+    color: white;
+}
+.bet-page-background .bet-page-snackbar {
+
+}
+.bet-page-snackbar {
+
+}
