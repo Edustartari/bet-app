@@ -45,17 +45,27 @@ class BetCard extends Component {
 			url: '/save-bet',
 			data: {
 				bet_info: JSON.stringify(this.props.data),
-                option_selected: this.state.option_selected
+                option_selected: JSON.stringify(this.state.option_selected)
 			},
 			success: function(data){
 				if(data.status === 'success'){
 					this.props.handle_snackbar('Saved!');
-                    this.props.handle_change('bet_card', false)
+                    let poll_dict = this.props.poll_dict;
+                    // Find the bet in the poll_dict and update it
+                    for(let i = 0; i < poll_dict.bets.length; i++){
+                        if(poll_dict.bets[i].hash_id === this.props.data.hash_id){
+                            poll_dict.bets[i]['users_answers'][this.props.poll_dict.user_id] = {
+                                "answer": this.state.option_selected
+                            };
+                            break;
+                        }
+                    }
+                    // Update the poll_dict in the redux store
+                    this.props.update('poll_dict', poll_dict);                    
+                    this.props.handle_change('bet_card', false);
 				} else {
 					this.props.handle_snackbar('Sorry, something went wrong...');
 				}
-				console.log('success')
-				console.log(data)
 			}
 		})
     }
@@ -141,7 +151,7 @@ class BetPage extends Component {
         return (
             <React.Fragment>
                 {this.state.bet_card &&
-                    <BetCard data={this.state.bet_card} handle_change={this.handle_change} handle_snackbar={this.handle_snackbar}/>
+                    <BetCard {...this.props} data={this.state.bet_card} handle_change={this.handle_change} handle_snackbar={this.handle_snackbar}/>
                 }
                 {!this.state.bet_card &&
                     <div className="bet-page-background">
@@ -170,9 +180,11 @@ class BetPage extends Component {
                                         <div key={bet.hash_id} className="bet-page-container-card" onClick={() => this.setState({bet_card: bet})}>
                                             <div className="bet-page-container-card-info">
                                                 <div className="bet-page-container-card-info-status">
-                                                    <span className="material-icons">{
-                                                        poll_dict.user_id in bet.users_answers ? 'done' : 'error'
-                                                    }</span>
+                                                    <span className="material-icons">
+                                                        {
+                                                            poll_dict.user_id in bet.users_answers ? 'done' : 'error'
+                                                        }
+                                                    </span>
                                                     <div className="bet-page-container-card-info-title">{bet.title}</div>
                                                 </div>
                                                 <div className="bet-page-container-card-info-description"><Marquee gradient={false}>{bet.description}</Marquee></div>
@@ -185,60 +197,7 @@ class BetPage extends Component {
                                             </div>
                                         </div>
                                     )
-                                })
-                                }
-                                <div className="bet-page-container-card">
-                                    <div className="bet-page-container-card-info">
-                                        <div className="bet-page-container-card-info-status">
-                                            <span className="material-icons">done</span>
-                                            <div className="bet-page-container-card-info-title">Bet Title</div>
-                                        </div>
-                                        <div className="bet-page-container-card-info-description"><Marquee gradient={false}>Bet description, could be very long</Marquee></div>
-                                        <div className="bet-page-container-card-info-date">Deadline: 12, JUN - 2022</div>
-                                    </div>
-                                    <div className="bet-page-container-card-button">
-                                        <span className="material-icons">keyboard_arrow_right</span>
-                                    </div>
-                                </div>
-                                <div className="bet-page-container-card">
-                                    <div className="bet-page-container-card-info">
-                                        <div className="bet-page-container-card-info-status">
-                                            <span className="material-icons">error</span>
-                                            <div className="bet-page-container-card-info-title">Bet Title</div>
-                                        </div>
-                                        <div className="bet-page-container-card-info-description"><Marquee gradient={false}>Bet description, could be very long, very very very very very very very very very very very looooong </Marquee></div>
-                                        <div className="bet-page-container-card-info-date">Deadline: 12, JUN - 2022</div>
-                                    </div>
-                                    <div className="bet-page-container-card-button">
-                                        <span className="material-icons">keyboard_arrow_right</span>
-                                    </div>
-                                </div>
-                                <div className="bet-page-container-card">
-                                    <div className="bet-page-container-card-info">
-                                        <div className="bet-page-container-card-info-status">
-                                            <span className="material-icons">done</span>
-                                            <div className="bet-page-container-card-info-title">Bet Title</div>
-                                        </div>
-                                        <div className="bet-page-container-card-info-description"><Marquee gradient={false}>Bet description, could be very long</Marquee></div>
-                                        <div className="bet-page-container-card-info-date">Deadline: 12, JUN - 2022</div>
-                                    </div>
-                                    <div className="bet-page-container-card-button">
-                                        <span className="material-icons">keyboard_arrow_right</span>
-                                    </div>
-                                </div>
-                                <div className="bet-page-container-card">
-                                    <div className="bet-page-container-card-info">
-                                        <div className="bet-page-container-card-info-status">
-                                            <span className="material-icons">block</span>
-                                            <div className="bet-page-container-card-info-title">Bet Title, gigantic, big and incredibly amazing title we have here don't you agree?</div>
-                                        </div>
-                                        <div className="bet-page-container-card-info-description"><Marquee gradient={false}>Bet description, could be very long</Marquee></div>
-                                        <div className="bet-page-container-card-info-date">Finished: 12, JUN - 2022</div>
-                                    </div>
-                                    <div className="bet-page-container-card-button">
-                                        <span className="material-icons">keyboard_arrow_right</span>
-                                    </div>
-                                </div>
+                                })}
                             </div>
                         </div>
                     </div>
@@ -249,7 +208,6 @@ class BetPage extends Component {
                     onClose={() => this.setState({snackbar_open: false})}
                     message={this.state.snackbar_message}
                     className='bet-page-snackbar'
-                    // action={action}
                 />
             </React.Fragment>
         )

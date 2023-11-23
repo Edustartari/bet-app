@@ -31,6 +31,7 @@
     "@mui/x-date-pickers": "^6.8.0",
     "@reduxjs/toolkit": "^1.9.5",
     "dayjs": "^1.11.8",
+    "moment": "^2.29.4",
     "react-device-detect": "^2.1.2",
     "react-fast-marquee": "^1.6.0",
     "react-images-uploading": "^3.1.6",

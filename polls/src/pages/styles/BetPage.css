@@ -96,6 +96,9 @@
 .bet-page-container-card-info-description {
     margin: 11px 0 3px 0;
 }
+.bet-page-container-card-info-description .initial-child-container .child:nth-child(1){
+    margin: 0 0 0 5px;
+}
 .bet-page-container-card-info-date {
     font-size: 12px;
 }

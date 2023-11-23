@@ -133,6 +133,31 @@ def search_polls(request):
 	print('')
 	print('search_polls')
 	print(request.user.id)
+	edu_dict = {
+		"answer_options": ["1", "2"],
+		"finish_date": "2023-11-15T23:57:49.263Z",
+		"users_answers": {
+			1: {
+			"user_id": 1,
+			"answer": "string1"
+			},
+			2: {
+			"user_id": 2,
+			"answer": "string2"
+			},
+			3: {
+			"user_id": 3,
+			"answer": "string3"
+			},
+			4: {
+			"user_id": 4,
+			"answer": "string4"
+			}
+		}
+	}
+	print(edu_dict)
+	print(edu_dict['users_answers'][2])
+	print(type(edu_dict))
 	context = {}
 	return render(request, 'polls/search-polls.html', context)
 
@@ -303,28 +328,36 @@ def bet_page(request):
 	context = {}
 	return render(request, 'polls/bet-page.html', context)
 
-
+@csrf_exempt
 def save_bet(request):
 	print('')
 	print('save_bet')
 	bet_info = request.POST.get('bet_info')
 	option_selected = request.POST.get('option_selected')
+	print('option_selected: ', str(option_selected))
 
 	bet_info = json.loads(bet_info)
+	option_selected = json.loads(option_selected)
 
 	try:
 		# Get the current session
 		session_hash = request.session['session_hash']
 		current_session = session.objects.get(hash_id = session_hash)
 		users_object = user.objects.get(id = current_session.user_id)
-		user_id = users_object.id
+		user_id = str(users_object.id)
 	except Exception as e:
 		print(e)
 		return JsonResponse({'status': 'error', 'reason': 'user_not_found'}, safe=False)
 
 	bet_object = bet.objects.get(hash_id=bet_info['hash_id'])
 	bet_data = json.loads(bet_object.bet_data)
-
+	if 'users_answers' not in bet_data:
+		bet_data['users_answers'] = {}
+	bet_data['users_answers'][user_id] = {
+		'answer': option_selected
+	}
+	bet_object.bet_data = json.dumps(bet_data)
+	bet_object.save()
 
 	return JsonResponse({'status': 'success'}, safe=False)
 
@@ -374,26 +407,22 @@ poll_data field with json example:
 bet table
 bet_data field with json example:
 {
-  "answer_options": ["1", "2"],
-  "finish_date": "2023-11-15T23:57:49.263Z",
-  "users_answers": [
-	{
-	  "user_id": 1,
-	  "answer": "string1"
-	},
-	{
-	  "user_id": 2,
-	  "answer": "string2"
-	},
-	{
-	  "user_id": 3,
-	  "answer": "string3"
-	},
-	{
-	  "user_id": 4,
-	  "answer": "string4"
+	"answer_options": ["1", "2"],
+	"finish_date": "2023-11-15T23:57:49.263Z",
+	"users_answers": {
+		1: {
+		"answer": "string1"
+		},
+		2: {
+		"answer": "string2"
+		},
+		3: {
+		"answer": "string3"
+		},
+		4: {
+		"answer": "string4"
+		}
 	}
-  ]
 }
 
 """
