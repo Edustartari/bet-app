@@ -26,16 +26,16 @@ pip install -r requirements.txt
 # fi
 
 # Enter MySQL
-mysql -u root -proot
+# mysql -u root -proot
 # Create the database if it doesn't exist
-create database IF NOT EXISTS bet_app_database;
-use bet_app_database;
+# create database IF NOT EXISTS bet_app_database;
+# use bet_app_database;
 # Create the user if it doesn't exist
 # create user IF NOT EXISTS 'bet_app_user'@'localhost' identified by 'bet_app_password';
 # Grant privileges to the user
 # grant all privileges on bet_app_database.* to 'bet_app_user'@'localhost';
 # flush privileges;
-exit
+# exit
 
 cd frontend/
 npm install -D webpack-cli
