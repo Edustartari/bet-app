@@ -64,7 +64,7 @@ def index(request):
 	context = {
 		'user': json.dumps(users_list)
 	}
-	return render(request, 'polls/index.html', context)
+	return render(request, 'index.html', context)
 
 def login(request):
 	context = {}
@@ -83,7 +83,7 @@ def login(request):
 	)
 	new_user.save()
 
-	return render(request, 'polls/login.html', context)
+	return render(request, 'login.html', context)
 
 def my_polls(request):
 	print('')
@@ -120,13 +120,13 @@ def my_polls(request):
 	context = {
 		'poll_list': json.dumps(poll_list)
 	}
-	return render(request, 'polls/my-polls.html', context)
+	return render(request, 'my-polls.html', context)
 
 def new_poll(request):
 	print('')
 	print('new_poll')
 	context = {}
-	return render(request, 'polls/new-poll.html', context)
+	return render(request, 'new-poll.html', context)
 
 @csrf_exempt
 def search_polls(request):
@@ -159,13 +159,13 @@ def search_polls(request):
 	print(edu_dict['users_answers'][2])
 	print(type(edu_dict))
 	context = {}
-	return render(request, 'polls/search-polls.html', context)
+	return render(request, 'search-polls.html', context)
 
 def settings(request):
 	print('')
 	print('settings')
 	context = {}
-	return render(request, 'polls/settings.html', context)
+	return render(request, 'settings.html', context)
 
 def poll_view(request, hash_id):
 	print('')
@@ -238,7 +238,7 @@ def poll_view(request, hash_id):
 		'poll_exists': json.dumps(poll_exists)
 	}
 
-	return render(request, 'polls/poll.html', context)
+	return render(request, 'poll.html', context)
 
 
 @csrf_exempt
@@ -326,7 +326,7 @@ def bet_page(request):
 	# poll_object = poll.objects.filter(hash_id=hash_id)
 	# print(poll_object.count())
 	context = {}
-	return render(request, 'polls/bet-page.html', context)
+	return render(request, 'bet-page.html', context)
 
 @csrf_exempt
 def save_bet(request):

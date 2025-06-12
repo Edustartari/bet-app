@@ -1,0 +1,44 @@
+{
+  "name": "polls",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack --watch --mode development",
+    "build": "webpack --mode production"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.17.4",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "babel-loader": "^8.2.3",
+    "css-loader": "^6.6.0",
+    "file-loader": "^6.2.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.69.0",
+    "webpack-cli": "^4.9.2"
+  },
+  "dependencies": {
+    "@babel/preset-typescript": "^7.27.1",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.13.5",
+    "@mui/x-date-pickers": "^6.8.0",
+    "@reduxjs/toolkit": "^1.9.5",
+    "dayjs": "^1.11.8",
+    "moment": "^2.29.4",
+    "react-device-detect": "^2.1.2",
+    "react-fast-marquee": "^1.6.0",
+    "react-images-uploading": "^3.1.6",
+    "react-redux": "^8.1.0",
+    "react-router-dom": "^6.2.1",
+    "redux": "^4.2.1",
+    "webpack-bundle-tracker": "^3.2.0"
+  }
+}

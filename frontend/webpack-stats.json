@@ -1,0 +1,148 @@
+{
+  "status": "done",
+  "assets": {
+    "03634c4c59144133e988271e72a07890.jpg": {
+      "name": "03634c4c59144133e988271e72a07890.jpg",
+      "path": "/home/eduardo/coding/projects/bet-app/static/03634c4c59144133e988271e72a07890.jpg",
+      "sourceFilename": "src/img/profile-picture-2.jpg"
+    },
+    "1e0716301d8a1ee6a2f53321f2b283e6.jpg": {
+      "name": "1e0716301d8a1ee6a2f53321f2b283e6.jpg",
+      "path": "/home/eduardo/coding/projects/bet-app/static/1e0716301d8a1ee6a2f53321f2b283e6.jpg",
+      "sourceFilename": "src/img/f1.jpg"
+    },
+    "24cbb915ad8e134bc7aadcff3913f309.jpg": {
+      "name": "24cbb915ad8e134bc7aadcff3913f309.jpg",
+      "path": "/home/eduardo/coding/projects/bet-app/static/24cbb915ad8e134bc7aadcff3913f309.jpg",
+      "sourceFilename": "src/img/profile-picture-1.jpg"
+    },
+    "5fa24bea40d40f2a8e3b9783f847c2d9.jpg": {
+      "name": "5fa24bea40d40f2a8e3b9783f847c2d9.jpg",
+      "path": "/home/eduardo/coding/projects/bet-app/static/5fa24bea40d40f2a8e3b9783f847c2d9.jpg",
+      "sourceFilename": "src/img/recipe.jpg"
+    },
+    "7eebbadbe5c168bc5ced8038ab6fc7ea.jpg": {
+      "name": "7eebbadbe5c168bc5ced8038ab6fc7ea.jpg",
+      "path": "/home/eduardo/coding/projects/bet-app/static/7eebbadbe5c168bc5ced8038ab6fc7ea.jpg",
+      "sourceFilename": "src/img/oscar.jpg"
+    },
+    "97b9be6ea8aef75c13c638fde421b1ac.jpg": {
+      "name": "97b9be6ea8aef75c13c638fde421b1ac.jpg",
+      "path": "/home/eduardo/coding/projects/bet-app/static/97b9be6ea8aef75c13c638fde421b1ac.jpg",
+      "sourceFilename": "src/img/03ac5eb8840611eeb4cd23a8f4e419d2.jpg"
+    },
+    "App_bundle.js": {
+      "name": "App_bundle.js",
+      "path": "/home/eduardo/coding/projects/bet-app/static/App_bundle.js"
+    },
+    "b4f401b67c287410bbf91d3bb854320d.jpg": {
+      "name": "b4f401b67c287410bbf91d3bb854320d.jpg",
+      "path": "/home/eduardo/coding/projects/bet-app/static/b4f401b67c287410bbf91d3bb854320d.jpg",
+      "sourceFilename": "src/img/mobile-icon-indicator.jpg"
+    },
+    "ba8b3bd03020d0b780da4525bf988cde.jpg": {
+      "name": "ba8b3bd03020d0b780da4525bf988cde.jpg",
+      "path": "/home/eduardo/coding/projects/bet-app/static/ba8b3bd03020d0b780da4525bf988cde.jpg",
+      "sourceFilename": "src/img/empty_list.jpg"
+    },
+    "BetPage_bundle.js": {
+      "name": "BetPage_bundle.js",
+      "path": "/home/eduardo/coding/projects/bet-app/static/BetPage_bundle.js"
+    },
+    "e239c3dc2a3caff0f24de049ef6164f1.png": {
+      "name": "e239c3dc2a3caff0f24de049ef6164f1.png",
+      "path": "/home/eduardo/coding/projects/bet-app/static/e239c3dc2a3caff0f24de049ef6164f1.png",
+      "sourceFilename": "src/img/default_poll_image.png"
+    },
+    "fd0b004a02828ad4eda09bb03cc8a1e5.jpg": {
+      "name": "fd0b004a02828ad4eda09bb03cc8a1e5.jpg",
+      "path": "/home/eduardo/coding/projects/bet-app/static/fd0b004a02828ad4eda09bb03cc8a1e5.jpg",
+      "sourceFilename": "src/img/new-baby.jpg"
+    },
+    "global_reducer_bundle.js": {
+      "name": "global_reducer_bundle.js",
+      "path": "/home/eduardo/coding/projects/bet-app/static/global_reducer_bundle.js"
+    },
+    "Header_bundle.js": {
+      "name": "Header_bundle.js",
+      "path": "/home/eduardo/coding/projects/bet-app/static/Header_bundle.js"
+    },
+    "index_bundle.js": {
+      "name": "index_bundle.js",
+      "path": "/home/eduardo/coding/projects/bet-app/static/index_bundle.js"
+    },
+    "Login_bundle.js": {
+      "name": "Login_bundle.js",
+      "path": "/home/eduardo/coding/projects/bet-app/static/Login_bundle.js"
+    },
+    "Logout_bundle.js": {
+      "name": "Logout_bundle.js",
+      "path": "/home/eduardo/coding/projects/bet-app/static/Logout_bundle.js"
+    },
+    "Main_bundle.js": {
+      "name": "Main_bundle.js",
+      "path": "/home/eduardo/coding/projects/bet-app/static/Main_bundle.js"
+    },
+    "MyPolls_bundle.js": {
+      "name": "MyPolls_bundle.js",
+      "path": "/home/eduardo/coding/projects/bet-app/static/MyPolls_bundle.js"
+    },
+    "NewPoll_bundle.js": {
+      "name": "NewPoll_bundle.js",
+      "path": "/home/eduardo/coding/projects/bet-app/static/NewPoll_bundle.js"
+    },
+    "Poll_bundle.js": {
+      "name": "Poll_bundle.js",
+      "path": "/home/eduardo/coding/projects/bet-app/static/Poll_bundle.js"
+    },
+    "SearchPolls_bundle.js": {
+      "name": "SearchPolls_bundle.js",
+      "path": "/home/eduardo/coding/projects/bet-app/static/SearchPolls_bundle.js"
+    },
+    "Settings_bundle.js": {
+      "name": "Settings_bundle.js",
+      "path": "/home/eduardo/coding/projects/bet-app/static/Settings_bundle.js"
+    }
+  },
+  "chunks": {
+    "App.js": [
+      "App_bundle.js"
+    ],
+    "BetPage.js": [
+      "BetPage_bundle.js"
+    ],
+    "global_reducer.js": [
+      "global_reducer_bundle.js"
+    ],
+    "Header.js": [
+      "Header_bundle.js"
+    ],
+    "index.js": [
+      "index_bundle.js"
+    ],
+    "Login.js": [
+      "Login_bundle.js"
+    ],
+    "Logout.js": [
+      "Logout_bundle.js"
+    ],
+    "Main.js": [
+      "Main_bundle.js"
+    ],
+    "MyPolls.js": [
+      "MyPolls_bundle.js"
+    ],
+    "NewPoll.js": [
+      "NewPoll_bundle.js"
+    ],
+    "Poll.js": [
+      "Poll_bundle.js"
+    ],
+    "SearchPolls.js": [
+      "SearchPolls_bundle.js"
+    ],
+    "Settings.js": [
+      "Settings_bundle.js"
+    ]
+  }
+}
