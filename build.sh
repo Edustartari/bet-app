@@ -10,20 +10,20 @@ source venv/bin/activate
 
 pip install -r requirements.txt
 
-# Check if mysqlclient is installed
-if ! python -c "import MySQLdb" &> /dev/null; then
-    echo "mysqlclient is not installed. Installing..."
-    pip install mysqlclient
-else
-    echo "mysqlclient is already installed."
-fi
-# Check if psycopg2 is installed
-if ! python -c "import psycopg2" &> /dev/null; then
-    echo "psycopg2 is not installed. Installing..."
-    pip install psycopg2
-else
-    echo "psycopg2 is already installed."
-fi
+# # Check if mysqlclient is installed
+# if ! python -c "import MySQLdb" &> /dev/null; then
+#     echo "mysqlclient is not installed. Installing..."
+#     pip install mysqlclient
+# else
+#     echo "mysqlclient is already installed."
+# fi
+# # Check if psycopg2 is installed
+# if ! python -c "import psycopg2" &> /dev/null; then
+#     echo "psycopg2 is not installed. Installing..."
+#     pip install psycopg2
+# else
+#     echo "psycopg2 is already installed."
+# fi
 
 # Enter MySQL
 mysql -u root -proot

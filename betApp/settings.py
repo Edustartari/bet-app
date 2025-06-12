@@ -110,7 +110,6 @@ DATABASES = {
         'NAME': 'bet_app_database',
         'USER': 'root',
         'PASSWORD': 'root',
-        # Accept localhost and other values for 'HOST'
         'HOST': 'localhost',
         'PORT': '3306',
         'OPTIONS': {
