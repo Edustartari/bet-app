@@ -3,7 +3,7 @@ set -o errexit
 echo "BUILD START"
 
 # create a virtual environment named 'venv' if it doesn't already exist
-python3.7 -m venv venv
+python3.9 -m venv venv
 
 # activate the virtual environment
 source venv/bin/activate
