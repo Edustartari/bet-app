@@ -96,7 +96,7 @@ const BetCard = (props) => {
             <div className='bet-card-warning'>7 days until bet is closed...</div>
             <div className='bet-card-buttons'>
                 <div className='bet-card-button-details bet-card-button-cancel' onClick={() => props.setBetCard(false)}>CANCEL</div>
-                <div className='bet-card-button-details bet-card-button-confirm' onClick={this.save_bet}>CONFIRM</div>
+                <div className='bet-card-button-details bet-card-button-confirm' onClick={save_bet}>CONFIRM</div>
             </div>
         </div>
     )

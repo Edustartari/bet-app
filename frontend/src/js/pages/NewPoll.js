@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import 'styles/pages/NewPoll.css';
 
 import Button from '@mui/material/Button';
@@ -29,13 +29,13 @@ import default_poll_image from 'images//default_poll_image.png';
 import ImageUploading from "react-images-uploading";
 
 function UploadImageComponent(props) {
-	const [images, setImages] = React.useState(props.image);
+	const [images, setImages] = useState(props.image);
 	const maxNumber = 69;
 	const onChange = (imageList, addUpdateIndex) => {
 		// data for submit
 		console.log(imageList, addUpdateIndex);
 		setImages(imageList);
-		props.handle_change('image', imageList)
+		props.setImage(imageList)
 	};
 
 	return (
@@ -114,7 +114,7 @@ function renderItem({ item, remove_answer, correct_answer }) {
 }
   
 function AnswerOptions(props) {
-	const [answer, setAnswer] = React.useState('');
+	const [answer, setAnswer] = useState('');
 
 	const add_answer = () => {
 		if(answer.length === 0){
@@ -168,63 +168,44 @@ function AnswerOptions(props) {
 	);
 }
 
-export default class NewPoll extends Component {
-	constructor(props){
-		super(props)
-		this.state = {
-			step: 'first', // can be first, second, third...
-			poll_name: '',
-			poll_type: false,
-			is_private: false,
-			password: '',
-			image: [],
-			finish_date_active: false,
-			finish_date: dayjs(new Date()),
-			bets: [],
-			bet_finish_date_active: false,
-			bet: {
-				'bet_title': '',
-				'bet_description': '',
-				'bet_data': {
-					'answer_options': [],
-					'finish_date': false,
-					'users_answers': [],
-				},
-				'image': '',
-				'bet_type': '', /* select field - bet type could be radio (one answer), several checks (several answers) */
-				'correct_answer': '',
-				'correct_answer_confirmed': false,
-				'bet_hash': false
-			},
-			create_bet_card: false,
-			correct_answer_switch: false,
-			correct_answer_confirmed: false,
-			snackbar_open: false,
-			snackbar_message: '',
-			backdrop: false,
-		}
-		this.set_bet = this.set_bet.bind(this);
-		this.update_bet = this.update_bet.bind(this);
-		this.edit_bet = this.edit_bet.bind(this);
-		this.save_answer = this.save_answer.bind(this);
-		this.erase_all_fields = this.erase_all_fields.bind(this);
-		this.add_bet = this.add_bet.bind(this);
-		this.open_snackbar = this.open_snackbar.bind(this);
-		this.remove_bet = this.remove_bet.bind(this);
-		this.create_poll = this.create_poll.bind(this);
-		this.handle_change = this.handle_change.bind(this);
-	}
+const NewPoll = (props) => {
+	const [step, setStep] = useState('first'); // can be first, second, third...
+	const [pollName, setPollName] = useState('');
+	const [pollType, setPollType] = useState(false);
+	const [isPrivate, setIsPrivate] = useState(false);
+	const [password, setPassword] = useState('');
+	const [image, setImage] = useState([]);
+	const [finishDateActive, setFinishDateActive] = useState(false);
+	const [finishDate, setFinishDate] = useState(dayjs(new Date()));
+	const [bets, setBets] = useState([]);
+	const [betFinishDateActive, setBetFinishDateActive] = useState(false);
+	const [bet, setBet] = useState({
+		'bet_title': '',
+		'bet_description': '',
+		'bet_data': {
+			'answer_options': [],
+			'finish_date': false,
+			'users_answers': [],
+		},
+		'image': '',
+		'bet_type': '', /* select field - bet type could be radio (one answer), several checks (several answers) */
+		'correct_answer': '',
+		'correct_answer_confirmed': false,
+		'bet_hash': false
+	});
+	const [createBetCard, setCreateBetCard] = useState(false);
+	const [correctAnswerSwitch, setCorrectAnswerSwitch] = useState(false);
+	const [correctAnswerConfirmed, setCorrectAnswerConfirmed] = useState(false);
+	const [snackbarOpen, setSnackbarOpen] = useState(false);
+	const [snackbarMessage, setSnackbarMessage] = useState('');
+	const [backdrop, setBackdrop] = useState(false);
 
-	handle_change(key, value){
-		this.setState({[key]: value})
-	}
-
-	edit_bet(key, value){
+	const edit_bet = (key, value) => {
 		console.log('')
 		console.log('edit_bet')
 		console.log('key: ', key)
 		console.log('value: ', value)
-		let temporary_dict = Object.assign({}, this.state.bet)
+		let temporary_dict = Object.assign({}, bet)
 		if(key === 'bet_data'){
 			if('answer_options' in temporary_dict[key]){
 				temporary_dict[key]['answer_options'].push(value)
@@ -235,45 +216,46 @@ export default class NewPoll extends Component {
 			temporary_dict['bet_data']['finish_date'] = value
 		} else {
 			temporary_dict[key] = value
-			console.log(this.state.bet)
+			console.log(bet)
 		}
-		this.setState({bet: temporary_dict})
-		console.log('this.state.bet: ', this.state.bet)
+		setBet(temporary_dict)
+		console.log('bet: ', bet)
 		console.log('edit_bet finish')
 	}
 
-	set_bet(bet){
+	const set_bet = (bet) => {
 		console.log('')
 		console.log('set_bet')
 		console.log(bet)
-		this.setState({create_bet_card: true})
-		this.setState({bet: bet})
+		setCreateBetCard(true)
+		setBet(bet)
 		if(bet.correct_answer.length > 0 && bet.correct_answer_confirmed){
-			this.setState({correct_answer_confirmed: true})
+			setCorrectAnswerConfirmed(true)
 		}
 	}
 
-	save_answer(answer, action){
+	const save_answer = (answer, action) => {
 		console.log('')
 		console.log('save_answer')
 		console.log(answer)
 		let temporary_list;
 		if(action === 'add'){
 			console.log('if')
-			temporary_list = [...this.state.bet.bet_data.answer_options, answer]
+			temporary_list = [...bet.bet_data.answer_options, answer]
 		} else {
 			console.log('else')
-			temporary_list = [...this.state.bet.bet_data.answer_options.filter((i) => i !== answer)]
+			temporary_list = [...bet.bet_data.answer_options.filter((i) => i !== answer)]
 		}
-		let temporary_dict = Object.assign({}, this.state.bet)
+		let temporary_dict = Object.assign({}, bet)
 		temporary_dict.bet_data['answer_options'] = temporary_list
-		this.setState({bet: temporary_dict})		
+		setBet(temporary_dict)
 	}
 
-	erase_all_fields(){
+	const erase_all_fields = () => {
 		console.log('')
 		console.log('erase_all_fields')
-		this.setState({correct_answer: '', bet_finish_date_active: false});
+		// setCorrectAnswer('')
+		setBetFinishDateActive(false)
 		let empty_bet = {
 			'bet_title': '',
 			'bet_description': '',
@@ -288,26 +270,26 @@ export default class NewPoll extends Component {
 			'correct_answer_confirmed': false,
 			'bet_hash': false
 		}
-		this.setState({bet: empty_bet});
-		if(this.state.correct_answer_confirmed){
-			this.setState({correct_answer_confirmed: false})
+		setBet(empty_bet);
+		if(correctAnswerConfirmed){
+			setCorrectAnswerConfirmed(false)
 		}
 	}
 
-	add_bet(){
-		if(this.state.bet.bet_title.length === 0){
-			this.open_snackbar('You must give a bet name')
+	const add_bet = () => {
+		if(bet.bet_title.length === 0){
+			open_snackbar('You must give a bet name')
 			return
-		} else if(this.state.bet.bet_type.length === 0){
-			this.open_snackbar('You must choose a type')
+		} else if(bet.bet_type.length === 0){
+			open_snackbar('You must choose a type')
 			return
-		} else if (this.state.bet.bet_data.answer_options.length < 2){
-			this.open_snackbar('You must choose at least 2 answer')
+		} else if (bet.bet_data.answer_options.length < 2){
+			open_snackbar('You must choose at least 2 answer')
 			return
 		}
-		let temporary_dict = Object.assign({}, this.state.bet);
-		if(this.state.correct_answer_confirmed){
-			temporary_dict['correct_answer'] = this.state.bet.correct_answer;
+		let temporary_dict = Object.assign({}, bet);
+		if(correctAnswerConfirmed){
+			temporary_dict['correct_answer'] = bet.correct_answer;
 			temporary_dict['correct_answer_confirmed'] = true;
 		}
 
@@ -315,51 +297,49 @@ export default class NewPoll extends Component {
 		let random_hash = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 		temporary_dict['bet_hash'] = random_hash;
 
-		this.setState({bets: [...this.state.bets, temporary_dict]});
-		this.erase_all_fields();
-		this.setState({create_bet_card: false})
+		setBets([...bets, temporary_dict]);
+		erase_all_fields();
+		setCreateBetCard(false);
 	}
 
-	update_bet(){
+	const update_bet = () => {
 		console.log('')
 		console.log('update_bet')
-		console.log(this.state.bet)
-		let temporary_list = [...this.state.bets.filter((i) => i.bet_hash !== this.state.bet.bet_hash)]
-		this.setState({bets: [...temporary_list, this.state.bet]})
-		this.erase_all_fields()		
-		this.setState({create_bet_card: false})
+		console.log(bet)
+		let temporary_list = [...bets.filter((i) => i.bet_hash !== bet.bet_hash)]
+		setBets([...temporary_list, bet]);
+		erase_all_fields();
+		setCreateBetCard(false);
 	}
 
-	open_snackbar(message){
+	const open_snackbar = (message) => {
 		console.log('')
 		console.log('open_snackbar 4')
-		console.log(this.state.snackbar_message)
-		console.log(this.state.snackbar_open)
-		this.setState({snackbar_message: message})
-		this.setState({snackbar_open: true})
-		this.state.snackbar_message = message
-		this.state.snackbar_open = true
-		console.log(this.state.snackbar_message)
-		console.log(this.state.snackbar_open)
+		console.log(snackbarMessage)
+		console.log(snackbarOpen)
+		setSnackbarMessage(message);
+		setSnackbarOpen(true);
+		console.log(snackbarMessage)
+		console.log(snackbarOpen)
 	}
 
-	remove_bet(bet){
-		let temporary_list = [...this.state.bets.filter((i) => i.bet_title !== bet.bet_title)]
-		this.setState({bets: temporary_list})
+	const remove_bet = (bet) => {
+		let temporary_list = [...bets.filter((i) => i.bet_title !== bet.bet_title)]
+		setBets(temporary_list);
 	}
 
-	create_poll(){
-		this.setState({backdrop: true})
+	const create_poll = () => {
+		setBackdrop(true);
 		console.log('')
 		console.log('create_poll 6')
 		let data_dict = {}
-		data_dict['poll_name'] = this.state.poll_name
-		data_dict['poll_type'] = this.state.poll_type
-		data_dict['is_private'] = this.state.is_private
-		data_dict['image'] = this.state.image
-		data_dict['password'] = this.state.password
-		data_dict['finish_date'] = this.state.finish_date_active ? this.state.finish_date : false
-		data_dict['bets'] = this.state.bets
+		data_dict['poll_name'] = pollName
+		data_dict['poll_type'] = pollType
+		data_dict['isPrivate'] = isPrivate
+		data_dict['image'] = image
+		data_dict['password'] = password
+		data_dict['finish_date'] = finishDateActive ? finishDate : false
+		data_dict['bets'] = bets
 
 		$.ajax({
 			context: this,
@@ -372,8 +352,8 @@ export default class NewPoll extends Component {
 				if(data.status === 'success'){
 					window.open('/' + data.new_poll_hash, "_self")
 				} else {
-					this.setState({backdrop: false});
-					this.open_snackbar('Something went wrong. Please try again later...')
+					setBackdrop(false);
+					open_snackbar('Something went wrong. Please try again later...')
 				}
 				console.log('success')
 				console.log(data)
@@ -381,303 +361,302 @@ export default class NewPoll extends Component {
 		})
 	}
 
-    render() {
-		console.log('')
-		console.log('render')
-		console.log('this.state.bets: ', this.state.bets)
-		console.log('this.state.bet: ', this.state.bet)
-		console.log('this.state.finish_date: ', this.state.finish_date)
-		// console.log(this.state.step)
-		// console.log('this.state.bets')
-		// console.log(this.state.bets)
-		return (
-			<React.Fragment>
-				{this.state.step === 'first' &&
-					<div className='new-poll-first-step-background'>
-						<div className='new-poll-first-step-container'>
-							<div className='new-poll-first-step-title'>ADD POLL</div>
-							<div className='new-poll-first-step-field'>
-								<TextField fullWidth id="outlined-basic" label="Name" variant="outlined" value={this.state.poll_name} onChange={(event) => this.setState({poll_name: event.target.value})}/>
-							</div>
-							<div className='new-poll-first-step-field' style={{marginBottom: '0px'}} onClick={() => {this.setState({is_private: !this.state.is_private}), this.setState({password: ''})}}>
-								<div className='new-poll-first-step-field-text'>Private Poll?</div>
-								<div className='new-poll-first-step-field-toggle'>
-									<Switch checked={this.state.is_private}/>
-								</div>
-							</div>
-							{this.state.is_private &&
-								<div className='new-poll-first-step-password-textfield'>
-									<TextField fullWidth id="outlined-basic" label="Password" variant="outlined" onChange={(event) => this.setState({password: event.target.value})}/>
-								</div>
-							}
-							<div 
-								className='new-poll-first-step-field' 
-								style={{marginBottom: '0px'}}
-								onClick={() => this.setState({finish_date_active: !this.state.finish_date_active})}
-							>
-								<div className='new-poll-first-step-field-text'>Is there a date to end poll?</div>
-								<div className='new-poll-first-step-field-toggle'>
-									<Switch checked={this.state.finish_date_active}/>
-								</div>
-							</div>
-							{this.state.finish_date_active &&
-								<div className='new-poll-first-step-password-textfield'>
-									<LocalizationProvider dateAdapter={AdapterDayjs}>
-										<DatePicker
-											label="Poll finish date"
-											value={this.state.finish_date}
-											onChange={(e) => this.setState({finish_date: dayjs(e.$d)})}
-										/>
-									</LocalizationProvider>
-								</div>
-							}
+	console.log('')
+	console.log('render')
+	console.log('bets: ', bets)
+	console.log('bet: ', bet)
+	console.log('finish_date: ', finishDate)
+	// console.log(step)
+	// console.log('bets')
+	// console.log(bets)
+	return (
+		<React.Fragment>
+			{step === 'first' &&
+				<div className='new-poll-first-step-background'>
+					<div className='new-poll-first-step-container'>
+						<div className='new-poll-first-step-title'>ADD POLL</div>
+						<div className='new-poll-first-step-field'>
+							<TextField fullWidth id="outlined-basic" label="Name" variant="outlined" value={pollName} onChange={(event) => setPollName(event.target.value)}/>
 						</div>
-						<div className='new-poll-first-step-button-container'>
-							<div 
-								className='new-poll-first-step-button' 
-							>
-								<Button 
-									fullWidth 
-									variant="contained"
-									onClick={
-										() => this.state.poll_name.length === 0 ? this.open_snackbar('You must give a name for your poll') : 
-										(this.state.is_private && this.state.password.length === 0) ? this.open_snackbar('Your private pool needs a password') : 
-										this.setState({step: 'second'})
-									}
-								>
-									NEXT
-								</Button>
+						<div className='new-poll-first-step-field' style={{marginBottom: '0px'}} onClick={() => {setIsPrivate(!isPrivate), setPassword('')}}>
+							<div className='new-poll-first-step-field-text'>Private Poll?</div>
+							<div className='new-poll-first-step-field-toggle'>
+								<Switch checked={isPrivate}/>
 							</div>
 						</div>
-					</div>
-				}
-			
-			{this.state.step === 'second' &&
-				<div className='new-poll-second-step-background'>
-					{/* Make the title and add button a fixed component */}
-					{!this.state.create_bet_card &&
-						<div className='new-poll-second-step-header'>
-							<div className='new-poll-second-step-header-title'>CREATE NEW BET</div>
-							<div className='new-poll-second-step-header-button'>
-								<Button fullWidth variant="contained" onClick={() => this.setState({create_bet_card: true})}>
-									<span className="material-icons">add</span>
-								</Button>
+						{isPrivate &&
+							<div className='new-poll-first-step-password-textfield'>
+								<TextField fullWidth id="outlined-basic" label="Password" variant="outlined" onChange={(event) => setPassword(event.target.value)}/>
+							</div>
+						}
+						<div 
+							className='new-poll-first-step-field' 
+							style={{marginBottom: '0px'}}
+							onClick={() => setFinishDateActive(!finishDateActive)}
+						>
+							<div className='new-poll-first-step-field-text'>Is there a date to end poll?</div>
+							<div className='new-poll-first-step-field-toggle'>
+								<Switch checked={finishDateActive}/>
 							</div>
 						</div>
-					}
-					{/* If there's no bet yet, display a message */}
-					{(this.state.bets.length === 0 && !this.state.create_bet_card) &&
-						<div className='new-poll-empty-bets-background'>
-							<div className='new-poll-empty-bets-title'>Your poll has no bets yet.</div>
-							<div className='new-poll-empty-bets-subtitle'>Create your first bet</div>
-							<img className='new-poll-empty-bets-image' src={empty_list}/>
-						</div>
-					}
-					{/* Everytime a user clicks to add button, open a card */}
-					{this.state.create_bet_card &&
-						<React.Fragment>
-							<div className='new-poll-second-step-card-close-button' onClick={() => {this.erase_all_fields(), this.setState({create_bet_card: false})}}>
-								<div className='new-poll-second-step-card-close-button-text'>Cancel</div>
-								<span className='material-icons'>close</span>
-							</div>
-							<div className='new-poll-second-step-card'>
-								<div className='new-poll-second-step-card-title'>New Bet</div>
-								<div className='new-poll-second-step-card-header'>
-									<div className='new-poll-second-step-card-header-icon' onClick={this.erase_all_fields}>
-										<span className="material-icons">delete</span>
-									</div>							
-									<div className='new-poll-second-step-card-header-title' onClick={this.erase_all_fields}>Erase all fields</div>
-								</div>
-								<div className='new-poll-second-step-card-container'>
-									<div className='new-poll-second-step-card-field'>
-										<TextField 
-											fullWidth 
-											id="outlined-basic" 
-											label="Bet name" 
-											variant="outlined" 
-											value={this.state.bet.bet_title}
-											onChange={(event) => this.edit_bet('bet_title', event.target.value)}
-										/>
-									</div>
-									<div className='new-poll-second-step-card-field'>
-										<TextField
-											fullWidth
-											id="outlined-multiline-static"
-											label="Description"
-											multiline
-											rows={4}
-											value={this.state.bet.bet_description}
-											onChange={(event) => this.edit_bet('bet_description', event.target.value)}
-										/>
-									</div>
-									<div className='new-poll-second-step-card-field new-poll-selectfield-container'>
-										<FormControl fullWidth>
-											<InputLabel id="demo-simple-select-label">Type</InputLabel>
-											<Select
-												labelId="demo-simple-select-label"
-												id="demo-simple-select"
-												value={this.state.bet.bet_type}
-												label="Type"
-												onChange={(event) => this.edit_bet('bet_type', event.target.value)}
-											>
-											<MenuItem value={'radio'}>One answer only</MenuItem>
-											<MenuItem value={'multiple'}>Multiple answer</MenuItem>
-											</Select>
-										</FormControl>	
-									</div>
-									<div 
-										className='new-poll-second-step-card-field new-poll-datepicker-container' 
-										style={{marginBottom: '0px'}}
-										onClick={
-											this.state.bet_finish_date_active ?
-											() => this.setState({bet: {...this.state.bet, bet_data: {...this.state.bet.bet_data, finish_date: false}}, bet_finish_date_active: false})
-											:
-											() => this.setState({bet: {...this.state.bet, bet_data: {...this.state.bet.bet_data, finish_date: dayjs(new Date())}}, bet_finish_date_active: true})
-										}
-									>
-										<div className='new-poll-second-step-card-toggle-title'>Set deadline to make this bet</div>
-										<div className='new-poll-first-step-field-toggle'>
-											<Switch checked={this.state.bet_finish_date_active}/>
-										</div>
-									</div>
-									{this.state.bet_finish_date_active &&
-										<div className='new-poll-second-step-card-field new-poll-datepicker-container'>
-											<LocalizationProvider dateAdapter={AdapterDayjs}>
-												<DatePicker
-													label="Bet finish date"
-													value={this.state.bet.bet_data.finish_date}
-													onChange={(e) => this.edit_bet('bet_finish_date', dayjs(e.$d))}
-												/>
-											</LocalizationProvider>	
-										</div>
-									}
-									<div className='new-poll-second-step-card-field'>
-										<div className='new-poll-second-step-card-toggle-container' onClick={this.state.correct_answer_confirmed ? () => {} : () => {this.setState({correct_answer_switch: !this.state.correct_answer_switch})}}>
-											<div className='new-poll-second-step-card-toggle-title'>Is there a answer already?</div>
-											<div className='new-poll-second-step-card-toggle-button'>
-												<Switch 
-													disabled={this.state.correct_answer_confirmed ? true : false} 
-													checked={this.state.correct_answer_switch}
-												/>
-											</div>
-										</div>
-										{this.state.correct_answer_switch &&
-											<div className='new-poll-second-step-card-field-textfield'>
-												<div className='new-poll-second-step-card-field-textfield-description'>
-													<TextField 
-														disabled={this.state.correct_answer_confirmed ? true : false} 
-														fullWidth 
-														id="outlined-basic" 
-														label="Correct answer" 
-														variant="outlined"
-														value={this.state.bet.correct_answer}
-														onChange={(event) => this.edit_bet('correct_answer', event.target.value)}
-													/>
-												</div>
-												<div>
-													<Button disabled={this.state.correct_answer_confirmed ? true : false} fullWidth variant="contained" onClick={() => {this.save_answer(this.state.bet.correct_answer, 'add'), this.setState({correct_answer_confirmed: true})}}>CONFIRM</Button>
-													{this.state.correct_answer_confirmed &&
-														<Button 
-															fullWidth variant="contained" 
-															onClick={() => {
-																this.save_answer(this.state.bet.correct_answer, 'remove'),
-																this.setState({correct_answer_confirmed: false}),
-																this.setState({bet: {...this.state.bet, correct_answer: ''}})
-															}}
-														>
-															ERASE
-														</Button>
-													}
-												</div>
-											</div>
-										}
-									</div>
-									<div className='new-poll-second-step-card-answers-options-title'>List here your answer options:</div>
-									<div className='new-poll-second-step-card-field new-poll-second-step-card-answers-options'>{/* If user already added the real answer, include at the list options of answers available */}
-										<div className='new-poll-second-step-card-answers-options-container'>
-											<div className='new-poll-second-step-card-answers-options-component'>
-												<AnswerOptions {...this.state} save_answer={this.save_answer} answer_options={this.state.bet.bet_data.answer_options} open_snackbar={this.open_snackbar}/>
-											</div>
-										</div>
-									</div>
-								</div>
-								<Divider variant="middle" />
-								<div className='new-poll-second-step-card-button'>
-									{this.state.bet.bet_hash ?
-										<Button fullWidth variant="contained" onClick={this.update_bet}>UPDATE BET</Button>
-										:
-										<Button fullWidth variant="contained" onClick={this.add_bet}>ADD BET</Button>
-									}
-								</div>
-							</div>
-						</React.Fragment>
-					}
-					{!this.state.create_bet_card &&
-						<React.Fragment>
-							{(this.state.bets.length > 0) &&
-								<React.Fragment>
-									<div className='new-poll-second-step-list'>
-										<div className='new-poll-second-step-list-title'>List of Bets</div>
-										{this.state.bets.map((bet) => {
-											return(
-												<div key={bet.bet_hash} className='new-poll-second-step-list-card' onClick={() => this.set_bet(bet)}>
-													<div className='new-poll-second-step-list-card-title'>{bet.bet_title}</div>
-													<div className='new-poll-second-step-list-card-icon' onClick={() => this.remove_bet(bet)}>
-														<span className="material-icons">delete</span>
-													</div>
-												</div>
-											)
-										})}
-									</div>
-								</React.Fragment>
-							}
-						</React.Fragment>
-					}
-					{!this.state.create_bet_card &&
-						<div className='new-poll-second-step-buttons-container'>
-							<div className='new-poll-second-step-button' onClick={() => this.setState({step: 'first'})}>
-								<Button fullWidth variant="contained">BACK</Button>
-							</div>
-							{this.state.bets.length !== 0 &&
-								<div className='new-poll-second-step-button' onClick={() => this.setState({step: 'third'})}>
-									<Button fullWidth variant="contained">NEXT</Button>
-								</div>
-							}
-						</div>
-					}
-				</div>
-			}
-			{this.state.step === 'third' &&
-				<div className='new-poll-third-step-background'>
-					<div className='new-poll-third-step-photo'>
-						<div className='new-poll-third-step-photo-title'>Last step...</div>
-						<div className='new-poll-third-step-photo-subtitle'>Upload an image for your poll (OPTIONAL)</div>
-						<UploadImageComponent handle_change={this.handle_change} {...this.state}/>
-					</div>
-					<div className='new-poll-third-step-buttons-container'>
-						<div className='new-poll-third-step-button' onClick={() => this.setState({step: 'second'})}>
-							<Button fullWidth variant="contained">BACK</Button>
-						</div>
-						{this.state.bets.length !== 0 &&
-							<div className='new-poll-third-step-button new-poll-third-step-button-confirm' onClick={() => this.setState({step: 'finish'})}>
-								<Button fullWidth variant="contained" onClick={this.create_poll}>SAVE POLL</Button>
+						{finishDateActive &&
+							<div className='new-poll-first-step-password-textfield'>
+								<LocalizationProvider dateAdapter={AdapterDayjs}>
+									<DatePicker
+										label="Poll finish date"
+										value={finishDate}
+										onChange={(e) => setFinishDate(dayjs(e.$d))}
+									/>
+								</LocalizationProvider>
 							</div>
 						}
 					</div>
+					<div className='new-poll-first-step-button-container'>
+						<div 
+							className='new-poll-first-step-button' 
+						>
+							<Button 
+								fullWidth 
+								variant="contained"
+								onClick={
+									() => pollName.length === 0 ? open_snackbar('You must give a name for your poll') : 
+									(isPrivate && password.length === 0) ? open_snackbar('Your private pool needs a password') : 
+									setStep('second')
+								}
+							>
+								NEXT
+							</Button>
+						</div>
+					</div>
 				</div>
 			}
-			<Snackbar
-				autoHideDuration={2000}
-				open={this.state.snackbar_open}
-				message={this.state.snackbar_message}
-				onClose={() => this.setState({snackbar_open: false})}
-			/>
-			<Backdrop
-				open={this.state.backdrop}
-			>
-				<CircularProgress color="inherit" />
-			</Backdrop>
-			</React.Fragment>
-		)
-    }
+		
+		{step === 'second' &&
+			<div className='new-poll-second-step-background'>
+				{/* Make the title and add button a fixed component */}
+				{!createBetCard &&
+					<div className='new-poll-second-step-header'>
+						<div className='new-poll-second-step-header-title'>CREATE NEW BET</div>
+						<div className='new-poll-second-step-header-button'>
+							<Button fullWidth variant="contained" onClick={() => setCreateBetCard(true)}>
+								<span className="material-icons">add</span>
+							</Button>
+						</div>
+					</div>
+				}
+				{/* If there's no bet yet, display a message */}
+				{(bets.length === 0 && !createBetCard) &&
+					<div className='new-poll-empty-bets-background'>
+						<div className='new-poll-empty-bets-title'>Your poll has no bets yet.</div>
+						<div className='new-poll-empty-bets-subtitle'>Create your first bet</div>
+						<img className='new-poll-empty-bets-image' src={empty_list}/>
+					</div>
+				}
+				{/* Everytime a user clicks to add button, open a card */}
+				{createBetCard &&
+					<React.Fragment>
+						<div className='new-poll-second-step-card-close-button' onClick={() => {erase_all_fields(), setCreateBetCard(false)}}>
+							<div className='new-poll-second-step-card-close-button-text'>Cancel</div>
+							<span className='material-icons'>close</span>
+						</div>
+						<div className='new-poll-second-step-card'>
+							<div className='new-poll-second-step-card-title'>New Bet</div>
+							<div className='new-poll-second-step-card-header'>
+								<div className='new-poll-second-step-card-header-icon' onClick={erase_all_fields}>
+									<span className="material-icons">delete</span>
+								</div>							
+								<div className='new-poll-second-step-card-header-title' onClick={erase_all_fields}>Erase all fields</div>
+							</div>
+							<div className='new-poll-second-step-card-container'>
+								<div className='new-poll-second-step-card-field'>
+									<TextField 
+										fullWidth 
+										id="outlined-basic" 
+										label="Bet name" 
+										variant="outlined" 
+										value={bet.bet_title}
+										onChange={(event) => edit_bet('bet_title', event.target.value)}
+									/>
+								</div>
+								<div className='new-poll-second-step-card-field'>
+									<TextField
+										fullWidth
+										id="outlined-multiline-static"
+										label="Description"
+										multiline
+										rows={4}
+										value={bet.bet_description}
+										onChange={(event) => edit_bet('bet_description', event.target.value)}
+									/>
+								</div>
+								<div className='new-poll-second-step-card-field new-poll-selectfield-container'>
+									<FormControl fullWidth>
+										<InputLabel id="demo-simple-select-label">Type</InputLabel>
+										<Select
+											labelId="demo-simple-select-label"
+											id="demo-simple-select"
+											value={bet.bet_type}
+											label="Type"
+											onChange={(event) => edit_bet('bet_type', event.target.value)}
+										>
+										<MenuItem value={'radio'}>One answer only</MenuItem>
+										<MenuItem value={'multiple'}>Multiple answer</MenuItem>
+										</Select>
+									</FormControl>	
+								</div>
+								<div 
+									className='new-poll-second-step-card-field new-poll-datepicker-container' 
+									style={{marginBottom: '0px'}}
+									onClick={
+										betFinishDateActive ?
+										() => {setBet({...bet, bet_data: {...bet.bet_data, finish_date: false}}), setBetFinishDateActive(false)}
+										:
+										() => {setBet({...bet, bet_data: {...bet.bet_data, finish_date: dayjs(new Date())}}), setBetFinishDateActive(true)}
+									}
+								>
+									<div className='new-poll-second-step-card-toggle-title'>Set deadline to make this bet</div>
+									<div className='new-poll-first-step-field-toggle'>
+										<Switch checked={betFinishDateActive}/>
+									</div>
+								</div>
+								{betFinishDateActive &&
+									<div className='new-poll-second-step-card-field new-poll-datepicker-container'>
+										<LocalizationProvider dateAdapter={AdapterDayjs}>
+											<DatePicker
+												label="Bet finish date"
+												value={bet.bet_data.finish_date}
+												onChange={(e) => edit_bet('bet_finish_date', dayjs(e.$d))}
+											/>
+										</LocalizationProvider>	
+									</div>
+								}
+								<div className='new-poll-second-step-card-field'>
+									<div className='new-poll-second-step-card-toggle-container' onClick={correctAnswerConfirmed ? () => {} : () => {setCorrectAnswerSwitch(!correctAnswerSwitch)}}>
+										<div className='new-poll-second-step-card-toggle-title'>Is there a answer already?</div>
+										<div className='new-poll-second-step-card-toggle-button'>
+											<Switch 
+												disabled={correctAnswerConfirmed ? true : false} 
+												checked={correctAnswerSwitch}
+											/>
+										</div>
+									</div>
+									{correctAnswerSwitch &&
+										<div className='new-poll-second-step-card-field-textfield'>
+											<div className='new-poll-second-step-card-field-textfield-description'>
+												<TextField 
+													disabled={correctAnswerConfirmed ? true : false} 
+													fullWidth 
+													id="outlined-basic" 
+													label="Correct answer" 
+													variant="outlined"
+													value={bet.correct_answer}
+													onChange={(event) => edit_bet('correct_answer', event.target.value)}
+												/>
+											</div>
+											<div>
+												<Button disabled={correctAnswerConfirmed ? true : false} fullWidth variant="contained" onClick={() => {save_answer(bet.correct_answer, 'add'), setCorrectAnswerConfirmed(true)}}>CONFIRM</Button>
+												{correctAnswerConfirmed &&
+													<Button 
+														fullWidth variant="contained" 
+														onClick={() => {
+															save_answer(bet.correct_answer, 'remove'),
+															setCorrectAnswerConfirmed(false),
+															setBet({...bet, correct_answer: ''})
+														}}
+													>
+														ERASE
+													</Button>
+												}
+											</div>
+										</div>
+									}
+								</div>
+								<div className='new-poll-second-step-card-answers-options-title'>List here your answer options:</div>
+								<div className='new-poll-second-step-card-field new-poll-second-step-card-answers-options'>{/* If user already added the real answer, include at the list options of answers available */}
+									<div className='new-poll-second-step-card-answers-options-container'>
+										<div className='new-poll-second-step-card-answers-options-component'>
+											<AnswerOptions bet={bet} save_answer={save_answer} answer_options={bet.bet_data.answer_options} open_snackbar={open_snackbar}/>
+										</div>
+									</div>
+								</div>
+							</div>
+							<Divider variant="middle" />
+							<div className='new-poll-second-step-card-button'>
+								{bet.bet_hash ?
+									<Button fullWidth variant="contained" onClick={update_bet}>UPDATE BET</Button>
+									:
+									<Button fullWidth variant="contained" onClick={add_bet}>ADD BET</Button>
+								}
+							</div>
+						</div>
+					</React.Fragment>
+				}
+				{!createBetCard &&
+					<React.Fragment>
+						{(bets.length > 0) &&
+							<React.Fragment>
+								<div className='new-poll-second-step-list'>
+									<div className='new-poll-second-step-list-title'>List of Bets</div>
+									{bets.map((bet) => {
+										return(
+											<div key={bet.bet_hash} className='new-poll-second-step-list-card' onClick={() => set_bet(bet)}>
+												<div className='new-poll-second-step-list-card-title'>{bet.bet_title}</div>
+												<div className='new-poll-second-step-list-card-icon' onClick={() => remove_bet(bet)}>
+													<span className="material-icons">delete</span>
+												</div>
+											</div>
+										)
+									})}
+								</div>
+							</React.Fragment>
+						}
+					</React.Fragment>
+				}
+				{!createBetCard &&
+					<div className='new-poll-second-step-buttons-container'>
+						<div className='new-poll-second-step-button' onClick={() => setStep('first')}>
+							<Button fullWidth variant="contained">BACK</Button>
+						</div>
+						{bets.length !== 0 &&
+							<div className='new-poll-second-step-button' onClick={() => setStep('third')}>
+								<Button fullWidth variant="contained">NEXT</Button>
+							</div>
+						}
+					</div>
+				}
+			</div>
+		}
+		{step === 'third' &&
+			<div className='new-poll-third-step-background'>
+				<div className='new-poll-third-step-photo'>
+					<div className='new-poll-third-step-photo-title'>Last step...</div>
+					<div className='new-poll-third-step-photo-subtitle'>Upload an image for your poll (OPTIONAL)</div>
+					<UploadImageComponent setImage={setImage} {...this.state}/>
+				</div>
+				<div className='new-poll-third-step-buttons-container'>
+					<div className='new-poll-third-step-button' onClick={() => setStep('second')}>
+						<Button fullWidth variant="contained">BACK</Button>
+					</div>
+					{bets.length !== 0 &&
+						<div className='new-poll-third-step-button new-poll-third-step-button-confirm' onClick={() => setStep('finish')}>
+							<Button fullWidth variant="contained" onClick={create_poll}>SAVE POLL</Button>
+						</div>
+					}
+				</div>
+			</div>
+		}
+		<Snackbar
+			autoHideDuration={2000}
+			open={snackbarOpen}
+			message={snackbarMessage}
+			onClose={() => setSnackbarOpen(false)}
+		/>
+		<Backdrop
+			open={backdrop}
+		>
+			<CircularProgress color="inherit" />
+		</Backdrop>
+		</React.Fragment>
+	)
 }
+export default NewPoll;
