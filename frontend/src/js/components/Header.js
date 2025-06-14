@@ -8,6 +8,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import 'styles/components/Header.css'
+import { Link } from "react-router-dom";
 
 function SwipeableTemporaryDrawer() {
     const [state, setState] = React.useState({
@@ -30,57 +31,57 @@ function SwipeableTemporaryDrawer() {
             className="header-box"
         >
             <List>
-                <a href="/">
+                <Link to="/">
                     <ListItem button key={'Home'}>
                         <ListItemIcon>
                             <span className="material-icons">home</span>
                         </ListItemIcon>
                         <ListItemText primary={'Home'} />
                     </ListItem>
-                </a>
-                <a href="/my-polls">
+                </Link>
+                <Link to="/my-polls">
                     <ListItem button key={'My pools'}>
                         <ListItemIcon>
                             <span className="material-icons">list</span>
                         </ListItemIcon>
                         <ListItemText primary={'My pools'} />
                     </ListItem>
-                </a>
-                <a href="/new-poll">
+                </Link>
+                <Link to="/new-poll">
                     <ListItem button key={'New pool'}>
                         <ListItemIcon>
                             <span className="material-icons">add</span>
                         </ListItemIcon>
                         <ListItemText primary={'New pool'} />
                     </ListItem>
-                </a>
-                <a href="/search-polls">
+                </Link>
+                <Link to="/search-polls">
                     <ListItem button key={'Search pools'}>
                         <ListItemIcon>
                             <span className="material-icons">search</span>
                         </ListItemIcon>
                         <ListItemText primary={'Search pools'} />
                     </ListItem>
-                </a>
+                </Link>
             </List>
             <Divider />
             <List>
-                <a href="/settings">
+                <Link to="/settings">
                     <ListItem button key={'Settings'}>
                         <ListItemIcon>
                             <span className="material-icons">settings</span>
                         </ListItemIcon>
                         <ListItemText primary={'Settings'} />
                     </ListItem>
-                </a>
-                <a href="/">
+                </Link>
+                <Link to="/">
                     <ListItem button key={'Logout'}>
                         <ListItemIcon>
                             <span className="material-icons">logout</span>
                         </ListItemIcon>
                         <ListItemText primary={'Logout'} />
                     </ListItem>
-                </a>
+                </Link>
             </List>
         </Box>
     );

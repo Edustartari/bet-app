@@ -29,19 +29,17 @@ class App extends Component {
         var path_location = window.location.pathname;
         return (
             <div>
-                <Router>
-                    {path_location !== '/login' && <Header/>}
-                    <Routes>
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/my-polls" element={<MyPolls />} />
-                        <Route path="/new-poll" element={<NewPoll />} />
-                        <Route path="/search-polls" element={<SearchPolls />} />
-                        <Route path="/settings" element={<Settings />} />
-                        <Route path="/bet-page" element={<BetPage />} />
-                        <Route path="/:slug" element={<Poll />} />
-                        <Route path="/" element={<Main />} />
-                    </Routes>
-                </Router>
+                {path_location !== '/login' && <Header/>}
+                <Routes>
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/my-polls" element={<MyPolls />} />
+                    <Route path="/new-poll" element={<NewPoll />} />
+                    <Route path="/search-polls" element={<SearchPolls />} />
+                    <Route path="/settings" element={<Settings />} />
+                    <Route path="/bet-page" element={<BetPage />} />
+                    <Route path="/:slug" element={<Poll />} />
+                    <Route path="/" element={<Main />} />
+                </Routes>
             </div>
         )
     }
@@ -52,7 +50,9 @@ export default App;
 if(isMobile){
     render(
         <Provider store={store}>
-            <App/>
+            <Router>
+                <App/>
+            </Router>
         </Provider>
         , document.getElementById("app")
     );
