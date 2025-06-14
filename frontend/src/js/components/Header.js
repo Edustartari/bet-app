@@ -105,13 +105,13 @@ function SwipeableTemporaryDrawer() {
     );
 }
 
-export default class Header extends React.Component {
-    render() {
-      return (
+const Header = () => {
+    return (
         <div className="header-background">
             <SwipeableTemporaryDrawer/>
             <div className="header-title">Bet App</div>
         </div>
-      )
-    }
-  }
+    )
+}
+
+export default Header;

@@ -19,30 +19,23 @@ import {
 import { Provider } from "react-redux";
 import { store } from './redux_folder/global_reducer.js';
 
-class App extends Component {
-    constructor(props){
-        super(props)
-        this.state = {}
-    }
-
-    render() {
-        var path_location = window.location.pathname;
-        return (
-            <div>
-                {path_location !== '/login' && <Header/>}
-                <Routes>
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/my-polls" element={<MyPolls />} />
-                    <Route path="/new-poll" element={<NewPoll />} />
-                    <Route path="/search-polls" element={<SearchPolls />} />
-                    <Route path="/settings" element={<Settings />} />
-                    <Route path="/bet-page" element={<BetPage />} />
-                    <Route path="/:slug" element={<Poll />} />
-                    <Route path="/" element={<Main />} />
-                </Routes>
-            </div>
-        )
-    }
+const App = () => {
+    var path_location = window.location.pathname;
+    return (
+        <div>
+            {path_location !== '/login' && <Header/>}
+            <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route path="/my-polls" element={<MyPolls />} />
+                <Route path="/new-poll" element={<NewPoll />} />
+                <Route path="/search-polls" element={<SearchPolls />} />
+                <Route path="/settings" element={<Settings />} />
+                <Route path="/bet-page" element={<BetPage />} />
+                <Route path="/:slug" element={<Poll />} />
+                <Route path="/" element={<Main />} />
+            </Routes>
+        </div>
+    )
 }
 
 export default App;

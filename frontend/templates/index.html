@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block links %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -11,8 +10,9 @@
 {% block javascript %}
 <script >
     console.log('index.html')
-    // var content = {{user|safe}}
-    // console.log(content)
+    let content = {}
+    content.user = {{user|safe}}
+    console.log('content:', content)
 </script>
 <script src="{% static 'Main_bundle.js' %}"></script>
 {% endblock %}
