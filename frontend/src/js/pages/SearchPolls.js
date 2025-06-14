@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import 'styles/pages/SearchPolls.css';
-import new_baby from 'images//new-baby.jpg';
-import f1 from 'images//f1.jpg';
-import oscar from 'images//oscar.jpg';
+import new_baby from 'images/new-baby.jpg';
+import f1 from 'images/f1.jpg';
+import oscar from 'images/oscar.jpg';
 import recipe from 'images/recipe.jpg';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
