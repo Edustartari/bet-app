@@ -27,7 +27,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import empty_list from 'images//empty_list.jpg';
 import default_poll_image from 'images//default_poll_image.png';
 import ImageUploading from "react-images-uploading";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 /* 
 
@@ -35,6 +35,7 @@ import { Navigate } from "react-router-dom";
 	CREATE OPTION TO USER LOAD ANSWERS FROM A CSV FILE
 
 */
+
 
 function UploadImageComponent(props) {
 	const [images, setImages] = useState(props.image);
@@ -177,6 +178,8 @@ function AnswerOptions(props) {
 }
 
 const NewPoll = (props) => {
+	let navigate = useNavigate();
+
 	const [step, setStep] = useState('first'); // can be first, second, third...
 	const [pollName, setPollName] = useState('');
 	const [pollType, setPollType] = useState(false);
@@ -357,7 +360,7 @@ const NewPoll = (props) => {
 			},
 			success: function(data){
 				if(data.status === 'success'){
-					<Navigate to={"/poll/" + data.new_poll_hash} replace={true} />
+					navigate('/poll/' + data.new_poll_hash)
 				} else {
 					setLoading(false);
 					open_snackbar('Something went wrong. Please try again later...')
