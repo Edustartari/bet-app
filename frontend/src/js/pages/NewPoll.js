@@ -196,7 +196,7 @@ const NewPoll = (props) => {
 		'bet_data': {
 			'answer_options': [],
 			'finish_date': false,
-			'users_answers': [],
+			'users_answers': {},
 		},
 		'image': '',
 		'bet_type': '', /* select field - bet type could be radio (one answer), several checks (several answers) */
@@ -272,7 +272,7 @@ const NewPoll = (props) => {
 			'bet_data': {
 				'answer_options': [],
 				'finish_date': false,
-				'users_answers': [],
+				'users_answers': {},
 			},
 			'image': '',
 			'bet_type': '',
@@ -350,6 +350,9 @@ const NewPoll = (props) => {
 		data_dict['password'] = password
 		data_dict['finish_date'] = finishDateActive ? finishDate : false
 		data_dict['bets'] = bets
+		console.log('data_dict: ', data_dict)
+
+		return
 
 		$.ajax({
 			context: this,

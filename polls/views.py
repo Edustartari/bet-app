@@ -9,6 +9,78 @@ import base64
 import os
 from django.contrib.auth import authenticate, login, logout
 from django.db import connections, connection, transaction
+from polls.mock_data import poll_mock_list
+
+# Create your procedures here.
+def hash_id_generator():
+	return str(uuid.uuid1()).replace('-', '')
+
+def create_mock_data():
+	print('')
+	print('create_mock_data')
+
+	# Create users
+	for i in range(1, 6):
+		new_user = user(
+			name = 'User ' + str(i),
+			email = 'user' + str(i) + '@example.com',
+			hash_id = hash_id_generator()
+		)
+		new_user.save()
+
+	for poll_info in poll_mock_list:
+		print('')
+		print('test')
+		print(poll_info)
+
+		current_path = os.path.dirname(os.path.realpath(__file__))
+		poll_hash_id = hash_id_generator()
+
+		poll_image_hash = ''
+
+		finish_date = None
+		if poll_info['finish_date']:
+			finish_date = datetime.strptime(poll_info['finish_date'], '%Y-%m-%dT%H:%M:%S.%fZ') # 2023-06-23T22:35:12.226Z
+
+		new_poll = poll(
+			name = poll_info['poll_name'],
+			hash_id = poll_hash_id,
+			is_active = 1,
+			image = poll_image_hash,
+			poll_type = poll_info['poll_type'],
+			is_private = 1 if poll_info['isPrivate'] else 0,
+			password = poll_info['password'] if len(poll_info['password']) > 0 else 0,
+			poll_data = '',
+			finish_date = finish_date
+		)
+		new_poll.save()
+
+		for bet_dict in poll_info['bets']:
+			finish_date = None
+			if 'finish_date' in bet_dict['bet_data'] and bet_dict['bet_data']['finish_date']:
+				finish_date = datetime.strptime(bet_dict['bet_data']['finish_date'], '%Y-%m-%dT%H:%M:%S.%fZ')
+			new_bet = bet(
+				bet_title = bet_dict['bet_title'],
+				hash_id = hash_id_generator(),
+				bet_description = bet_dict['bet_description'],
+				bet_data = json.dumps(bet_dict['bet_data']),
+				bet_type = bet_dict['bet_type'],
+				poll_id = new_poll.id,
+				answer = bet_dict['correct_answer'],
+				is_active = 1,
+				finish_date = finish_date
+			)
+			new_bet.save()
+
+		new_poll_admin = poll_admins(
+			poll_id = new_poll.id,
+			hash_id = hash_id_generator(),
+			is_admin = 1,
+			# user_id = users_objects[0].id
+			user_id = 1
+		)
+		new_poll_admin.save()
+
 
 # Middlewares
 def session_middleware(get_response):
@@ -36,10 +108,6 @@ def session_middleware(get_response):
 
 	return middleware
 
-# Create your procedures here.
-def hash_id_generator():
-	return str(uuid.uuid1()).replace('-', '')
-
 # Create your views here.
 def index(request):
 	print('')
@@ -60,6 +128,8 @@ def index(request):
 	# current_session = session.objects.get(hash_id = request.session['session_hash'])
 	# current_session.user_id = 1
 	# current_session.save()
+
+	# create_mock_data()
 
 	context = {
 		'user': json.dumps(users_list)
@@ -141,7 +211,6 @@ def search_polls(request):
 		}
 	}
 	print(mock_dict)
-	print(mock_dict['users_answers'][2])
 	print(type(mock_dict))
 	response_dict = {
 		'status': 'success',
@@ -220,7 +289,7 @@ def poll_info(request):
 			if bet_info.finish_date:
 				bet_dict['finish_date'] = bet_info.finish_date.strftime('%-d, %b - %Y')
 
-			bet_dict['users_answers'] = []
+			bet_dict['users_answers'] = {}
 			if 'users_answers' in bet_data:
 				bet_dict['users_answers'] = bet_data['users_answers']
 
