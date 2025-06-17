@@ -71,6 +71,10 @@
       "name": "index_bundle.js",
       "path": "/home/eduardo/coding/projects/bet-app/static/index_bundle.js"
     },
+    "Loading_bundle.js": {
+      "name": "Loading_bundle.js",
+      "path": "/home/eduardo/coding/projects/bet-app/static/Loading_bundle.js"
+    },
     "Login_bundle.js": {
       "name": "Login_bundle.js",
       "path": "/home/eduardo/coding/projects/bet-app/static/Login_bundle.js"
@@ -120,6 +124,9 @@
     "index.js": [
       "index_bundle.js"
     ],
+    "Loading.js": [
+      "Loading_bundle.js"
+    ],
     "Login.js": [
       "Login_bundle.js"
     ],
@@ -146,5 +153,5 @@
     ]
   },
   "error": "ModuleBuildError",
-  "message": "Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /home/eduardo/coding/projects/bet-app/frontend/src/js/pages/NewPoll.js: Unexpected keyword 'true'. (517:117)\n\n  515 | \t\t\t\t\t\t\t\t\t\t:\n  516 | \t\t\t\t\t\t\t\t\t\t// () => setBet({...bet, bet_data: {...bet.bet_data, finish_date: dayjs(new Date())}, bet_finish_date_active: true})\n> 517 | \t\t\t\t\t\t\t\t\t\t() => {setBet({...bet, bet_data: {...bet.bet_data, finish_date: dayjs(new Date())}, setBetFinishDateActive(true))}\n      | \t\t\t\t\t\t\t\t\t\t                                                                                                           ^\n  518 | \t\t\t\t\t\t\t\t\t}\n  519 | \t\t\t\t\t\t\t\t>\n  520 | \t\t\t\t\t\t\t\t\t<div className='new-poll-second-step-card-toggle-title'>Set deadline to make this bet</div>\n    at constructor (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:363:19)\n    at JSXParserMixin.raise (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:6609:19)\n    at JSXParserMixin.checkReservedWord (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:12159:12)\n    at JSXParserMixin.parseIdentifierName (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:12146:12)\n    at JSXParserMixin.parseIdentifier (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:12116:23)\n    at JSXParserMixin.parseBindingAtom (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:7345:17)\n    at JSXParserMixin.parseMaybeDefault (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:7428:39)\n    at JSXParserMixin.parseBindingElement (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:7412:23)\n    at JSXParserMixin.parseBindingList (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:7381:24)\n    at JSXParserMixin.parseFunctionParams (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:13376:24)"
+  "message": "Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /home/eduardo/coding/projects/bet-app/frontend/src/js/pages/MyPolls.js: Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>? (71:2)\n\n  69 | \t\t\t\t</div>\n  70 | \t\t\t</div>\n> 71 | \t\t</>\n     | \t\t^\n  72 | \t)\n  73 | }\n  74 | export default MyPolls;\n    at constructor (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:363:19)\n    at JSXParserMixin.raise (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:6609:19)\n    at JSXParserMixin.jsxParseElementAt (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:4754:18)\n    at JSXParserMixin.jsxParseElement (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:4761:17)\n    at JSXParserMixin.parseExprAtom (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:4771:19)\n    at JSXParserMixin.parseExprSubscripts (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:11012:23)\n    at JSXParserMixin.parseUpdate (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10997:21)\n    at JSXParserMixin.parseMaybeUnary (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10977:23)\n    at JSXParserMixin.parseMaybeUnaryOrPrivate (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10830:61)\n    at JSXParserMixin.parseExprOpBaseRightExpr (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10917:34)"
 }

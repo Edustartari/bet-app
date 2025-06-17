@@ -50,3 +50,13 @@ class session(models.Model):
 	created_at = models.DateTimeField(auto_now=False, auto_now_add=True)
 	origin_ip = models.CharField(max_length=200, default='')
 	location = models.CharField(max_length=200, default='')
+
+class user_bet(models.Model):
+    user_id = models.IntegerField(default=0)
+    bet_id = models.IntegerField(default=0)
+    answer = models.CharField(max_length=200, default='')
+    bet_data = models.TextField(default='')
+    hash_id = models.CharField(max_length=200, null=True)
+    created_at = models.DateField(auto_now=False, auto_now_add=True)
+    updated_at = models.DateField(auto_now=True)
+    is_active = models.IntegerField(default=0)

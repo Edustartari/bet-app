@@ -254,7 +254,6 @@ const NewPoll = (props) => {
 	const erase_all_fields = () => {
 		console.log('')
 		console.log('erase_all_fields')
-		// setCorrectAnswer('')
 		setBetFinishDateActive(false)
 		let empty_bet = {
 			'bet_title': '',

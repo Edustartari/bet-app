@@ -1,7 +1,26 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect } from 'react'
 import 'styles/pages/Settings.css'
 
 const Settings = (props) => {
+	console.log('Settings component props:', props);
+
+    useEffect(() => {
+        const fetch_data = async () => {
+            try {
+                let response = await fetch('/settings');
+                console.log('response:', response);
+                if(response.status === 200){
+                    let data = await response.json();
+                    console.log('Fetched data:', data);
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        fetch_data()
+    }, [])
+
     return (
         <div className='settings-background'>
             <div className='settings-box'>

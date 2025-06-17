@@ -67,23 +67,10 @@ def index(request):
 	return render(request, 'index.html', context)
 
 def login(request):
-	context = {}
-
-	new_user = user(
-		name = 'Edward',
-		email = 'edu@mail.com',
-		hash_id = hash_id_generator()
-	)
-	new_user.save()
-
-	new_user = user(
-		name = 'John Lennon',
-		email = 'john@mail.com',
-		hash_id = hash_id_generator()
-	)
-	new_user.save()
-
-	return render(request, 'login.html', context)
+	response_dict = {
+		'status': 'success'
+	}
+	return JsonResponse(response_dict, safe=False)
 
 def my_polls(request):
 	print('')
@@ -117,23 +104,18 @@ def my_polls(request):
 		poll_dict['type'] = element.poll_type
 		poll_list.append(poll_dict)
 
-	context = {
-		'poll_list': json.dumps(poll_list)
+	response_dict = {
+		'status': 'success',
+		'poll_list': poll_list
 	}
-	return render(request, 'my-polls.html', context)
-
-def new_poll(request):
-	print('')
-	print('new_poll')
-	context = {}
-	return render(request, 'new-poll.html', context)
+	return JsonResponse(response_dict, safe=False)
 
 @csrf_exempt
 def search_polls(request):
 	print('')
 	print('search_polls')
 	print(request.user.id)
-	edu_dict = {
+	mock_dict = {
 		"answer_options": ["1", "2"],
 		"finish_date": "2023-11-15T23:57:49.263Z",
 		"users_answers": {
@@ -155,17 +137,22 @@ def search_polls(request):
 			}
 		}
 	}
-	print(edu_dict)
-	print(edu_dict['users_answers'][2])
-	print(type(edu_dict))
-	context = {}
-	return render(request, 'search-polls.html', context)
+	print(mock_dict)
+	print(mock_dict['users_answers'][2])
+	print(type(mock_dict))
+	response_dict = {
+		'status': 'success',
+		'data': mock_dict
+	}
+	return JsonResponse(response_dict, safe=False)
 
 def settings(request):
 	print('')
 	print('settings')
-	context = {}
-	return render(request, 'settings.html', context)
+	response_dict = {
+		'status': 'success'
+	}
+	return JsonResponse(response_dict, safe=False)
 
 def poll_view(request, hash_id):
 	print('')
@@ -365,41 +352,124 @@ def save_bet(request):
 poll table
 poll_data field with json example:
 {
-	"finish_date": "2024-12-10T00:26:28.000Z",
-	"ranking": [
-		{
-			"user_id": 1,
-			"user_hash": 1,
-			"position": 1,
-			"profile_picture_1": "",
-			"user_name": "Name 1",
-			"total_points": 9
+	"ranking": {
+		"current": {
+			"bet_id": 2,
+			"bet_hash": '',
+			"users_bets": [
+				{
+					"user_id": 1,
+					"user_hash": 1,
+					"position": 1,
+					"profile_picture_1": "",
+					"user_name": "Name 1",
+					"total_points": 9
+				},
+				{
+					"user_id": 2,
+					"user_hash": 2,
+					"position": 2,
+					"profile_picture_2": "",
+					"user_name": "Name 2",
+					"total_points": 6
+				},
+				{
+					"user_id": 3,
+					"user_hash": 3,
+					"position": 3,
+					"profile_picture_3": "",
+					"user_name": "Name 3",
+					"total_points": 3
+				},
+				{
+					"user_id": 4,
+					"user_hash": 4,
+					"position": 4,
+					"profile_picture_4": "",
+					"user_name": "Name 4",
+					"total_points": 0
+				}
+			]
 		},
-		{
-			"user_id": 2,
-			"user_hash": 2,
-			"position": 2,
-			"profile_picture_2": "",
-			"user_name": "Name 2",
-			"total_points": 6
-		},
-		{
-			"user_id": 3,
-			"user_hash": 3,
-			"position": 3,
-			"profile_picture_3": "",
-			"user_name": "Name 3",
-			"total_points": 3
-		},
-		{
-			"user_id": 4,
-			"user_hash": 4,
-			"position": 4,
-			"profile_picture_4": "",
-			"user_name": "Name 4",
-			"total_points": 0
-		}
-	]
+		"history": [
+			{
+				"bet_id": 1,
+				"bet_hash": '',
+				"users_bets": [
+					{
+						"user_id": 1,
+						"user_hash": 1,
+						"position": 1,
+						"profile_picture_1": "",
+						"user_name": "Name 1",
+						"total_points": 9
+					},
+					{
+						"user_id": 2,
+						"user_hash": 2,
+						"position": 2,
+						"profile_picture_2": "",
+						"user_name": "Name 2",
+						"total_points": 6
+					},
+					{
+						"user_id": 3,
+						"user_hash": 3,
+						"position": 3,
+						"profile_picture_3": "",
+						"user_name": "Name 3",
+						"total_points": 3
+					},
+					{
+						"user_id": 4,
+						"user_hash": 4,
+						"position": 4,
+						"profile_picture_4": "",
+						"user_name": "Name 4",
+						"total_points": 0
+					}
+				]
+			}
+			{
+				"bet_id": 2,
+				"bet_hash": '',
+				"users_bets": [
+					{
+						"user_id": 1,
+						"user_hash": 1,
+						"position": 1,
+						"profile_picture_1": "",
+						"user_name": "Name 1",
+						"total_points": 9
+					},
+					{
+						"user_id": 2,
+						"user_hash": 2,
+						"position": 2,
+						"profile_picture_2": "",
+						"user_name": "Name 2",
+						"total_points": 6
+					},
+					{
+						"user_id": 3,
+						"user_hash": 3,
+						"position": 3,
+						"profile_picture_3": "",
+						"user_name": "Name 3",
+						"total_points": 3
+					},
+					{
+						"user_id": 4,
+						"user_hash": 4,
+						"position": 4,
+						"profile_picture_4": "",
+						"user_name": "Name 4",
+						"total_points": 0
+					}
+				]
+			}
+		]
+	}
 }
 """
 
@@ -407,10 +477,8 @@ poll_data field with json example:
 bet table
 bet_data field with json example:
 {
-	"answer_options": ["1", "2"],
-	"finish_date": "2023-11-15T23:57:49.263Z",
 	"users_answers": {
-		1: {
+		1: {// This is the user_id
 		"answer": "string1"
 		},
 		2: {
