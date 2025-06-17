@@ -27,6 +27,14 @@ import dayjs, { Dayjs } from 'dayjs';
 import empty_list from 'images//empty_list.jpg';
 import default_poll_image from 'images//default_poll_image.png';
 import ImageUploading from "react-images-uploading";
+import { Navigate } from "react-router-dom";
+
+/* 
+
+    CREATE OPTION TO USER COPY THE SAME BET AGAIN, BUT WITH A DIFFERENT NAME
+	CREATE OPTION TO USER LOAD ANSWERS FROM A CSV FILE
+
+*/
 
 function UploadImageComponent(props) {
 	const [images, setImages] = useState(props.image);
@@ -198,7 +206,7 @@ const NewPoll = (props) => {
 	const [correctAnswerConfirmed, setCorrectAnswerConfirmed] = useState(false);
 	const [snackbarOpen, setSnackbarOpen] = useState(false);
 	const [snackbarMessage, setSnackbarMessage] = useState('');
-	const [backdrop, setBackdrop] = useState(false);
+	const [loading, setLoading] = useState(false);
 
 	const edit_bet = (key, value) => {
 		console.log('')
@@ -328,7 +336,7 @@ const NewPoll = (props) => {
 	}
 
 	const create_poll = () => {
-		setBackdrop(true);
+		setLoading(true);
 		console.log('')
 		console.log('create_poll 6')
 		let data_dict = {}
@@ -349,9 +357,9 @@ const NewPoll = (props) => {
 			},
 			success: function(data){
 				if(data.status === 'success'){
-					window.open('/' + data.new_poll_hash, "_self")
+					<Navigate to={"/poll/" + data.new_poll_hash} replace={true} />
 				} else {
-					setBackdrop(false);
+					setLoading(false);
 					open_snackbar('Something went wrong. Please try again later...')
 				}
 				console.log('success')
@@ -630,7 +638,7 @@ const NewPoll = (props) => {
 				<div className='new-poll-third-step-photo'>
 					<div className='new-poll-third-step-photo-title'>Last step...</div>
 					<div className='new-poll-third-step-photo-subtitle'>Upload an image for your poll (OPTIONAL)</div>
-					<UploadImageComponent setImage={setImage} {...this.state}/>
+					<UploadImageComponent setImage={setImage} image={image}/>
 				</div>
 				<div className='new-poll-third-step-buttons-container'>
 					<div className='new-poll-third-step-button' onClick={() => setStep('second')}>
@@ -651,7 +659,7 @@ const NewPoll = (props) => {
 			onClose={() => setSnackbarOpen(false)}
 		/>
 		<Backdrop
-			open={backdrop}
+			open={loading}
 		>
 			<CircularProgress color="inherit" />
 		</Backdrop>

@@ -86,7 +86,7 @@
     font-size: 15px;
 }
 .poll-header-icon{
-    width: 100%;
+    width: fit-content;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -106,4 +106,10 @@
     align-items: center;
     height: 100%;
     margin: 20px 0 0 0;
+}
+.poll-header-button-container {
+    width: 100%;
+}
+.poll-header-button-container a{
+    text-decoration: unset;
 }

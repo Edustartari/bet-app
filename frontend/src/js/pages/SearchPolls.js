@@ -6,7 +6,7 @@ import oscar from 'images/oscar.jpg';
 import recipe from 'images/recipe.jpg';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import Loading from '../components/Loading.js'
+import LoadingComponent from '../components/LoadingComponent.js'
 
 /* INCLUDE OPTIONS AT HEADER: 3 DOTS AT RIGHT TO DISPLAY: filter by date, by category, by active */
 /* For each search, display only 20 first results, and then after user scrolls down an reach bottom load more 20 results and so on */
@@ -14,12 +14,12 @@ import Loading from '../components/Loading.js'
 const SearchPolls = (props) => {
 	console.log('SearchPolls component props:', props);
 	const [searchTerm, setSearchTerm] = useState('');
-	const [backdrop, setBackdrop] = useState(false);
+	const [loading, setLoading] = useState(false);
 
 	const fetch_data = async () => {
 		console.log('')
 		console.log('fetch_data')
-		setBackdrop(true);
+		setLoading(true);
 		try {
 			let response = await fetch('/search-polls');
 			console.log('response:', response);
@@ -30,13 +30,13 @@ const SearchPolls = (props) => {
 		} catch (error) {
 			console.error('Error fetching data:', error);
 		} finally {
-			setBackdrop(false);
+			setLoading(false);
 		}
 	}
 
 	return (
 		<>
-			{backdrop && <Loading />}
+			{loading && <LoadingComponent />}
 			<div className="search-background">
 				<div className="search-bar-container">
 					<div className="search-bar">

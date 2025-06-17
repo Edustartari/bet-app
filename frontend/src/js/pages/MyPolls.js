@@ -2,12 +2,13 @@ import React, { Component, useState, useEffect } from 'react'
 import 'styles/pages/MyPolls.css';
 import new_baby from 'images/new-baby.jpg'
 import default_poll_image from 'images/default_poll_image.png';
-import Loading from '../components/Loading.js'
+import LoadingComponent from '../components/LoadingComponent.js'
+import { Link } from "react-router-dom";
 
 /* INCLUDE OPTIONS AT HEADER: 3 DOTS AT RIGHT TO DISPLAY: ACTIVE POLLS, ALL, FINISHED POLLS */
 
 const MyPolls = (props) => {
-	const [backdrop, setBackdrop] = useState(true);	
+	const [loading, setLoading] = useState(true);	
 	const [pollList, setPollList] = useState([]);	
 
 	console.log('MyPolls component props:', props);
@@ -25,7 +26,7 @@ const MyPolls = (props) => {
 			} catch (error) {
 				console.error('Error fetching data:', error);
 			} finally {
-				setBackdrop(false);
+				setLoading(false);
 			}
 		}
 		fetch_data()
@@ -33,7 +34,7 @@ const MyPolls = (props) => {
 
 	return (
 		<>
-			{backdrop && <Loading />}
+			{loading && <LoadingComponent />}
 			{pollList.length === 0 &&
 				<div className="my-polls-background-empty">No bets yet...</div>
 			}
@@ -44,14 +45,14 @@ const MyPolls = (props) => {
 
 							let poll_image = "";
 							try {
-								poll_image = require('images//' + element.image + '.jpg');
+								poll_image = require('images/' + element.image + '.jpg');
 								poll_image = poll_image.default;
 							} catch (error) {
 								poll_image = default_poll_image;
 							}
 
 							return(
-								<a key={element.hash_id} href={"/" + element.hash_id} className="my-polls-card">
+								<Link key={element.hash_id} to={"/poll/" + element.hash_id} className="my-polls-card">
 									<div className="my-polls-card-left">
 										<div className="my-polls-card-left-image">
 											<img src={poll_image}/>
@@ -64,7 +65,7 @@ const MyPolls = (props) => {
 											<span className="material-icons">chevron_right</span>
 										</div>
 									</div>
-								</a>
+								</Link>
 							)
 						})}
 					</div>

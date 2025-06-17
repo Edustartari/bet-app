@@ -88,13 +88,16 @@ def my_polls(request):
 		poll_dict['name'] = element.name
 		poll_dict['image'] = element.image
 		poll_dict['hash_id'] = element.hash_id
-		poll_data_json = json.loads(element.poll_data)
-		if len(poll_data_json['ranking']) > 0:
-			for e in poll_data_json['ranking']:
-				if e['user_id'] == user_id:
-					poll_dict['position'] = e['position']
-					break
-		else:
+		try:
+			poll_data_json = json.loads(element.poll_data)
+			if len(poll_data_json['ranking']) > 0:
+				for e in poll_data_json['ranking']:
+					if e['user_id'] == user_id:
+						poll_dict['position'] = e['position']
+						break
+			else:
+				poll_dict['position'] = False
+		except:
 			poll_dict['position'] = False
 		poll_dict['created_at'] = element.created_at.strftime('%Y/%m/%d')
 		poll_dict['updated_at'] = element.updated_at.strftime('%Y/%m/%d')
@@ -154,9 +157,16 @@ def settings(request):
 	}
 	return JsonResponse(response_dict, safe=False)
 
-def poll_view(request, hash_id):
+@csrf_exempt
+def poll_info(request):
 	print('')
-	print('poll_view')
+	print('poll_info')
+	# Access request.body and retrieve the dict from the POST request
+	post_data = json.loads(request.body.decode("utf-8"))
+	print('post_data')
+	print(post_data)
+	hash_id = post_data['hash_id']
+	print('hash_id: ', hash_id)
 
 	try:
 		# Get the current session
@@ -179,9 +189,9 @@ def poll_view(request, hash_id):
 		poll_dict['name'] = poll_object.name
 		poll_dict['image'] = poll_object.image        
 		poll_dict['hash_id'] = poll_object.hash_id
-		poll_data_json = json.loads(poll_object.poll_data)
-		poll_dict['ranking'] = poll_data_json['ranking']
-		poll_dict['finish_date'] = poll_data_json['finish_date']
+		# poll_data_json = json.loads(poll_object.poll_data)
+		# poll_dict['ranking'] = poll_data_json['ranking']
+		# poll_dict['finish_date'] = poll_data_json['finish_date']
 		poll_dict['created_at'] = poll_object.created_at.strftime('%Y/%m/%d')
 		poll_dict['updated_at'] = poll_object.updated_at.strftime('%Y/%m/%d')
 		poll_dict['is_active'] = poll_object.is_active
@@ -219,14 +229,12 @@ def poll_view(request, hash_id):
 		
 		poll_dict['bets'] = bets_list
 
-
-	context = {
-		'poll_dict': json.dumps(poll_dict),
-		'poll_exists': json.dumps(poll_exists)
+	response_dict = {
+		'status': 'success',
+		'poll_dict': poll_dict,
+		'poll_exists': poll_exists
 	}
-
-	return render(request, 'poll.html', context)
-
+	return JsonResponse(response_dict, safe=False)
 
 @csrf_exempt
 def create_poll(request):
@@ -265,9 +273,9 @@ def create_poll(request):
 		is_active = 1,
 		image = poll_image_hash,
 		poll_type = poll_info['poll_type'],
-		is_private = 1 if poll_info['is_private'] else 0,
+		is_private = 1 if poll_info['isPrivate'] else 0,
 		password = poll_info['password'] if len(poll_info['password']) > 0 else 0,
-		poll_data = json.dumps({'finish_date': poll_info['finish_date'], 'ranking': []}),
+		poll_data = '',
 		finish_date = finish_date
 	)
 	new_poll.save()

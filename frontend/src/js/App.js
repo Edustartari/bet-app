@@ -31,7 +31,7 @@ const App = () => {
                 <Route path="/search-polls" element={<SearchPolls />} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/bet-page" element={<BetPage />} />
-                <Route path="/:slug" element={<Poll />} />
+                <Route path="/poll/:slug" element={<Poll />} />
                 <Route path="/" element={<Main />} />
             </Routes>
         </div>
