@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import 'styles/pages/MyPolls.css';
 import new_baby from 'images/new-baby.jpg'
 import default_poll_image from 'images/default_poll_image.png';

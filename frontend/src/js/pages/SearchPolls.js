@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'styles/pages/SearchPolls.css';
 import new_baby from 'images/new-baby.jpg';
 import f1 from 'images/f1.jpg';

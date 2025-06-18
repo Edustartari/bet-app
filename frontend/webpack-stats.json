@@ -35,41 +35,13 @@
       "name": "App_bundle.js",
       "path": "/home/eduardo/coding/projects/bet-app/static/App_bundle.js"
     },
-    "b4f401b67c287410bbf91d3bb854320d.jpg": {
-      "name": "b4f401b67c287410bbf91d3bb854320d.jpg",
-      "path": "/home/eduardo/coding/projects/bet-app/static/b4f401b67c287410bbf91d3bb854320d.jpg",
-      "sourceFilename": "src/img/mobile-icon-indicator.jpg"
-    },
-    "ba8b3bd03020d0b780da4525bf988cde.jpg": {
-      "name": "ba8b3bd03020d0b780da4525bf988cde.jpg",
-      "path": "/home/eduardo/coding/projects/bet-app/static/ba8b3bd03020d0b780da4525bf988cde.jpg",
-      "sourceFilename": "src/img/empty_list.jpg"
-    },
     "BetPage_bundle.js": {
       "name": "BetPage_bundle.js",
       "path": "/home/eduardo/coding/projects/bet-app/static/BetPage_bundle.js"
     },
-    "e239c3dc2a3caff0f24de049ef6164f1.png": {
-      "name": "e239c3dc2a3caff0f24de049ef6164f1.png",
-      "path": "/home/eduardo/coding/projects/bet-app/static/e239c3dc2a3caff0f24de049ef6164f1.png",
-      "sourceFilename": "src/img/default_poll_image.png"
-    },
-    "fd0b004a02828ad4eda09bb03cc8a1e5.jpg": {
-      "name": "fd0b004a02828ad4eda09bb03cc8a1e5.jpg",
-      "path": "/home/eduardo/coding/projects/bet-app/static/fd0b004a02828ad4eda09bb03cc8a1e5.jpg",
-      "sourceFilename": "src/img/new-baby.jpg"
-    },
-    "global_reducer_bundle.js": {
-      "name": "global_reducer_bundle.js",
-      "path": "/home/eduardo/coding/projects/bet-app/static/global_reducer_bundle.js"
-    },
     "Header_bundle.js": {
       "name": "Header_bundle.js",
       "path": "/home/eduardo/coding/projects/bet-app/static/Header_bundle.js"
-    },
-    "index_bundle.js": {
-      "name": "index_bundle.js",
-      "path": "/home/eduardo/coding/projects/bet-app/static/index_bundle.js"
     },
     "LoadingComponent_bundle.js": {
       "name": "LoadingComponent_bundle.js",
@@ -106,6 +78,38 @@
     "Settings_bundle.js": {
       "name": "Settings_bundle.js",
       "path": "/home/eduardo/coding/projects/bet-app/static/Settings_bundle.js"
+    },
+    "b4f401b67c287410bbf91d3bb854320d.jpg": {
+      "name": "b4f401b67c287410bbf91d3bb854320d.jpg",
+      "path": "/home/eduardo/coding/projects/bet-app/static/b4f401b67c287410bbf91d3bb854320d.jpg",
+      "sourceFilename": "src/img/mobile-icon-indicator.jpg"
+    },
+    "ba8b3bd03020d0b780da4525bf988cde.jpg": {
+      "name": "ba8b3bd03020d0b780da4525bf988cde.jpg",
+      "path": "/home/eduardo/coding/projects/bet-app/static/ba8b3bd03020d0b780da4525bf988cde.jpg",
+      "sourceFilename": "src/img/empty_list.jpg"
+    },
+    "e239c3dc2a3caff0f24de049ef6164f1.png": {
+      "name": "e239c3dc2a3caff0f24de049ef6164f1.png",
+      "path": "/home/eduardo/coding/projects/bet-app/static/e239c3dc2a3caff0f24de049ef6164f1.png",
+      "sourceFilename": "src/img/default_poll_image.png"
+    },
+    "fd0b004a02828ad4eda09bb03cc8a1e5.jpg": {
+      "name": "fd0b004a02828ad4eda09bb03cc8a1e5.jpg",
+      "path": "/home/eduardo/coding/projects/bet-app/static/fd0b004a02828ad4eda09bb03cc8a1e5.jpg",
+      "sourceFilename": "src/img/new-baby.jpg"
+    },
+    "global_reducer_bundle.js": {
+      "name": "global_reducer_bundle.js",
+      "path": "/home/eduardo/coding/projects/bet-app/static/global_reducer_bundle.js"
+    },
+    "index_bundle.js": {
+      "name": "index_bundle.js",
+      "path": "/home/eduardo/coding/projects/bet-app/static/index_bundle.js"
+    },
+    "store_bundle.js": {
+      "name": "store_bundle.js",
+      "path": "/home/eduardo/coding/projects/bet-app/static/store_bundle.js"
     }
   },
   "chunks": {
@@ -115,14 +119,8 @@
     "BetPage.js": [
       "BetPage_bundle.js"
     ],
-    "global_reducer.js": [
-      "global_reducer_bundle.js"
-    ],
     "Header.js": [
       "Header_bundle.js"
-    ],
-    "index.js": [
-      "index_bundle.js"
     ],
     "LoadingComponent.js": [
       "LoadingComponent_bundle.js"
@@ -150,8 +148,17 @@
     ],
     "Settings.js": [
       "Settings_bundle.js"
+    ],
+    "global_reducer.js": [
+      "global_reducer_bundle.js"
+    ],
+    "index.js": [
+      "index_bundle.js"
+    ],
+    "store.js": [
+      "store_bundle.js"
     ]
   },
   "error": "ModuleBuildError",
-  "message": "Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /home/eduardo/coding/projects/bet-app/frontend/src/js/pages/NewPoll.js: Missing semicolon. (364:14)\n\n  362 | \t\t\t\tif(data.status === 'success'){\n  363 | \t\t\t\t\tnavigate(\"/poll/\" + data.new_poll_hash)\n> 364 | \t\t\t\t\t<Navigate to={\"/poll/\" + data.new_poll_hash}/>\n      | \t\t\t\t\t         ^\n  365 | \t\t\t\t} else {\n  366 | \t\t\t\t\tsetLoading(false);\n  367 | \t\t\t\t\topen_snackbar('Something went wrong. Please try again later...')\n    at constructor (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:363:19)\n    at JSXParserMixin.raise (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:6609:19)\n    at JSXParserMixin.semicolon (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:6906:10)\n    at JSXParserMixin.parseExpressionStatement (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:13204:10)\n    at JSXParserMixin.parseStatementContent (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:12818:19)\n    at JSXParserMixin.parseStatementLike (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:12685:17)\n    at JSXParserMixin.parseStatementListItem (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:12665:17)\n    at JSXParserMixin.parseBlockOrModuleBlockBody (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:13235:61)\n    at JSXParserMixin.parseBlockBody (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:13228:10)\n    at JSXParserMixin.parseBlock (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:13216:10)"
+  "message": "Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /home/eduardo/coding/projects/bet-app/frontend/src/js/pages/BetPage.js: Unexpected token (140:27)\n\n  138 |                 <BetCard data={bet_card} setBetCard={setBetCard} handle_snackbar={handle_snackbar}/>\n  139 |             }\n> 140 |             {!bet_card ||  &&\n      |                            ^\n  141 |                 <div className=\"bet-page-background\">\n  142 |                     <div className=\"bet-page-main-header\">\n  143 |                         <Link to={\"/\" + poll_dict.hash_id}>\n    at constructor (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:363:19)\n    at JSXParserMixin.raise (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:6609:19)\n    at JSXParserMixin.unexpected (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:6629:16)\n    at JSXParserMixin.parseExprAtom (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:11378:16)\n    at JSXParserMixin.parseExprAtom (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:4776:20)\n    at JSXParserMixin.parseExprSubscripts (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:11012:23)\n    at JSXParserMixin.parseUpdate (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10997:21)\n    at JSXParserMixin.parseMaybeUnary (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10977:23)\n    at JSXParserMixin.parseMaybeUnaryOrPrivate (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10830:61)\n    at JSXParserMixin.parseExprOpBaseRightExpr (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10917:34)\n    at JSXParserMixin.parseExprOpRightExpr (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10912:21)\n    at JSXParserMixin.parseExprOp (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10878:27)\n    at JSXParserMixin.parseExprOps (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10839:17)\n    at JSXParserMixin.parseMaybeConditional (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10812:23)\n    at JSXParserMixin.parseMaybeAssign (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10765:21)\n    at JSXParserMixin.parseExpressionBase (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10718:23)\n    at /home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10714:39\n    at JSXParserMixin.allowInAnd (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:12361:12)\n    at JSXParserMixin.parseExpression (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10714:17)\n    at JSXParserMixin.jsxParseExpressionContainer (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:4644:31)\n    at JSXParserMixin.jsxParseElementAt (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:4723:36)\n    at JSXParserMixin.jsxParseElement (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:4761:17)\n    at JSXParserMixin.parseExprAtom (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:4771:19)\n    at JSXParserMixin.parseExprSubscripts (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:11012:23)\n    at JSXParserMixin.parseUpdate (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10997:21)\n    at JSXParserMixin.parseMaybeUnary (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10977:23)\n    at JSXParserMixin.parseMaybeUnaryOrPrivate (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10830:61)\n    at JSXParserMixin.parseExprOps (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10835:23)\n    at JSXParserMixin.parseMaybeConditional (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10812:23)\n    at JSXParserMixin.parseMaybeAssign (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10765:21)\n    at /home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10734:39\n    at JSXParserMixin.allowInAnd (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:12361:12)\n    at JSXParserMixin.parseMaybeAssignAllowIn (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10734:17)\n    at JSXParserMixin.parseParenAndDistinguishExpression (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:11608:28)\n    at JSXParserMixin.parseExprAtom (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:11262:23)\n    at JSXParserMixin.parseExprAtom (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:4776:20)\n    at JSXParserMixin.parseExprSubscripts (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:11012:23)\n    at JSXParserMixin.parseUpdate (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10997:21)\n    at JSXParserMixin.parseMaybeUnary (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10977:23)\n    at JSXParserMixin.parseMaybeUnaryOrPrivate (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10830:61)\n    at JSXParserMixin.parseExprOps (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10835:23)\n    at JSXParserMixin.parseMaybeConditional (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10812:23)\n    at JSXParserMixin.parseMaybeAssign (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10765:21)\n    at JSXParserMixin.parseExpressionBase (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10718:23)\n    at /home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10714:39\n    at JSXParserMixin.allowInAnd (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:12356:16)\n    at JSXParserMixin.parseExpression (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:10714:17)\n    at JSXParserMixin.parseReturnStatement (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:13061:28)\n    at JSXParserMixin.parseStatementContent (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:12716:21)\n    at JSXParserMixin.parseStatementLike (/home/eduardo/coding/projects/bet-app/frontend/node_modules/@babel/parser/lib/index.js:12685:17)"
 }

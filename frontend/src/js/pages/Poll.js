@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import 'styles/pages/Poll.css'
 import Button from '@mui/material/Button';
 import oscar from 'images/oscar.jpg';
@@ -7,8 +7,8 @@ import profile_picture_2 from 'images/profile-picture-2.jpg';
 import Avatar from '@mui/material/Avatar';
 import { CardContent } from '@mui/material';
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import { update } from "../redux_folder/global_reducer.js";
+import { useSelector, useDispatch } from 'react-redux';
+import { updatePollDict } from "../redux_folder/global_reducer.js";
 import default_poll_image from 'images//default_poll_image.png';
 import LoadingComponent from '../components/LoadingComponent.js'
 
@@ -17,6 +17,11 @@ import LoadingComponent from '../components/LoadingComponent.js'
 /* USE AVATAR FOR USERS THAT DON'T HAVE PHOTO */
 
 const Poll = (props) => {
+    const state = useSelector(state => state.global)
+    const dispatch = useDispatch()
+
+    console.log('redux state:', state)
+
     const [loading, setLoading] = useState(true);	
     const [poll_dict, setPollDict] = useState({});	
     // console.log('')
@@ -31,7 +36,7 @@ const Poll = (props) => {
 
         const fetch_data = async () => {
             try {
-                let response = await fetch('/poll-info?hash_id=test', {
+                let response = await fetch('/poll-info', {
                     method: "POST",
                     headers: {
                         'Content-Type': 'application/json',
@@ -43,7 +48,7 @@ const Poll = (props) => {
                     let data = await response.json();
                     console.log('Fetched data:', data);
                     setPollDict(data.poll_dict);
-                    update('poll_dict', poll_dict);
+                    dispatch(updatePollDict(data.poll_dict));
                 }
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -126,11 +131,4 @@ const Poll = (props) => {
         )
     }
 }
-
-function mapStateToProps(state) {
-    return {
-        poll_dict: state.poll_dict
-    };
-}
-
-export default connect(mapStateToProps, { update })(Poll);
+export default Poll;

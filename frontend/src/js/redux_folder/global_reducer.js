@@ -1,31 +1,21 @@
-import { legacy_createStore as createStore} from 'redux'
+import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-    poll_dict: false,
-};
-
-export function update (key, value) {
-    return {
-        type: "UPDATE",
-        key: key,
-        value: value
-    }
+    poll_dict: {}
 }
 
-function global_reducer (state = initialState, action) {
-    let new_state = Object.assign({}, state);
-    console.log('')
-    console.log('global_reducer.js')
-    console.log(state)
-    console.log(action)
-    switch (action.type) {
-        case "UPDATE":            
-            new_state[action.key] = action.value;
-            console.log(new_state)
-            return new_state;
-        default:
-            return new_state;
+export const globalSlice = createSlice({
+  name: 'global',
+  initialState,
+  reducers: {
+    updatePollDict: (state, action) => {
+        console.log('action: ', action)
+        state.poll_dict = action.payload
     }
-};
+  }
+})
 
-export const store = createStore(global_reducer);
+// Action creators are generated for each case reducer function
+export const { updatePollDict } = globalSlice.actions
+
+export default globalSlice.reducer

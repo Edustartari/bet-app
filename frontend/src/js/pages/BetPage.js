@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'styles/pages/BetPage.css';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
@@ -11,11 +11,14 @@ import Marquee from "react-fast-marquee";
 import {
     Link
 } from "react-router-dom";
-import { connect } from "react-redux";
-import { update } from "../redux_folder/global_reducer.js";
+import { useSelector, useDispatch } from 'react-redux';
+import { updatePollDict } from "../redux_folder/global_reducer.js";
 import default_poll_image from 'images/default_poll_image.png';
 
 const BetCard = (props) => {
+    const state = useSelector(state => state.global)
+    const dispatch = useDispatch()
+
     const [option_selected, setOptionSelected] = useState([]);
 
     const save_bet = () => {
@@ -43,18 +46,18 @@ const BetCard = (props) => {
 			success: function(data){
 				if(data.status === 'success'){
 					props.handle_snackbar('Saved!');
-                    let poll_dict = props.poll_dict;
+                    let poll_dict = state.poll_dict;
                     // Find the bet in the poll_dict and update it
                     for(let i = 0; i < poll_dict.bets.length; i++){
                         if(poll_dict.bets[i].hash_id === props.data.hash_id){
-                            poll_dict.bets[i]['users_answers'][props.poll_dict.user_id] = {
+                            poll_dict.bets[i]['users_answers'][state.poll_dict.user_id] = {
                                 "answer": option_selected
                             };
                             break;
                         }
                     }
                     // Update the poll_dict in the redux store
-                    props.update('poll_dict', poll_dict);                    
+                    // props.update('poll_dict', poll_dict);
                     props.setBetCard(false);
 				} else {
 					props.handle_snackbar('Sorry, something went wrong...');
@@ -103,6 +106,11 @@ const BetCard = (props) => {
 }
 
 const BetPage = (props) => {
+    const state = useSelector(state => state.global)
+    const dispatch = useDispatch()
+
+    let poll_dict = state.poll_dict;
+
     const [bet_card, setBetCard] = useState(false);
     const [snackbar_open, setSnackbarOpen] = useState(false);
     const [snackbar_message, setSnackbarMessage] = useState('');
@@ -112,11 +120,9 @@ const BetPage = (props) => {
         setSnackbarOpen(true);
     };
 
-    let poll_dict = props.poll_dict;
-
     let poll_image = "";
     try {
-        poll_image = require('images//' + poll_dict.image + '.jpg');
+        poll_image = require('images/' + poll_dict.image + '.jpg');
         poll_image = poll_image.default;
     } catch (error) {
         poll_image = default_poll_image;
@@ -124,16 +130,17 @@ const BetPage = (props) => {
 
     console.log('')
     console.log('snackbar_open', snackbar_open)
+    console.log('poll_dict', poll_dict)
 
     return (
         <React.Fragment>
             {bet_card &&
-                <BetCard {...props} data={bet_card} setBetCard={setBetCard} handle_snackbar={handle_snackbar}/>
+                <BetCard data={bet_card} setBetCard={setBetCard} handle_snackbar={handle_snackbar}/>
             }
             {!bet_card &&
                 <div className="bet-page-background">
                     <div className="bet-page-main-header">
-                        <Link to={"/" + poll_dict.hash_id}>
+                        <Link to={"/poll/" + poll_dict.hash_id}>
                             <div className="bet-page-main-header-button">
                                 <span className="material-icons">arrow_back</span>
                                 <span className="bet-page-main-header-button-details">BACK</span>
@@ -189,11 +196,4 @@ const BetPage = (props) => {
         </React.Fragment>
     )
 }
-
-function mapStateToProps(state) {
-    return {
-        poll_dict: state.poll_dict
-    };
-}
-
-export default connect(mapStateToProps, { update })(BetPage);
+export default BetPage;

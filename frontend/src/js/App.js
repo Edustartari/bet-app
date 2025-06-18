@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { render } from "react-dom";
+import React, { Component, StrictMode } from 'react'
+import ReactDOM from 'react-dom/client';
 import {isMobile} from 'react-device-detect';
 import Main from './pages/Main';
 import MyPolls from './pages/MyPolls';
@@ -16,8 +16,8 @@ import {
     Route
 } from "react-router-dom";
 
+import store from './redux_folder/store';
 import { Provider } from "react-redux";
-import { store } from './redux_folder/global_reducer.js';
 
 const App = () => {
     var path_location = window.location.pathname;
@@ -41,12 +41,14 @@ const App = () => {
 export default App;
 
 if(isMobile){
-    render(
-        <Provider store={store}>
-            <Router>
-                <App/>
-            </Router>
-        </Provider>
-        , document.getElementById("app")
+    const root = ReactDOM.createRoot(document.getElementById("app"));
+    root.render(
+        <StrictMode>
+            <Provider store={store}>
+                <Router>
+                    <App/>
+                </Router>
+            </Provider>
+        </StrictMode>,
     );
 }

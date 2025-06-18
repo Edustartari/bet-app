@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from 'react'
+import { useEffect } from 'react'
 import 'styles/pages/Settings.css'
 
 const Settings = (props) => {

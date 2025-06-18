@@ -19,7 +19,7 @@ for (var i = folder_pool.length - 1; i >= 0; i--) {
 	
 	// List all the files in the current folder
 	var files = fs.readdirSync(path.join(current_folder));
-	// files = [ 'components', 'pages', 'index.js', App.js', redux_folder ]
+	// files = [ 'components', 'pages', 'index.js', App.js' ]
 
 	// Append all the keys to the dict
 	for (var j= files.length - 1; j >= 0; j--) {
@@ -38,7 +38,6 @@ for (var i = folder_pool.length - 1; i >= 0; i--) {
 }
 
 // entries = {
-//   'global_reducer.js': '/home/eduardo/coding/projects/bet-app/frontend/src/js/redux_folder/global_reducer.js',
 //   'Settings.js': '/home/eduardo/coding/projects/bet-app/frontend/src/js/pages/Settings.js',
 //   'SearchPolls.js': '/home/eduardo/coding/projects/bet-app/frontend/src/js/pages/SearchPolls.js',
 //   'Poll.js': '/home/eduardo/coding/projects/bet-app/frontend/src/js/pages/Poll.js',
