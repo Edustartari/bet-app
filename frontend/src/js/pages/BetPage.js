@@ -16,20 +16,43 @@ import { updatePollDict } from "../redux_folder/global_reducer.js";
 import default_poll_image from 'images/default_poll_image.png';
 
 const BetCard = (props) => {
+    const { data } = props;
+
     const state = useSelector(state => state.global)
     const dispatch = useDispatch()
 
     const [option_selected, setOptionSelected] = useState([]);
 
+    const change_option = (option) => {
+        console.log('')
+        console.log('change_option')
+        console.log('option', option)
+        if(data.type === 'radio'){
+            console.log('if')
+            setOptionSelected([option]);
+        }
+        else {
+            console.log('else if')
+            if(option_selected.includes(option)){
+                setOptionSelected(option_selected.filter(item => item !== option));
+            } else {
+                setOptionSelected([...option_selected, option]);
+            }
+        }
+    }
+
     const save_bet = () => {
         console.log('')
         console.log('save_bet')
+        console.log('data', data)
+        console.log('option_selected', option_selected)
+
         if(option_selected.length === 0){
             console.log('if')
             props.handle_snackbar('Please select at least one option');
             return;
         }
-        else if(props.data.type === 'radio' && option_selected.length > 1){
+        else if(data.type === 'radio' && option_selected.length > 1){
             console.log('else if')
             props.handle_snackbar('Please select one option only');
             return;
@@ -40,7 +63,7 @@ const BetCard = (props) => {
 			type: 'POST',
 			url: '/save-bet',
 			data: {
-				bet_info: JSON.stringify(props.data),
+				bet_info: JSON.stringify(data),
                 option_selected: JSON.stringify(option_selected)
 			},
 			success: function(data){
@@ -49,7 +72,7 @@ const BetCard = (props) => {
                     let poll_dict = state.poll_dict;
                     // Find the bet in the poll_dict and update it
                     for(let i = 0; i < poll_dict.bets.length; i++){
-                        if(poll_dict.bets[i].hash_id === props.data.hash_id){
+                        if(poll_dict.bets[i].hash_id === data.hash_id){
                             poll_dict.bets[i]['users_answers'][state.poll_dict.user_id] = {
                                 "answer": option_selected
                             };
@@ -57,7 +80,7 @@ const BetCard = (props) => {
                         }
                     }
                     // Update the poll_dict in the redux store
-                    // props.update('poll_dict', poll_dict);
+                    dispatch(updatePollDict(poll_dict));
                     props.setBetCard(false);
 				} else {
 					props.handle_snackbar('Sorry, something went wrong...');
@@ -66,7 +89,6 @@ const BetCard = (props) => {
 		})
     }
 
-    const { data } = props;
     console.log('')
     console.log('data', data)
     console.log('option_selected', option_selected)
@@ -82,7 +104,7 @@ const BetCard = (props) => {
                         <div 
                             key={answer} 
                             className='bet-card-option-item' 
-                            onClick={(e) => setOptionSelected(option_selected.includes(answer) ? option_selected.filter(item => item !== answer) : [...option_selected, answer] )}
+                            onClick={(e) => change_option(answer)}
                             style={{backgroundColor: option_selected.includes(answer) ? 'rgb(25 118 210 / 30%)' : 'white'}}
                         >
                             <div className='bet-card-option-item-text'>{answer}</div>

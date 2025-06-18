@@ -13,7 +13,23 @@ poll_mock_list = [
 				'bet_data': {
 					'answer_options': ['opt 1', 'opt 3', 'opt 4', 'opt 5'],
 					'finish_date': '2025-08-28T21:25:08.000Z',
-					'users_answers': {}
+					'users_answers': {
+                        "1": {
+                            "answer": [
+                                "opt 1"
+                            ]
+                        },
+                        "2": {
+                            "answer": [
+                                "opt 2"
+                            ]
+                        },
+                        "4": {
+                            "answer": [
+                                "opt 3"
+                            ]
+                        }
+                    }
 				},
 				'image': '',
 				'bet_type': 'radio',
@@ -27,7 +43,23 @@ poll_mock_list = [
 				'bet_data': {
 					'answer_options': ['opt 6', 'opt 7', 'opt 8'],
 					'finish_date': '2025-07-05T21:25:36.000Z',
-					'users_answers': {}
+					'users_answers': {
+                        "1": {
+                            "answer": [
+                                "opt 6"
+                            ]
+                        },
+                        "2": {
+                            "answer": [
+                                "opt 7"
+                            ]
+                        },
+                        "4": {
+                            "answer": [
+                                "opt 6"
+                            ]
+                        }
+                    }
 				},
 				'image': '',
 				'bet_type': 'radio',
@@ -51,7 +83,38 @@ poll_mock_list = [
 				'bet_data': {
 					'answer_options': ['John', 'Paul', 'Ringo', 'George'],
 					'finish_date': '2025-09-24T21:25:08.000Z',
-					'users_answers': {}
+					'users_answers': {
+                        "1": {
+                            "answer": [
+                                "John"
+                            ]
+                        },
+                        "2": {
+                            "answer": [
+                                "Paul"
+                            ]
+                        },
+                        "3": {
+                            "answer": [
+                                "John"
+                            ]
+                        },
+                        "4": {
+                            "answer": [
+                                "Ringo"
+                            ]
+                        },
+                        "5": {
+                            "answer": [
+                                "George"
+                            ]
+                        },
+                        "6": {
+                            "answer": [
+                                "Paul"
+                            ]
+                        }
+                    }
 				},
 				'image': '',
 				'bet_type': 'radio',
@@ -75,7 +138,33 @@ poll_mock_list = [
 				'bet_data': {
 					'answer_options': ['Yes', 'No'],
 					'finish_date': '2025-09-19T21:25:08.000Z',
-					'users_answers': {}
+					'users_answers': {
+                        "1": {
+                            "answer": [
+                                "Yes"
+                            ]
+                        },
+                        "2": {
+                            "answer": [
+                                "Yes"
+                            ]
+                        },
+                        "3": {
+                            "answer": [
+                                "Yes"
+                            ]
+                        },
+                        "4": {
+                            "answer": [
+                                "Yes"
+                            ]
+                        },
+                        "5": {
+                            "answer": [
+                                "No"
+                            ]
+                        }
+                    }
 				},
 				'image': '',
 				'bet_type': 'radio',
@@ -89,7 +178,33 @@ poll_mock_list = [
 				'bet_data': {
 					'answer_options': ['Yes', 'No'],
 					'finish_date': '2025-09-19T21:25:08.000Z',
-					'users_answers': {}
+					'users_answers': {
+                        "1": {
+                            "answer": [
+                                "Yes"
+                            ]
+                        },
+                        "2": {
+                            "answer": [
+                                "No"
+                            ]
+                        },
+                        "3": {
+                            "answer": [
+                                "Yes"
+                            ]
+                        },
+                        "4": {
+                            "answer": [
+                                "No"
+                            ]
+                        },
+                        "5": {
+                            "answer": [
+                                "No"
+                            ]
+                        }
+                    }
 				},
 				'image': '',
 				'bet_type': 'radio',
@@ -103,7 +218,28 @@ poll_mock_list = [
 				'bet_data': {
 					'answer_options': ['Yes', 'No'],
 					'finish_date': '2025-09-19T21:25:08.000Z',
-					'users_answers': {}
+					'users_answers': {
+                        "1": {
+                            "answer": [
+                                "Yes"
+                            ]
+                        },
+                        "3": {
+                            "answer": [
+                                "No"
+                            ]
+                        },
+                        "4": {
+                            "answer": [
+                                "No"
+                            ]
+                        },
+                        "5": {
+                            "answer": [
+                                "No"
+                            ]
+                        }
+                    }
 				},
 				'image': '',
 				'bet_type': 'radio',
@@ -117,7 +253,28 @@ poll_mock_list = [
 				'bet_data': {
 					'answer_options': ['Yes', 'No'],
 					'finish_date': '2025-09-19T21:25:08.000Z',
-					'users_answers': {}
+					'users_answers': {
+                        "1": {
+                            "answer": [
+                                "No"
+                            ]
+                        },
+                        "2": {
+                            "answer": [
+                                "No"
+                            ]
+                        },
+                        "4": {
+                            "answer": [
+                                "Yes"
+                            ]
+                        },
+                        "5": {
+                            "answer": [
+                                "No"
+                            ]
+                        }
+                    }
 				},
 				'image': '',
 				'bet_type': 'radio',
@@ -162,7 +319,33 @@ poll_mock_list = [
                         'Gabriel Bortoleto'
                     ],
 					'finish_date': '2025-06-28T21:25:08.000Z',
-					'users_answers': {}
+					'users_answers': {
+                        "1": {
+                            "answer": [
+                                "Max Verstappen"
+                            ]
+                        },
+                        "2": {
+                            "answer": [
+                                "Max Verstappen"
+                            ]
+                        },
+                        "3": {
+                            "answer": [
+                                "Max Verstappen"
+                            ]
+                        },
+                        "4": {
+                            "answer": [
+                                "Max Verstappen"
+                            ]
+                        },
+                        "5": {
+                            "answer": [
+                                "Oscar Piastri"
+                            ]
+                        }
+                    }
 				},
 				'image': '',
 				'bet_type': 'radio',
@@ -197,7 +380,33 @@ poll_mock_list = [
                         'Gabriel Bortoleto'
                     ],
 					'finish_date': '2025-07-05T21:25:08.000Z',
-					'users_answers': {}
+					'users_answers': {
+                        "1": {
+                            "answer": [
+                                "Lewis Hamilton"
+                            ]
+                        },
+                        "2": {
+                            "answer": [
+                                "Lewis Hamilton"
+                            ]
+                        },
+                        "3": {
+                            "answer": [
+                                "Oscar Piastri"
+                            ]
+                        },
+                        "4": {
+                            "answer": [
+                                "George Russell"
+                            ]
+                        },
+                        "5": {
+                            "answer": [
+                                "Lewis Hamilton"
+                            ]
+                        }
+                    }
 				},
 				'image': '',
 				'bet_type': 'radio',
@@ -232,7 +441,33 @@ poll_mock_list = [
                         'Gabriel Bortoleto'
                     ],
 					'finish_date': '2025-07-26T21:25:08.000Z',
-					'users_answers': {}
+					'users_answers': {
+                        "1": {
+                            "answer": [
+                                "Lando Norris"
+                            ]
+                        },
+                        "2": {
+                            "answer": [
+                                "Oscar Piastri"
+                            ]
+                        },
+                        "3": {
+                            "answer": [
+                                "Lewis Hamilton"
+                            ]
+                        },
+                        "4": {
+                            "answer": [
+                                "Oscar Piastri"
+                            ]
+                        },
+                        "5": {
+                            "answer": [
+                                "Lando Norris"
+                            ]
+                        }
+                    }
 				},
 				'image': '',
 				'bet_type': 'radio',
@@ -267,7 +502,33 @@ poll_mock_list = [
                         'Gabriel Bortoleto'
                     ],
 					'finish_date': '2025-08-02T21:25:08.000Z',
-					'users_answers': {}
+					'users_answers': {
+                        "1": {
+                            "answer": [
+                                "Lewis Hamilton"
+                            ]
+                        },
+                        "2": {
+                            "answer": [
+                                "Oscar Piastri"
+                            ]
+                        },
+                        "3": {
+                            "answer": [
+                                "Oscar Piastri"
+                            ]
+                        },
+                        "4": {
+                            "answer": [
+                                "Oscar Piastri"
+                            ]
+                        },
+                        "5": {
+                            "answer": [
+                                "Lando Norris"
+                            ]
+                        }
+                    }
 				},
 				'image': '',
 				'bet_type': 'radio',
@@ -276,7 +537,7 @@ poll_mock_list = [
 				'bet_hash': ''
 			},
 			{
-				'bet_title': '	Dutch Grand Prix',
+				'bet_title': 'Dutch Grand Prix',
 				'bet_description': '',
 				'bet_data': {
 					'answer_options': [
@@ -302,7 +563,33 @@ poll_mock_list = [
                         'Gabriel Bortoleto'
                     ],
 					'finish_date': '2025-08-30T21:25:08.000Z',
-					'users_answers': {}
+					'users_answers': {
+                        "1": {
+                            "answer": [
+                                "Max Verstappen"
+                            ]
+                        },
+                        "2": {
+                            "answer": [
+                                "Oscar Piastri"
+                            ]
+                        },
+                        "3": {
+                            "answer": [
+                                "Max Verstappen"
+                            ]
+                        },
+                        "4": {
+                            "answer": [
+                                "Charles Leclerc"
+                            ]
+                        },
+                        "5": {
+                            "answer": [
+                                "Lando Norris"
+                            ]
+                        }
+                    }
 				},
 				'image': '',
 				'bet_type': 'radio',
@@ -337,7 +624,33 @@ poll_mock_list = [
                         'Gabriel Bortoleto'
                     ],
 					'finish_date': '2025-09-06T21:25:08.000Z',
-					'users_answers': {}
+					'users_answers': {
+                        "1": {
+                            "answer": [
+                                "Charles Leclerc"
+                            ]
+                        },
+                        "2": {
+                            "answer": [
+                                "Charles Leclerc"
+                            ]
+                        },
+                        "3": {
+                            "answer": [
+                                "Lando Norris"
+                            ]
+                        },
+                        "4": {
+                            "answer": [
+                                "Lando Norris"
+                            ]
+                        },
+                        "5": {
+                            "answer": [
+                                "Lando Norris"
+                            ]
+                        }
+                    }
 				},
 				'image': '',
 				'bet_type': 'radio',
@@ -372,7 +685,33 @@ poll_mock_list = [
                         'Gabriel Bortoleto'
                     ],
 					'finish_date': '2025-09-20T21:25:08.000Z',
-					'users_answers': {}
+					'users_answers': {
+                        "1": {
+                            "answer": [
+                                "Lando Norris"
+                            ]
+                        },
+                        "2": {
+                            "answer": [
+                                "Lando Norris"
+                            ]
+                        },
+                        "3": {
+                            "answer": [
+                                "Oscar Piastri"
+                            ]
+                        },
+                        "4": {
+                            "answer": [
+                                "Oscar Piastri"
+                            ]
+                        },
+                        "5": {
+                            "answer": [
+                                "Oscar Piastri"
+                            ]
+                        }
+                    }
 				},
 				'image': '',
 				'bet_type': 'radio',
@@ -407,7 +746,33 @@ poll_mock_list = [
                         'Gabriel Bortoleto'
                     ],
 					'finish_date': '2025-10-04T21:25:08.000Z',
-					'users_answers': {}
+					'users_answers': {
+                        "1": {
+                            "answer": [
+                                "Lando Norris"
+                            ]
+                        },
+                        "2": {
+                            "answer": [
+                                "Lando Norris"
+                            ]
+                        },
+                        "3": {
+                            "answer": [
+                                "Oscar Piastri"
+                            ]
+                        },
+                        "4": {
+                            "answer": [
+                                "Lando Norris"
+                            ]
+                        },
+                        "5": {
+                            "answer": [
+                                "Oscar Piastri"
+                            ]
+                        }
+                    }
 				},
 				'image': '',
 				'bet_type': 'radio',
@@ -442,7 +807,33 @@ poll_mock_list = [
                         'Gabriel Bortoleto'
                     ],
 					'finish_date': '2025-10-18T21:25:08.000Z',
-					'users_answers': {}
+					'users_answers': {
+                        "1": {
+                            "answer": [
+                                "George Russell"
+                            ]
+                        },
+                        "2": {
+                            "answer": [
+                                "George Russell"
+                            ]
+                        },
+                        "3": {
+                            "answer": [
+                                "Oscar Piastri"
+                            ]
+                        },
+                        "4": {
+                            "answer": [
+                                "Lando Norris"
+                            ]
+                        },
+                        "5": {
+                            "answer": [
+                                "Oscar Piastri"
+                            ]
+                        }
+                    }
 				},
 				'image': '',
 				'bet_type': 'radio',
@@ -477,7 +868,33 @@ poll_mock_list = [
                         'Gabriel Bortoleto'
                     ],
 					'finish_date': '2025-10-25T21:25:08.000Z',
-					'users_answers': {}
+					'users_answers': {
+                        "1": {
+                            "answer": [
+                                "Max Verstappen"
+                            ]
+                        },
+                        "2": {
+                            "answer": [
+                                "George Russell"
+                            ]
+                        },
+                        "3": {
+                            "answer": [
+                                "Max Verstappen"
+                            ]
+                        },
+                        "4": {
+                            "answer": [
+                                "Lando Norris"
+                            ]
+                        },
+                        "5": {
+                            "answer": [
+                                "Oscar Piastri"
+                            ]
+                        }
+                    }
 				},
 				'image': '',
 				'bet_type': 'radio',
@@ -512,7 +929,33 @@ poll_mock_list = [
                         'Gabriel Bortoleto'
                     ],
 					'finish_date': '2025-11-08T21:25:08.000Z',
-					'users_answers': {}
+					'users_answers': {
+                        "1": {
+                            "answer": [
+                                "Max Verstappen"
+                            ]
+                        },
+                        "2": {
+                            "answer": [
+                                "Oscar Piastri"
+                            ]
+                        },
+                        "3": {
+                            "answer": [
+                                "Max Verstappen"
+                            ]
+                        },
+                        "4": {
+                            "answer": [
+                                "Lando Norris"
+                            ]
+                        },
+                        "5": {
+                            "answer": [
+                                "Oscar Piastri"
+                            ]
+                        }
+                    }
 				},
 				'image': '',
 				'bet_type': 'radio',
@@ -547,7 +990,33 @@ poll_mock_list = [
                         'Gabriel Bortoleto'
                     ],
 					'finish_date': '2025-11-21T21:25:08.000Z',
-					'users_answers': {}
+					'users_answers': {
+                        "1": {
+                            "answer": [
+                                "Max Verstappen"
+                            ]
+                        },
+                        "2": {
+                            "answer": [
+                                "Oscar Piastri"
+                            ]
+                        },
+                        "3": {
+                            "answer": [
+                                "Lewis Hamilton"
+                            ]
+                        },
+                        "4": {
+                            "answer": [
+                                "Lando Norris"
+                            ]
+                        },
+                        "5": {
+                            "answer": [
+                                "Lando Norris"
+                            ]
+                        }
+                    }
 				},
 				'image': '',
 				'bet_type': 'radio',
@@ -582,7 +1051,33 @@ poll_mock_list = [
                         'Gabriel Bortoleto'
                     ],
 					'finish_date': '2025-11-29T21:25:08.000Z',
-					'users_answers': {}
+					'users_answers': {
+                        "1": {
+                            "answer": [
+                                "Max Verstappen"
+                            ]
+                        },
+                        "2": {
+                            "answer": [
+                                "Oscar Piastri"
+                            ]
+                        },
+                        "3": {
+                            "answer": [
+                                "George Russell"
+                            ]
+                        },
+                        "4": {
+                            "answer": [
+                                "Max Verstappen"
+                            ]
+                        },
+                        "5": {
+                            "answer": [
+                                "Charles Leclerc"
+                            ]
+                        }
+                    }
 				},
 				'image': '',
 				'bet_type': 'radio',
@@ -617,7 +1112,33 @@ poll_mock_list = [
                         'Gabriel Bortoleto'
                     ],
 					'finish_date': '2025-12-06T21:25:08.000Z',
-					'users_answers': {}
+					'users_answers': {
+                        "1": {
+                            "answer": [
+                                "Max Verstappen"
+                            ]
+                        },
+                        "2": {
+                            "answer": [
+                                "Oscar Piastri"
+                            ]
+                        },
+                        "3": {
+                            "answer": [
+                                "Oscar Piastri"
+                            ]
+                        },
+                        "4": {
+                            "answer": [
+                                "Max Verstappen"
+                            ]
+                        },
+                        "5": {
+                            "answer": [
+                                "Kimi Antonelli"
+                            ]
+                        }
+                    }
 				},
 				'image': '',
 				'bet_type': 'radio',

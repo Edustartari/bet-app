@@ -72,6 +72,17 @@ def create_mock_data():
 			)
 			new_bet.save()
 
+			for user_id, user_answer in bet_dict['bet_data']['users_answers'].items():
+				new_user_bet = user_bet(
+					user_id = user_id,
+					bet_id = new_bet.id,
+					answer = json.dumps(user_answer['answer']),
+					bet_data = json.dumps(bet_dict['bet_data']),
+					hash_id = hash_id_generator(),
+					is_active = 1
+				)
+				new_user_bet.save()
+
 		new_poll_admin = poll_admins(
 			poll_id = new_poll.id,
 			hash_id = hash_id_generator(),
@@ -403,25 +414,45 @@ def save_bet(request):
 	bet_info = json.loads(bet_info)
 	option_selected = json.loads(option_selected)
 
-	try:
-		# Get the current session
-		session_hash = request.session['session_hash']
-		current_session = session.objects.get(hash_id = session_hash)
-		users_object = user.objects.get(id = current_session.user_id)
-		user_id = str(users_object.id)
-	except Exception as e:
-		print(e)
-		return JsonResponse({'status': 'error', 'reason': 'user_not_found'}, safe=False)
+	user_id = 1
+
+	# try:
+	# 	# Get the current session
+	# 	session_hash = request.session['session_hash']
+	# 	current_session = session.objects.get(hash_id = session_hash)
+	# 	users_object = user.objects.get(id = current_session.user_id)
+	# 	user_id = str(users_object.id)
+	# except Exception as e:
+	# 	print(e)
+	# 	user_id = 1
+	# 	return JsonResponse({'status': 'error', 'reason': 'user_not_found'}, safe=False)
 
 	bet_object = bet.objects.get(hash_id=bet_info['hash_id'])
 	bet_data = json.loads(bet_object.bet_data)
 	if 'users_answers' not in bet_data:
 		bet_data['users_answers'] = {}
-	bet_data['users_answers'][user_id] = {
+	bet_data['users_answers'][str(user_id)] = {
 		'answer': option_selected
 	}
 	bet_object.bet_data = json.dumps(bet_data)
 	bet_object.save()
+
+	user_bet_object = user_bet.objects.filter(bet_id=bet_object.id)
+	if user_bet_object.count() == 0:
+		new_user_bet = user_bet(
+			user_id = user_id,
+			bet_id = bet_object.id,
+			answer = json.dumps(option_selected),
+			bet_data = json.dumps(bet_data),
+			hash_id = hash_id_generator(),
+			is_active = 1
+		)
+		new_user_bet.save()
+	else:
+		user_bet_object = user_bet_object[0]
+		user_bet_object.answer = json.dumps(option_selected)
+		user_bet_object.bet_data = json.dumps(bet_data)
+		user_bet_object.save()
 
 	return JsonResponse({'status': 'success'}, safe=False)
 
