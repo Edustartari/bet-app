@@ -1,0 +1,36 @@
+.terms-background {
+    padding: 80px 10px 10px 10px;
+}
+.terms-content {
+
+}
+.terms-content h1{
+
+}
+.terms-content h2{
+
+}
+.terms-content p{
+
+}
+.terms-header-button-container {
+    width: 100%;
+}
+.terms-header-button-container a{
+    text-decoration: unset;
+    color: black;
+}
+.terms-header-icon{
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+.terms-header-icon .material-icons {
+    font-size: 23px;
+}
+.terms-header-icon-text{
+    margin: 0 0 0 5px;
+    font-size: 20px;
+}

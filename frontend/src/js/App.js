@@ -7,6 +7,7 @@ import Poll from './pages/Poll';
 import NewPoll from './pages/NewPoll';
 import SearchPolls from './pages/SearchPolls';
 import Settings from './pages/Settings';
+import TermsOfUse from './pages/TermsOfUse';
 import Login from './pages/Login';
 import BetPage from './pages/BetPage';
 import Header from './components/Header.js'
@@ -29,6 +30,7 @@ const App = () => {
                 <Route path="/my-polls" element={<MyPolls />} />
                 <Route path="/new-poll" element={<NewPoll />} />
                 <Route path="/search-polls" element={<SearchPolls />} />
+                <Route path="/terms" element={<TermsOfUse />} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/bet-page" element={<BetPage />} />
                 <Route path="/poll/:slug" element={<Poll />} />

@@ -22,7 +22,7 @@ const Poll = (props) => {
 
     console.log('redux state:', state)
 
-    const [loading, setLoading] = useState(true);	
+    const [loading, setLoading] = useState(true);
     const [poll_dict, setPollDict] = useState({});	
     // console.log('')
     // console.log('Poll')

@@ -31,7 +31,6 @@ def create_mock_data():
 	for poll_info in poll_mock_list:
 		print('')
 		print('test')
-		print(poll_info)
 
 		current_path = os.path.dirname(os.path.realpath(__file__))
 		poll_hash_id = hash_id_generator()
@@ -232,8 +231,17 @@ def search_polls(request):
 def settings(request):
 	print('')
 	print('settings')
+
+	user_object = user.objects.get(id=1)
+	user_info = {
+		'name': user_object.name,
+		'email': user_object.email,
+		'hash_id': user_object.hash_id
+	}
+
 	response_dict = {
-		'status': 'success'
+		'status': 'success',
+		'user_info': user_info
 	}
 	return JsonResponse(response_dict, safe=False)
 
