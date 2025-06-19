@@ -79,6 +79,10 @@
       "name": "Settings_bundle.js",
       "path": "/home/eduardo/coding/projects/bet-app/static/Settings_bundle.js"
     },
+    "TermsOfUse_bundle.js": {
+      "name": "TermsOfUse_bundle.js",
+      "path": "/home/eduardo/coding/projects/bet-app/static/TermsOfUse_bundle.js"
+    },
     "b4f401b67c287410bbf91d3bb854320d.jpg": {
       "name": "b4f401b67c287410bbf91d3bb854320d.jpg",
       "path": "/home/eduardo/coding/projects/bet-app/static/b4f401b67c287410bbf91d3bb854320d.jpg",
@@ -149,6 +153,9 @@
     "Settings.js": [
       "Settings_bundle.js"
     ],
+    "TermsOfUse.js": [
+      "TermsOfUse_bundle.js"
+    ],
     "global_reducer.js": [
       "global_reducer_bundle.js"
     ],
@@ -158,7 +165,5 @@
     "store.js": [
       "store_bundle.js"
     ]
-  },
-  "error": "ModuleBuildError",
-  "message": "Module build failed (from ./node_modules/css-loader/dist/cjs.js):\n\nSyntaxError\n\n(1:1) /home/eduardo/coding/projects/bet-app/frontend/src/styles/pages/TermsOfUse.css Unknown word .terms-background\n\n> 1 | .terms-background\n    | ^\n  2 | .terms-header-button-container\n  3 | .terms-header-icon\n"
+  }
 }
