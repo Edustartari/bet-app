@@ -8,9 +8,7 @@ import Avatar from '@mui/material/Avatar';
 import { CardContent } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
 import Marquee from "react-fast-marquee";
-import {
-    Link
-} from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { update } from "../redux_folder/global_reducer.js";
 import default_poll_image from 'images/default_poll_image.png';
@@ -146,6 +144,7 @@ const BetCard = (props) => {
 const BetPage = (props) => {
     const state = useSelector(state => state.global)
     const dispatch = useDispatch()
+    const navigate = useNavigate();
 
     let poll_dict = state.poll_dict;
 
@@ -199,7 +198,8 @@ const BetPage = (props) => {
                         <div className="bet-page-container-cards-list">
                             {poll_dict.bets.map((bet, index) => {
                                 return (
-                                    <div key={bet.hash_id} className="bet-page-container-card" onClick={() => setBetCard(bet)}>
+                                    // <div key={bet.hash_id} className="bet-page-container-card" onClick={() => setBetCard(bet)}>
+                                    <div key={bet.hash_id} className="bet-page-container-card" onClick={() => navigate('/bet-manage/' + bet.hash_id)}>
                                         <div className="bet-page-container-card-info">
                                             <div className="bet-page-container-card-info-status">
                                                 <span className="material-icons">

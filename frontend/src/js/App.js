@@ -10,6 +10,7 @@ import Settings from './pages/Settings';
 import TermsOfUse from './pages/TermsOfUse';
 import Login from './pages/Login';
 import BetPage from './pages/BetPage';
+import BetManage from './pages/BetManage';
 import Header from './components/Header.js'
 import {
     BrowserRouter as Router,
@@ -33,6 +34,7 @@ const App = () => {
                 <Route path="/terms" element={<TermsOfUse />} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/bet-page" element={<BetPage />} />
+                <Route path="/bet-manage/:slug" element={<BetManage />} />
                 <Route path="/poll/:slug" element={<Poll />} />
                 <Route path="/" element={<Main />} />
             </Routes>

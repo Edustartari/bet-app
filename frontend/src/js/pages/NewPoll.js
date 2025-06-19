@@ -174,7 +174,7 @@ function AnswerOptions(props) {
 }
 
 const NewPoll = (props) => {
-	let navigate = useNavigate();
+	const navigate = useNavigate();
 
 	const [step, setStep] = useState('first'); // can be first, second, third...
 	const [pollName, setPollName] = useState('');
