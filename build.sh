@@ -11,6 +11,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 
 cd frontend/
+npm install --legacy-peer-deps
 npm install -D webpack-cli
 npm run build
 
