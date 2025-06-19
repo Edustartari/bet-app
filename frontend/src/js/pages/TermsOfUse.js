@@ -3,8 +3,6 @@ import 'styles/pages/TermsOfUse.css'
 import { Link } from "react-router-dom";
 
 const TermsOfUse = (props) => {
-	console.log('TermsOfUse component props:', props);
-
     return (
         <div className='terms-background'>
             <div className="terms-header-button-container">

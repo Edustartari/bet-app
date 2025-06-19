@@ -1,21 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-    poll_dict: {}
+    poll_dict: {},
+    user_info: {}
 }
 
 export const globalSlice = createSlice({
   name: 'global',
   initialState,
   reducers: {
-    updatePollDict: (state, action) => {
-        console.log('action: ', action)
-        state.poll_dict = action.payload
+    update: (state, action) => {
+        state[action.payload.key] = action.payload.value
     }
   }
 })
 
 // Action creators are generated for each case reducer function
-export const { updatePollDict } = globalSlice.actions
+export const { update } = globalSlice.actions
 
 export default globalSlice.reducer

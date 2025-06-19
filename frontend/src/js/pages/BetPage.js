@@ -12,8 +12,24 @@ import {
     Link
 } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import { updatePollDict } from "../redux_folder/global_reducer.js";
+import { update } from "../redux_folder/global_reducer.js";
 import default_poll_image from 'images/default_poll_image.png';
+
+/* 
+CREATE A INTERMEDIATE PAGE: 
+- As soon user clicks on a bet, show a page with:
+    - Bet title
+    - Bet description
+    - Warning that bet closes in 7 days
+    - Button "Others users answers" that shows how others users answered the bet
+    - Button "My answer" that opens BetCard component
+    - Button "Admin - Set correct answer" that ends the bet and shows the results
+        -> This button should also open the BetCard component, but user must select the correct answer before submitting
+        -> If user already provided the answer, then the option should be pre-selected
+        -> To confirm the end of the bet, user must click on "Confirm" button
+        -> Then the system will make a request to process the results and store in the correct tables in database
+        -> After that, the user will be redirected to the BetPage where it is displayed a list of all bets
+*/
 
 const BetCard = (props) => {
     const { data } = props;
@@ -80,7 +96,7 @@ const BetCard = (props) => {
                         }
                     }
                     // Update the poll_dict in the redux store
-                    dispatch(updatePollDict(poll_dict));
+                    dispatch(update({key: 'poll_dict', value: poll_dict}));                    
                     props.setBetCard(false);
 				} else {
 					props.handle_snackbar('Sorry, something went wrong...');
@@ -118,7 +134,7 @@ const BetCard = (props) => {
                     )
                 })}
             </div>
-            <div className='bet-card-warning'>7 days until bet is closed...</div>
+            {/* <div className='bet-card-warning'>7 days until bet is closed...</div> */}
             <div className='bet-card-buttons'>
                 <div className='bet-card-button-details bet-card-button-cancel' onClick={() => props.setBetCard(false)}>CANCEL</div>
                 <div className='bet-card-button-details bet-card-button-confirm' onClick={save_bet}>CONFIRM</div>

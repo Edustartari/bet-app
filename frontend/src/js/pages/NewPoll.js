@@ -1,31 +1,32 @@
 import React, { useState } from 'react';
 import 'styles/pages/NewPoll.css';
-
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import Switch from '@mui/material/Switch';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import { TransitionGroup } from 'react-transition-group';
-import Snackbar from '@mui/material/Snackbar';
-import Divider from '@mui/material/Divider';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
+import { 
+	Button,
+	TextField,
+	Box,
+	InputLabel,
+	MenuItem,
+	FormControl,
+	Select,
+	Switch,
+	Collapse,
+	IconButton,
+	List,
+	ListItem,
+	ListItemText,
+	Snackbar,
+	Divider,
+	Backdrop,
+	CircularProgress	
+} from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { TransitionGroup } from 'react-transition-group';
 
 import dayjs, { Dayjs } from 'dayjs';
-import empty_list from 'images//empty_list.jpg';
-import default_poll_image from 'images//default_poll_image.png';
+import empty_list from 'images/empty_list.jpg';
+import default_poll_image from 'images/default_poll_image.png';
 import ImageUploading from "react-images-uploading";
 import { Navigate, useNavigate } from "react-router-dom";
 
@@ -36,13 +37,11 @@ import { Navigate, useNavigate } from "react-router-dom";
 
 */
 
-
 function UploadImageComponent(props) {
 	const [images, setImages] = useState(props.image);
 	const maxNumber = 69;
 	const onChange = (imageList, addUpdateIndex) => {
 		// data for submit
-		console.log(imageList, addUpdateIndex);
 		setImages(imageList);
 		props.setImage(imageList)
 	};
@@ -99,9 +98,6 @@ function UploadImageComponent(props) {
 }
 
 function renderItem({ item, remove_answer, correct_answer }) {
-	// console.log('')
-	// console.log('item: ', item)
-	// console.log('correct_answer: ', correct_answer)
 	return (
 	<ListItem
 		secondaryAction={
@@ -212,10 +208,6 @@ const NewPoll = (props) => {
 	const [loading, setLoading] = useState(false);
 
 	const edit_bet = (key, value) => {
-		console.log('')
-		console.log('edit_bet')
-		console.log('key: ', key)
-		console.log('value: ', value)
 		let temporary_dict = Object.assign({}, bet)
 		if(key === 'bet_data'){
 			if('answer_options' in temporary_dict[key]){
@@ -227,17 +219,11 @@ const NewPoll = (props) => {
 			temporary_dict['bet_data']['finish_date'] = value
 		} else {
 			temporary_dict[key] = value
-			console.log(bet)
 		}
 		setBet(temporary_dict)
-		console.log('bet: ', bet)
-		console.log('edit_bet finish')
 	}
 
 	const set_bet = (bet) => {
-		console.log('')
-		console.log('set_bet')
-		console.log(bet)
 		setCreateBetCard(true)
 		setBet(bet)
 		if(bet.correct_answer.length > 0 && bet.correct_answer_confirmed){
@@ -246,15 +232,10 @@ const NewPoll = (props) => {
 	}
 
 	const save_answer = (answer, action) => {
-		console.log('')
-		console.log('save_answer')
-		console.log(answer)
 		let temporary_list;
 		if(action === 'add'){
-			console.log('if')
 			temporary_list = [...bet.bet_data.answer_options, answer]
 		} else {
-			console.log('else')
 			temporary_list = [...bet.bet_data.answer_options.filter((i) => i !== answer)]
 		}
 		let temporary_dict = Object.assign({}, bet)
@@ -263,8 +244,6 @@ const NewPoll = (props) => {
 	}
 
 	const erase_all_fields = () => {
-		console.log('')
-		console.log('erase_all_fields')
 		setBetFinishDateActive(false)
 		let empty_bet = {
 			'bet_title': '',
@@ -313,9 +292,6 @@ const NewPoll = (props) => {
 	}
 
 	const update_bet = () => {
-		console.log('')
-		console.log('update_bet')
-		console.log(bet)
 		let temporary_list = [...bets.filter((i) => i.bet_hash !== bet.bet_hash)]
 		setBets([...temporary_list, bet]);
 		erase_all_fields();
@@ -323,14 +299,8 @@ const NewPoll = (props) => {
 	}
 
 	const open_snackbar = (message) => {
-		console.log('')
-		console.log('open_snackbar 4')
-		console.log(snackbarMessage)
-		console.log(snackbarOpen)
 		setSnackbarMessage(message);
 		setSnackbarOpen(true);
-		console.log(snackbarMessage)
-		console.log(snackbarOpen)
 	}
 
 	const remove_bet = (bet) => {
@@ -340,8 +310,6 @@ const NewPoll = (props) => {
 
 	const create_poll = () => {
 		setLoading(true);
-		console.log('')
-		console.log('create_poll 6')
 		let data_dict = {}
 		data_dict['poll_name'] = pollName
 		data_dict['poll_type'] = pollType
@@ -350,9 +318,6 @@ const NewPoll = (props) => {
 		data_dict['password'] = password
 		data_dict['finish_date'] = finishDateActive ? finishDate : false
 		data_dict['bets'] = bets
-		console.log('data_dict: ', data_dict)
-
-		return
 
 		$.ajax({
 			context: this,
@@ -368,20 +333,10 @@ const NewPoll = (props) => {
 					setLoading(false);
 					open_snackbar('Something went wrong. Please try again later...')
 				}
-				console.log('success')
-				console.log(data)
 			}
 		})
 	}
 
-	console.log('')
-	console.log('render')
-	console.log('bets: ', bets)
-	console.log('bet: ', bet)
-	console.log('finish_date: ', finishDate)
-	// console.log(step)
-	// console.log('bets')
-	// console.log(bets)
 	return (
 		<React.Fragment>
 			{step === 'first' &&

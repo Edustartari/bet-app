@@ -12,20 +12,15 @@ import LoadingComponent from '../components/LoadingComponent.js'
 /* For each search, display only 20 first results, and then after user scrolls down an reach bottom load more 20 results and so on */
 
 const SearchPolls = (props) => {
-	console.log('SearchPolls component props:', props);
 	const [searchTerm, setSearchTerm] = useState('');
 	const [loading, setLoading] = useState(false);
 
 	const fetch_data = async () => {
-		console.log('')
-		console.log('fetch_data')
 		setLoading(true);
 		try {
 			let response = await fetch('/search-polls');
-			console.log('response:', response);
 			if(response.status === 200){
 				let data = await response.json();
-				console.log('Fetched data:', data);
 			}
 		} catch (error) {
 			console.error('Error fetching data:', error);

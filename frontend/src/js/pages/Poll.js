@@ -8,7 +8,7 @@ import Avatar from '@mui/material/Avatar';
 import { CardContent } from '@mui/material';
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import { updatePollDict } from "../redux_folder/global_reducer.js";
+import { update } from "../redux_folder/global_reducer.js";
 import default_poll_image from 'images//default_poll_image.png';
 import LoadingComponent from '../components/LoadingComponent.js'
 
@@ -48,7 +48,7 @@ const Poll = (props) => {
                     let data = await response.json();
                     console.log('Fetched data:', data);
                     setPollDict(data.poll_dict);
-                    dispatch(updatePollDict(data.poll_dict));
+                    dispatch(update({key: 'poll_dict', value: data.poll_dict}));
                 }
             } catch (error) {
                 console.error('Error fetching data:', error);
