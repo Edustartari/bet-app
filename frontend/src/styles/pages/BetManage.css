@@ -1,3 +1,36 @@
 .bet-manage-background {
     padding: 72px 15px 15px;
 }
+.bet-manage-header{
+
+}
+.bet-manage-header-title{
+    font-size: 28px;
+}
+.bet-manage-header-description{
+    font-size: 20px;
+    margin: 10px 0;
+}
+.bet-manage-header-warning{
+
+}
+.bet-manage-container{
+    margin: 30px 0 20px;
+}
+.bet-manage-container-buttons{
+
+}
+.bet-manage-container-buttons .MuiButtonBase-root{
+    margin: 0 0 20px 0;
+}
+.bet-manage-container-admin{
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px dotted red;
+}
+.bet-manage-container-admin-title{
+    font-size: 18px;
+}
+.bet-manage-container-admin-description{
+    margin: 10px 0;
+}

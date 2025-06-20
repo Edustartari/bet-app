@@ -19,8 +19,8 @@ CREATE A INTERMEDIATE PAGE:
     - Bet title
     - Bet description
     - Warning that bet closes in 7 days
-    - Button "Others users answers" that shows how others users answered the bet
     - Button "My answer" that opens BetCard component
+    - Button "Others users answers" that shows how others users answered the bet
     - Button "Admin - Set correct answer" that ends the bet and shows the results
         -> This button should also open the BetCard component, but user must select the correct answer before submitting
         -> If user already provided the answer, then the option should be pre-selected
