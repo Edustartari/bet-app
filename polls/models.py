@@ -55,6 +55,7 @@ class user_bet(models.Model):
     user_id = models.IntegerField(default=0)
     bet_id = models.IntegerField(default=0)
     answer = models.CharField(max_length=200, default='')
+    status = models.CharField(max_length=200, default='') # e.g., 'pending', 'won', 'lost'
     bet_data = models.TextField(default='')
     hash_id = models.CharField(max_length=200, null=True)
     created_at = models.DateField(auto_now=False, auto_now_add=True)

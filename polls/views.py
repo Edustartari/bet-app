@@ -20,6 +20,7 @@ def create_mock_data():
 	print('create_mock_data')
 
 	# Create users
+	new_user_ids = []
 	for i in range(1, 6):
 		new_user = user(
 			name = 'User ' + str(i),
@@ -27,7 +28,9 @@ def create_mock_data():
 			hash_id = hash_id_generator()
 		)
 		new_user.save()
+		new_user_ids.append(new_user.id)
 
+	current_user = new_user_ids[0]
 	for poll_info in poll_mock_list:
 		print('')
 		print('test')
@@ -49,7 +52,7 @@ def create_mock_data():
 			poll_type = poll_info['poll_type'],
 			is_private = 1 if poll_info['isPrivate'] else 0,
 			password = poll_info['password'] if len(poll_info['password']) > 0 else 0,
-			poll_data = '',
+			poll_data = poll_info['poll_data'],
 			finish_date = finish_date
 		)
 		new_poll.save()
@@ -139,7 +142,7 @@ def index(request):
 	# current_session.user_id = 1
 	# current_session.save()
 
-	# create_mock_data()
+	create_mock_data()
 
 	context = {
 		'user': json.dumps(users_list)
@@ -249,9 +252,7 @@ def settings(request):
 def poll_info(request):
 	print('')
 	print('poll_info')
-	# Access request.body and retrieve the dict from the POST request
 	post_data = json.loads(request.body.decode("utf-8"))
-	print('post_data')
 	print(post_data)
 	hash_id = post_data['hash_id']
 	print('hash_id: ', hash_id)
@@ -279,7 +280,7 @@ def poll_info(request):
 		poll_dict['hash_id'] = poll_object.hash_id
 		# poll_data_json = json.loads(poll_object.poll_data)
 		# poll_dict['ranking'] = poll_data_json['ranking']
-		# poll_dict['finish_date'] = poll_data_json['finish_date']
+		poll_dict['finish_date'] = poll_object.finish_date
 		poll_dict['created_at'] = poll_object.created_at.strftime('%Y/%m/%d')
 		poll_dict['updated_at'] = poll_object.updated_at.strftime('%Y/%m/%d')
 		poll_dict['is_active'] = poll_object.is_active
@@ -468,143 +469,186 @@ def save_bet(request):
 poll table
 poll_data field with json example:
 {
-	"ranking": {
-		"current": {
-			"bet_id": 2,
-			"bet_hash": '',
-			"users_bets": [
-				{
-					"user_id": 1,
-					"user_hash": 1,
-					"position": 1,
-					"profile_picture_1": "",
-					"user_name": "Name 1",
-					"total_points": 9
-				},
-				{
-					"user_id": 2,
-					"user_hash": 2,
-					"position": 2,
-					"profile_picture_2": "",
-					"user_name": "Name 2",
-					"total_points": 6
-				},
-				{
-					"user_id": 3,
-					"user_hash": 3,
-					"position": 3,
-					"profile_picture_3": "",
-					"user_name": "Name 3",
-					"total_points": 3
-				},
-				{
-					"user_id": 4,
-					"user_hash": 4,
-					"position": 4,
-					"profile_picture_4": "",
-					"user_name": "Name 4",
-					"total_points": 0
-				}
-			]
-		},
-		"history": [
-			{
-				"bet_id": 1,
-				"bet_hash": '',
-				"users_bets": [
-					{
-						"user_id": 1,
-						"user_hash": 1,
-						"position": 1,
-						"profile_picture_1": "",
-						"user_name": "Name 1",
-						"total_points": 9
-					},
-					{
-						"user_id": 2,
-						"user_hash": 2,
-						"position": 2,
-						"profile_picture_2": "",
-						"user_name": "Name 2",
-						"total_points": 6
-					},
-					{
-						"user_id": 3,
-						"user_hash": 3,
-						"position": 3,
-						"profile_picture_3": "",
-						"user_name": "Name 3",
-						"total_points": 3
-					},
-					{
-						"user_id": 4,
-						"user_hash": 4,
-						"position": 4,
-						"profile_picture_4": "",
-						"user_name": "Name 4",
-						"total_points": 0
-					}
-				]
-			}
-			{
-				"bet_id": 2,
-				"bet_hash": '',
-				"users_bets": [
-					{
-						"user_id": 1,
-						"user_hash": 1,
-						"position": 1,
-						"profile_picture_1": "",
-						"user_name": "Name 1",
-						"total_points": 9
-					},
-					{
-						"user_id": 2,
-						"user_hash": 2,
-						"position": 2,
-						"profile_picture_2": "",
-						"user_name": "Name 2",
-						"total_points": 6
-					},
-					{
-						"user_id": 3,
-						"user_hash": 3,
-						"position": 3,
-						"profile_picture_3": "",
-						"user_name": "Name 3",
-						"total_points": 3
-					},
-					{
-						"user_id": 4,
-						"user_hash": 4,
-						"position": 4,
-						"profile_picture_4": "",
-						"user_name": "Name 4",
-						"total_points": 0
-					}
-				]
-			}
-		]
-	}
+    "ranking" : {
+        "current": {
+            "date": "2023-10-01",
+            "users": {
+                1: {
+                    "user_id": 1,
+                    "user_hash": 1,
+                    "user_name": "Name 1",
+                    "user_image": "",
+                    "points": 6,
+                    "position": 2,
+                    "total_bets": 50,
+                    "total_wins": 30,
+                    "total_losses": 10,
+                },
+                2: {
+                    "user_id": 2,
+                    "user_hash": 2,
+                    "user_name": "Name 2",
+                    "user_image": "",
+                    "points": 9,
+                    "position": 1,
+                    "total_bets": 50,
+                    "total_wins": 20,
+                    "total_losses": 20,
+                },
+                3: {
+                    "user_id": 3,
+                    "user_hash": 3,
+                    "user_name": "Name 3",
+                    "user_image": "",
+                    "points": 3,
+                    "position": 3,
+                    "total_bets": 50,
+                    "total_wins": 10,
+                    "total_losses": 30,
+                },
+            }
+        },
+        "history": [
+            {
+                "date": "2023-10-01",
+                "users": {
+                    1: {
+                        "user_id": 1,
+                        "user_hash": 1,
+                        "user_name": "Name 1",
+                        "user_image": "",
+                        "points": 6,
+                        "position": 2,
+                        "total_bets": 87,
+                        "total_wins": 30,
+                        "total_losses": 10,
+                    },
+                    2: {
+                        "user_id": 2,
+                        "user_hash": 2,
+                        "user_name": "Name 2",
+                        "user_image": "",
+                        "points": 9,
+                        "position": 1,
+                        "total_bets": 52,
+                        "total_wins": 20,
+                        "total_losses": 20,
+                    },
+                    3: {
+                        "user_id": 3,
+                        "user_hash": 3,
+                        "user_name": "Name 3",
+                        "user_image": "",
+                        "points": 3,
+                        "position": 3,
+                        "total_bets": 21,
+                        "total_wins": 10,
+                        "total_losses": 30,
+                    },
+                }
+            },
+            {
+                "date": "2023-09-01",
+                "users": {
+                    1: {
+                        "user_id": 1,
+                        "user_hash": 1,
+                        "user_name": "Name 1",
+                        "user_image": "",
+                        "points": 6,
+                        "position": 1,
+                        "total_bets": 86,
+                        "total_wins": 30,
+                        "total_losses": 10,
+                    },
+                    2: {
+                        "user_id": 2,
+                        "user_hash": 2,
+                        "user_name": "Name 2",
+                        "user_image": "",
+                        "points": 3,
+                        "position": 2,
+                        "total_bets": 51,
+                        "total_wins": 20,
+                        "total_losses": 20,
+                    },
+                    3: {
+                        "user_id": 3,
+                        "user_hash": 3,
+                        "user_name": "Name 3",
+                        "user_image": "",
+                        "points": 0,
+                        "position": 3,
+                        "total_bets": 20,
+                        "total_wins": 10,
+                        "total_losses": 30,
+                    },
+                }
+            },
+            {
+                "date": "2023-08-01",
+                "users": {
+                    1: {
+                        "user_id": 1,
+                        "user_hash": 1,
+                        "user_name": "Name 1",
+                        "user_image": "",
+                        "points": 3,
+                        "position": 1,
+                        "total_bets": 85,
+                        "total_wins": 30,
+                        "total_losses": 10,
+                    },
+                    2: {
+                        "user_id": 2,
+                        "user_hash": 2,
+                        "user_name": "Name 2",
+                        "user_image": "",
+                        "points": 0,
+                        "position": 2,
+                        "total_bets": 50,
+                        "total_wins": 20,
+                        "total_losses": 20,
+                    },
+                    3: {
+                        "user_id": 3,
+                        "user_hash": 3,
+                        "user_name": "Name 3",
+                        "user_image": "",
+                        "points": 0,
+                        "position": 2,
+                        "total_bets": 19,
+                        "total_wins": 10,
+                        "total_losses": 30,
+                    },
+                }
+            }
+        ]
+    }
 }
 """
 
 """
 bet table
 bet_data field with json example:
-{
-	"users_answers": {
-		1: {// This is the user_id
-		"answer": "string1"
+'bet_data': {
+	'answer_options': ['opt 1', 'opt 3', 'opt 4', 'opt 5'],
+	'finish_date': '2025-08-28T21:25:08.000Z',
+	'users_answers': {
+		"1": {
+			"answer": [
+				"opt 1"
+			]
 		},
-		2: {
-		"answer": "string2"
+		"2": {
+			"answer": [
+				"opt 2"
+			]
 		},
-		3: {
-		"answer": "string3"
-		},
-		4: {
-		"answer": "string4"
+		"4": {
+			"answer": [
+				"opt 3"
+			]
 		}
 	}
 }

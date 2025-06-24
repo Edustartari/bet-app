@@ -1146,6 +1146,164 @@ poll_mock_list = [
 				'correct_answer_confirmed': False,
 				'bet_hash': ''
 			},
-		]
+		],
+        'poll_data': {
+            "ranking" : {
+                "current": {
+                    "date": "2023-10-01",
+                    "users": {
+                        1: {
+                            "user_id": 1,
+                            "user_hash": 1,
+                            "user_name": "Name 1",
+                            "user_image": "",
+                            "points": 6,
+                            "position": 2,
+                            "total_bets": 50,
+                            "total_wins": 30,
+                            "total_losses": 10,
+                        },
+                        2: {
+                            "user_id": 2,
+                            "user_hash": 2,
+                            "user_name": "Name 2",
+                            "user_image": "",
+                            "points": 9,
+                            "position": 1,
+                            "total_bets": 50,
+                            "total_wins": 20,
+                            "total_losses": 20,
+                        },
+                        3: {
+                            "user_id": 3,
+                            "user_hash": 3,
+                            "user_name": "Name 3",
+                            "user_image": "",
+                            "points": 3,
+                            "position": 3,
+                            "total_bets": 50,
+                            "total_wins": 10,
+                            "total_losses": 30,
+                        },
+                    }
+                },
+                "history": [
+                    {
+                        "date": "2023-10-01",
+                        "users": {
+                            1: {
+                                "user_id": 1,
+                                "user_hash": 1,
+                                "user_name": "Name 1",
+                                "user_image": "",
+                                "points": 6,
+                                "position": 2,
+                                "total_bets": 87,
+                                "total_wins": 30,
+                                "total_losses": 10,
+                            },
+                            2: {
+                                "user_id": 2,
+                                "user_hash": 2,
+                                "user_name": "Name 2",
+                                "user_image": "",
+                                "points": 9,
+                                "position": 1,
+                                "total_bets": 52,
+                                "total_wins": 20,
+                                "total_losses": 20,
+                            },
+                            3: {
+                                "user_id": 3,
+                                "user_hash": 3,
+                                "user_name": "Name 3",
+                                "user_image": "",
+                                "points": 3,
+                                "position": 3,
+                                "total_bets": 21,
+                                "total_wins": 10,
+                                "total_losses": 30,
+                            },
+                        }
+                    },
+                    {
+                        "date": "2023-09-01",
+                        "users": {
+                            1: {
+                                "user_id": 1,
+                                "user_hash": 1,
+                                "user_name": "Name 1",
+                                "user_image": "",
+                                "points": 6,
+                                "position": 1,
+                                "total_bets": 86,
+                                "total_wins": 30,
+                                "total_losses": 10,
+                            },
+                            2: {
+                                "user_id": 2,
+                                "user_hash": 2,
+                                "user_name": "Name 2",
+                                "user_image": "",
+                                "points": 3,
+                                "position": 2,
+                                "total_bets": 51,
+                                "total_wins": 20,
+                                "total_losses": 20,
+                            },
+                            3: {
+                                "user_id": 3,
+                                "user_hash": 3,
+                                "user_name": "Name 3",
+                                "user_image": "",
+                                "points": 0,
+                                "position": 3,
+                                "total_bets": 20,
+                                "total_wins": 10,
+                                "total_losses": 30,
+                            },
+                        }
+                    },
+                    {
+                        "date": "2023-08-01",
+                        "users": {
+                            1: {
+                                "user_id": 1,
+                                "user_hash": 1,
+                                "user_name": "Name 1",
+                                "user_image": "",
+                                "points": 3,
+                                "position": 1,
+                                "total_bets": 85,
+                                "total_wins": 30,
+                                "total_losses": 10,
+                            },
+                            2: {
+                                "user_id": 2,
+                                "user_hash": 2,
+                                "user_name": "Name 2",
+                                "user_image": "",
+                                "points": 0,
+                                "position": 2,
+                                "total_bets": 50,
+                                "total_wins": 20,
+                                "total_losses": 20,
+                            },
+                            3: {
+                                "user_id": 3,
+                                "user_hash": 3,
+                                "user_name": "Name 3",
+                                "user_image": "",
+                                "points": 0,
+                                "position": 2,
+                                "total_bets": 19,
+                                "total_wins": 10,
+                                "total_losses": 30,
+                            },
+                        }
+                    }
+                ]
+            }
+        }
 	},
 ]
