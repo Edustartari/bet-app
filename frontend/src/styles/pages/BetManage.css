@@ -4,15 +4,50 @@
 .bet-manage-header{
 
 }
+.bet-manage-main-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.bet-manage-main-header a {
+    text-decoration: none;
+    color: black;
+}
+.bet-manage-main-header-button {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+.bet-manage-main-header-button .material-icons{
+    font-size: 23px;
+}
+.bet-manage-main-header-button-details {
+    margin: 0 0 0 5px;
+    font-size: 20px;
+}
+.bet-manage-main-header-poll-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+}
+.bet-manage-main-header-poll-info-text {
+    width: max-content;
+}
 .bet-manage-header-title{
     font-size: 28px;
+    text-align: center;
 }
 .bet-manage-header-description{
     font-size: 20px;
     margin: 10px 0;
+    text-align: center;
 }
 .bet-manage-header-warning{
-
+    text-align: center;
 }
 .bet-manage-container{
     margin: 30px 0 20px;

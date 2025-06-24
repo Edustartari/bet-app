@@ -79,6 +79,16 @@ const BetManage = (props) => {
     return (
         <React.Fragment>
             <div className="bet-manage-background">
+
+                <div className="bet-manage-main-header">
+                    <Link to={"/bet-page"}>
+                        <div className="bet-manage-main-header-button">
+                            <span className="material-icons">arrow_back</span>
+                            <span className="bet-manage-main-header-button-details">BACK</span>
+                        </div>
+                    </Link>
+                </div>
+
                 <div className="bet-manage-header">
                     <div className="bet-manage-header-title">bet title</div>
                     <div className="bet-manage-header-description">bet description</div>

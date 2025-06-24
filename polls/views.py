@@ -10,6 +10,7 @@ import os
 from django.contrib.auth import authenticate, login, logout
 from django.db import connections, connection, transaction
 from polls.mock_data import poll_mock_list
+from django.db import transaction
 
 # Create your procedures here.
 def hash_id_generator():
@@ -21,78 +22,124 @@ def create_mock_data():
 
 	# Create users
 	new_user_ids = []
-	for i in range(1, 6):
-		new_user = user(
-			name = 'User ' + str(i),
-			email = 'user' + str(i) + '@example.com',
-			hash_id = hash_id_generator()
-		)
-		new_user.save()
-		new_user_ids.append(new_user.id)
+ 
+	with transaction.atomic():
+		for i in range(1, 10):
+			new_user = user(
+				name = 'User ' + str(i),
+				email = 'user' + str(i) + '@example.com',
+				hash_id = hash_id_generator()
+			)
+			new_user.save()
+			new_user_ids.append(new_user.id)
 
-	current_user = new_user_ids[0]
-	for poll_info in poll_mock_list:
-		print('')
-		print('test')
+		print('New users created: ', new_user_ids)
+		for poll_info in poll_mock_list:
+			print('')
 
-		current_path = os.path.dirname(os.path.realpath(__file__))
-		poll_hash_id = hash_id_generator()
+			current_path = os.path.dirname(os.path.realpath(__file__))
+			poll_hash_id = hash_id_generator()
 
-		poll_image_hash = ''
+			poll_image_hash = ''
 
-		finish_date = None
-		if poll_info['finish_date']:
-			finish_date = datetime.strptime(poll_info['finish_date'], '%Y-%m-%dT%H:%M:%S.%fZ') # 2023-06-23T22:35:12.226Z
-
-		new_poll = poll(
-			name = poll_info['poll_name'],
-			hash_id = poll_hash_id,
-			is_active = 1,
-			image = poll_image_hash,
-			poll_type = poll_info['poll_type'],
-			is_private = 1 if poll_info['isPrivate'] else 0,
-			password = poll_info['password'] if len(poll_info['password']) > 0 else 0,
-			poll_data = poll_info['poll_data'],
-			finish_date = finish_date
-		)
-		new_poll.save()
-
-		for bet_dict in poll_info['bets']:
 			finish_date = None
-			if 'finish_date' in bet_dict['bet_data'] and bet_dict['bet_data']['finish_date']:
-				finish_date = datetime.strptime(bet_dict['bet_data']['finish_date'], '%Y-%m-%dT%H:%M:%S.%fZ')
-			new_bet = bet(
-				bet_title = bet_dict['bet_title'],
-				hash_id = hash_id_generator(),
-				bet_description = bet_dict['bet_description'],
-				bet_data = json.dumps(bet_dict['bet_data']),
-				bet_type = bet_dict['bet_type'],
-				poll_id = new_poll.id,
-				answer = bet_dict['correct_answer'],
+			if poll_info['finish_date']:
+				finish_date = datetime.strptime(poll_info['finish_date'], '%Y-%m-%dT%H:%M:%S.%fZ') # 2023-06-23T22:35:12.226Z
+
+
+			if poll_info['poll_data']:
+				ranking_current = poll_info['poll_data']['ranking']['current']['users']
+				ranking_history = poll_info['poll_data']['ranking']['history']
+
+				new_dict = {}
+				counter = 0
+				for key, value in ranking_current.items():
+					current_user_id = new_user_ids[counter]
+					value['user_id'] = current_user_id
+					value['user_hash'] = ''
+					value['user_name'] = 'Name ' + str(current_user_id)
+					new_dict[str(current_user_id)] = value
+					counter += 1
+				poll_info['poll_data']['ranking']['current']['users'] = new_dict
+
+				for item in ranking_history:
+					counter = 0
+					temporary_dict = {}
+					for key, value in item['users'].items():
+						current_user_id = new_user_ids[counter]
+						value['user_id'] = current_user_id
+						value['user_hash'] = ''
+						value['user_name'] = 'Name ' + str(current_user_id)
+						temporary_dict[str(current_user_id)] = value
+						counter += 1
+					item['users'] = temporary_dict
+				poll_info['poll_data']['ranking']['history'] = ranking_history
+
+			new_poll = poll(
+				name = poll_info['poll_name'],
+				hash_id = poll_hash_id,
 				is_active = 1,
+				image = poll_image_hash,
+				poll_type = poll_info['poll_type'],
+				is_private = 1 if poll_info['isPrivate'] else 0,
+				password = poll_info['password'] if len(poll_info['password']) > 0 else 0,
+				poll_data = poll_info['poll_data'],
 				finish_date = finish_date
 			)
-			new_bet.save()
+			new_poll.save()
 
-			for user_id, user_answer in bet_dict['bet_data']['users_answers'].items():
-				new_user_bet = user_bet(
-					user_id = user_id,
-					bet_id = new_bet.id,
-					answer = json.dumps(user_answer['answer']),
-					bet_data = json.dumps(bet_dict['bet_data']),
+			for bet_dict in poll_info['bets']:
+				finish_date = None
+				if 'finish_date' in bet_dict['bet_data'] and bet_dict['bet_data']['finish_date']:
+					finish_date = datetime.strptime(bet_dict['bet_data']['finish_date'], '%Y-%m-%dT%H:%M:%S.%fZ')
+
+				counter = 0
+				users_answers = bet_dict['bet_data']['users_answers']
+				new_dict = {}
+				for user_id, user_answer in users_answers.items():
+					print('counter: ', counter)
+					current_user_id = new_user_ids[counter]
+					new_dict[str(current_user_id)] = user_answer
+					counter += 1
+				bet_dict['bet_data']['users_answers'] = new_dict
+
+				new_bet = bet(
+					bet_title = bet_dict['bet_title'],
 					hash_id = hash_id_generator(),
-					is_active = 1
+					bet_description = bet_dict['bet_description'],
+					bet_data = json.dumps(bet_dict['bet_data']),
+					bet_type = bet_dict['bet_type'],
+					poll_id = new_poll.id,
+					answer = bet_dict['correct_answer'],
+					is_active = 1,
+					finish_date = finish_date
 				)
-				new_user_bet.save()
+				new_bet.save()
 
-		new_poll_admin = poll_admins(
-			poll_id = new_poll.id,
-			hash_id = hash_id_generator(),
-			is_admin = 1,
-			# user_id = users_objects[0].id
-			user_id = 1
-		)
-		new_poll_admin.save()
+				for user_id, user_answer in bet_dict['bet_data']['users_answers'].items():
+					new_user_bet = user_bet(
+						user_id = user_id,
+						bet_id = new_bet.id,
+						answer = json.dumps(user_answer['answer']),
+						bet_data = json.dumps(bet_dict['bet_data']),
+						hash_id = hash_id_generator(),
+						is_active = 1
+					)
+					new_user_bet.save()
+
+			new_poll_admin = poll_admins(
+				poll_id = new_poll.id,
+				hash_id = hash_id_generator(),
+				is_admin = 1,
+				user_id = new_user_ids[0]
+			)
+			new_poll_admin.save()
+
+		users_objects = user.objects.filter(id__in=new_user_ids)
+		for element in users_objects:
+			element.name = 'User ' + str(element.id)
+			element.email = 'user' + str(element.id) + '@example.com'
+			element.save()
 
 
 # Middlewares
@@ -137,12 +184,12 @@ def index(request):
 	
 	# print(users_list)
 
-	# Set current session to have user_id = 1
+	# Set current session to have user_id = 71
 	# current_session = session.objects.get(hash_id = request.session['session_hash'])
-	# current_session.user_id = 1
+	# current_session.user_id = 71
 	# current_session.save()
 
-	create_mock_data()
+	# create_mock_data()
 
 	context = {
 		'user': json.dumps(users_list)
@@ -159,7 +206,8 @@ def my_polls(request):
 	print('')
 	print('my_polls')
 	print(hash_id_generator())
-	user_id = 1
+	user_id = 71
+	# user_id = 1
 
 	poll_admin_object = poll_admins.objects.filter(user_id=user_id)
 	polls_ids = [poll.poll_id for poll in poll_admin_object]  
@@ -265,7 +313,7 @@ def poll_info(request):
 		user_id = users_object.id
 	except Exception as e:
 		print(e)
-		user_id = 1
+		user_id = 71
 
 	poll_object = poll.objects.filter(hash_id=hash_id)
 	print(poll_object.count())
@@ -391,7 +439,7 @@ def create_poll(request):
 		hash_id = hash_id_generator(),
 		is_admin = 1,
 		# user_id = users_objects[0].id
-		user_id = 1
+		user_id = 71
 	)
 	new_poll_admin.save()
 
@@ -423,7 +471,7 @@ def save_bet(request):
 	bet_info = json.loads(bet_info)
 	option_selected = json.loads(option_selected)
 
-	user_id = 1
+	user_id = 71
 
 	# try:
 	# 	# Get the current session
@@ -433,7 +481,7 @@ def save_bet(request):
 	# 	user_id = str(users_object.id)
 	# except Exception as e:
 	# 	print(e)
-	# 	user_id = 1
+	# 	user_id = 71
 	# 	return JsonResponse({'status': 'error', 'reason': 'user_not_found'}, safe=False)
 
 	bet_object = bet.objects.get(hash_id=bet_info['hash_id'])

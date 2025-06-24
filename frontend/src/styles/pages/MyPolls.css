@@ -60,8 +60,10 @@
     justify-content: center;
     align-items: center;
     height: 90vh;
+}
+.my-polls-background-empty-title {
     font-size: 22px;
     font-weight: 800;
     color: #1976d2;
-    padding: 72px 20px 20px;
+    margin: 50px 0 30px 0;
 }

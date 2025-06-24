@@ -3,13 +3,16 @@ import 'styles/pages/MyPolls.css';
 import new_baby from 'images/new-baby.jpg'
 import default_poll_image from 'images/default_poll_image.png';
 import LoadingComponent from '../components/LoadingComponent.js'
-import { Link } from "react-router-dom";
+import { Button } from '@mui/material';
+import { Link, useNavigate } from "react-router-dom";
 
 /* INCLUDE OPTIONS AT HEADER: 3 DOTS AT RIGHT TO DISPLAY: ACTIVE POLLS, ALL, FINISHED POLLS */
 
 const MyPolls = (props) => {
 	const [loading, setLoading] = useState(true);	
-	const [pollList, setPollList] = useState([]);	
+	const [pollList, setPollList] = useState([]);
+
+	const navigate = useNavigate();
 
 	console.log('MyPolls component props:', props);
 
@@ -36,7 +39,14 @@ const MyPolls = (props) => {
 		<>
 			{loading && <LoadingComponent />}
 			{pollList.length === 0 &&
-				<div className="my-polls-background-empty">No bets yet...</div>
+				<>
+					<div className="my-polls-background-empty">
+						<div className="my-polls-background-empty-title">No polls yet...</div>
+						<Button variant="contained" color="primary" onClick={() => navigate('/new-poll')}>
+							Create a new poll
+						</Button>
+					</div>
+				</>
 			}
 			{pollList.length > 0 &&
 				<div className="my-polls-background">
