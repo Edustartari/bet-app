@@ -14,17 +14,15 @@ const MyPolls = (props) => {
 
 	const navigate = useNavigate();
 
-	console.log('MyPolls component props:', props);
-
 	useEffect(() => {
 		const fetch_data = async () => {
 			try {
 				let response = await fetch('/my-polls');
 				console.log('response:', response);
 				if(response.status === 200){
-					let data = await response.json();
-					console.log('Fetched data:', data);
-					setPollList(data.poll_list);
+					let jsonData = await response.json();
+					console.log('Fetched data:', jsonData);
+					setPollList(jsonData.data);
 				}
 			} catch (error) {
 				console.error('Error fetching data:', error);

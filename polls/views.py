@@ -198,14 +198,14 @@ def index(request):
 
 def login(request):
 	response_dict = {
-		'status': 'success'
+		'status': 'success',
+		'message': 'Login successful'
 	}
 	return JsonResponse(response_dict, safe=False)
 
 def my_polls(request):
 	print('')
 	print('my_polls')
-	print(hash_id_generator())
 	user_id = 71
 	# user_id = 1
 
@@ -240,7 +240,8 @@ def my_polls(request):
 
 	response_dict = {
 		'status': 'success',
-		'poll_list': poll_list
+		'message': '',
+		'data': poll_list
 	}
 	return JsonResponse(response_dict, safe=False)
 
@@ -275,6 +276,7 @@ def search_polls(request):
 	print(type(mock_dict))
 	response_dict = {
 		'status': 'success',
+		'message': '',
 		'data': mock_dict
 	}
 	return JsonResponse(response_dict, safe=False)
@@ -283,7 +285,10 @@ def settings(request):
 	print('')
 	print('settings')
 
-	user_object = user.objects.get(id=1)
+	user_id = 71
+	# user_id = 1
+
+	user_object = user.objects.get(id=user_id)
 	user_info = {
 		'name': user_object.name,
 		'email': user_object.email,
@@ -292,7 +297,8 @@ def settings(request):
 
 	response_dict = {
 		'status': 'success',
-		'user_info': user_info
+		'message': '',
+		'data': user_info
 	}
 	return JsonResponse(response_dict, safe=False)
 
@@ -368,6 +374,7 @@ def poll_info(request):
 
 	response_dict = {
 		'status': 'success',
+		'message': '',
 		'poll_dict': poll_dict,
 		'poll_exists': poll_exists
 	}

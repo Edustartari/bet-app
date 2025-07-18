@@ -19,9 +19,9 @@ const Settings = (props) => {
                 try {
                     let response = await fetch('/settings');
                     if(response.status === 200){
-                        let data = await response.json();
-                        setUserInfo(data.user_info);
-                        dispatch(update({key: 'user_info', value: data.user_info}));
+                        let jsonData = await response.json();
+                        setUserInfo(jsonData.data);
+                        dispatch(update({key: 'user_info', value: jsonData.data}));
                     }
                 } catch (error) {
                 } finally {
