@@ -1,0 +1,22 @@
+To avoid cross-site scripting (XSS), include the safe measures below, mostly sanitization and validation process:
+
+Step 1: Understand Input Sources
+• Identify all points where your application accepts user input (e.g., form fields, APIs, query strings, file uploads).
+
+Step 2: Define Expected Input Formats
+• Specify the type, format, and range of acceptable data for each input. For example:
+• Email: Must match a regex for valid email addresses.
+• Age: Must be a number between 18 and 100.
+• Text Fields: Limit length and disallow certain special characters.
+
+Step 3: Validate Inputs
+• Client-Side Validation: Implement basic validation in the front-end for a better user experience. For instance, ensuring that required fields are not left blank.
+• Server-Side Validation: Always enforce strict validation on the server side, as client-side checks can be bypassed by attackers.
+• Use libraries or frameworks that provide built-in validation functions (e.g., Express.js for Node.js, Django Validators in Python).
+
+Step 4: Sanitize Inputs
+• Remove or escape unwanted characters from input to ensure they cannot harm your system. Examples include:
+• Stripping HTML tags to prevent cross-site scripting (XSS). (This includes <script>, semantic tags, divs, etc)
+• Escaping special characters like \, ', and " to prevent SQL injection.
+• Normalizing data formats, such as trimming white spaces from strings or standardizing date formats.
+• Use established libraries or built-in functions to sanitize inputs (e.g., OWASP’s ESAPI for Java, Python’s bleach library).
