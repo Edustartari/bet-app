@@ -308,6 +308,32 @@ const NewPoll = (props) => {
 		setBets(temporary_list);
 	}
 
+	const sanitize_data = (data) => {
+		let sanitized_data = {};
+		for (let key in data) {
+			// Stripping HTML tags to prevent cross-site scripting (XSS). (This includes <script>, semantic tags, divs, etc)
+			if (typeof data[key] === 'string') {
+				sanitized_data[key] = data[key].replace(/<\/?[^>]+(>|$)/g, "");
+			} else if (key === 'bets') {
+				sanitized_data[key] = data[key].map(bet => {
+					let sanitized_bet = Object.assign({}, bet);
+					sanitized_bet.bet_title = bet.bet_title.replace(/<\/?[^>]+(>|$)/g, "");
+					sanitized_bet.bet_description = bet.bet_description.replace(/<\/?[^>]+(>|$)/g, "");
+					sanitized_bet.bet_data.answer_options = bet.bet_data.answer_options.map(option => option.replace(/<\/?[^>]+(>|$)/g, ""));
+					sanitized_bet.bet_data.finish_date = bet.bet_data.finish_date ? bet.bet_data.finish_date : false;
+					sanitized_bet.correct_answer = bet.correct_answer.replace(/<\/?[^>]+(>|$)/g, "");
+					sanitized_bet.bet_type = bet.bet_type.replace(/<\/?[^>]+(>|$)/g, "");
+					sanitized_bet.image = bet.image.replace(/<\/?[^>]+(>|$)/g, "");
+					sanitized_bet.bet_hash = bet.bet_hash.replace(/<\/?[^>]+(>|$)/g, "");
+					return sanitized_bet;
+				});
+			} else {
+				sanitized_data[key] = data[key];
+			}
+		}
+		return sanitized_data;
+	}
+
 	const create_poll = () => {
 		setLoading(true);
 		let data_dict = {}
@@ -319,12 +345,14 @@ const NewPoll = (props) => {
 		data_dict['finish_date'] = finishDateActive ? finishDate : false
 		data_dict['bets'] = bets
 
+		const data_sanitized = sanitize_data(data_dict);
+
 		$.ajax({
 			context: this,
 			type: 'POST',
 			url: '/create-poll',
 			data: {
-				poll_info: JSON.stringify(data_dict)
+				poll_info: JSON.stringify(data_sanitized)
 			},
 			success: function(data){
 				if(data.status === 'success'){
@@ -344,7 +372,7 @@ const NewPoll = (props) => {
 					<div className='new-poll-first-step-container'>
 						<div className='new-poll-first-step-title'>ADD POLL</div>
 						<div className='new-poll-first-step-field'>
-							<TextField fullWidth id="outlined-basic" label="Name" variant="outlined" value={pollName} onChange={(event) => setPollName(event.target.value)}/>
+							<TextField fullWidth id="outlined-basic" label="Name" variant="outlined" value={pollName} onChange={(event) => setPollName(event.target.value.replace(/<\/?[^>]+(>|$)/g, ""))}/>
 						</div>
 						<div className='new-poll-first-step-field' style={{marginBottom: '0px'}} onClick={() => {setIsPrivate(!isPrivate), setPassword('')}}>
 							<div className='new-poll-first-step-field-text'>Private Poll?</div>
