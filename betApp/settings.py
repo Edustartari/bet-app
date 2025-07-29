@@ -32,7 +32,7 @@ SECRET_KEY = 'django-insecure-d9yd8^7rrz2g#8dj3^a5!t0l-ef+oozf6&zo2_-c15wsqec8kd
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', ".vercel.app"]
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.vercel.app', 'testserver']
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 104857600
 
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'polls',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
