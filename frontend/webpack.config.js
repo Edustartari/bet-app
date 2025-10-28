@@ -121,7 +121,6 @@ module.exports = {
 		alias: {
             styles: path.resolve(__dirname, "src/styles/"),
             images: path.resolve(__dirname, "src/img/"),
-
 		}
 	},
 }

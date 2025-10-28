@@ -176,6 +176,9 @@ def index(request):
 	print(users_objects.count())
 	users_list = []
 	# for element in users_objects:
+	# 	print('element.id: ', element.id)
+
+	# for element in users_objects:
 	#     users_dict = {}
 	#     users_dict['name'] = element.name
 	#     users_dict['email'] = element.email
@@ -206,8 +209,7 @@ def login(request):
 def my_polls(request):
 	print('')
 	print('my_polls')
-	user_id = 71
-	# user_id = 1
+	user_id = 10
 
 	poll_admin_object = poll_admins.objects.filter(user_id=user_id)
 	polls_ids = [poll.poll_id for poll in poll_admin_object]  
