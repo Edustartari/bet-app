@@ -22,6 +22,7 @@ import store from './redux_folder/store';
 import { Provider } from "react-redux";
 
 const App = () => {
+    console.log('App component rendered');
     var path_location = window.location.pathname;
     return (
         <div>
@@ -47,12 +48,12 @@ export default App;
 if(isMobile){
     const root = ReactDOM.createRoot(document.getElementById("app"));
     root.render(
-        <StrictMode>
+        // <StrictMode>
             <Provider store={store}>
                 <Router>
                     <App/>
                 </Router>
             </Provider>
-        </StrictMode>,
+        /* </StrictMode> */
     );
 }

@@ -106,6 +106,7 @@ WSGI_APPLICATION = 'betApp.wsgi.app'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DEBUG = False
 if DEBUG:
     DATABASES = {
         'default': {

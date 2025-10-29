@@ -171,7 +171,7 @@ poll_mock_list = [
 				},
 				'image': '',
 				'bet_type': 'radio',
-				'correct_answer': '',
+				'correct_answer': 'Yes',
 				'correct_answer_confirmed': True,
 				'bet_hash': ''
 			},
@@ -211,7 +211,7 @@ poll_mock_list = [
 				},
 				'image': '',
 				'bet_type': 'radio',
-				'correct_answer': '',
+				'correct_answer': 'No',
 				'correct_answer_confirmed': True,
 				'bet_hash': ''
 			},
@@ -246,7 +246,7 @@ poll_mock_list = [
 				},
 				'image': '',
 				'bet_type': 'radio',
-				'correct_answer': '',
+				'correct_answer': 'No',
 				'correct_answer_confirmed': True,
 				'bet_hash': ''
 			},
@@ -281,7 +281,7 @@ poll_mock_list = [
 				},
 				'image': '',
 				'bet_type': 'radio',
-				'correct_answer': '',
+				'correct_answer': 'Yes',
 				'correct_answer_confirmed': True,
 				'bet_hash': ''
 			}
@@ -330,7 +330,7 @@ poll_mock_list = [
                         },
                         "2": {
                             "answer": [
-                                "Max Verstappen"
+                                "Lando Norris"
                             ]
                         },
                         "3": {
@@ -352,7 +352,7 @@ poll_mock_list = [
 				},
 				'image': '',
 				'bet_type': 'radio',
-				'correct_answer': '',
+				'correct_answer': 'Lando Norris',
 				'correct_answer_confirmed': False,
 				'bet_hash': ''
 			},
@@ -413,7 +413,7 @@ poll_mock_list = [
 				},
 				'image': '',
 				'bet_type': 'radio',
-				'correct_answer': '',
+				'correct_answer': 'Lando Norris',
 				'correct_answer_confirmed': False,
 				'bet_hash': ''
 			},
@@ -474,7 +474,7 @@ poll_mock_list = [
 				},
 				'image': '',
 				'bet_type': 'radio',
-				'correct_answer': '',
+				'correct_answer': 'Oscar Piastri',
 				'correct_answer_confirmed': False,
 				'bet_hash': ''
 			},
@@ -535,7 +535,7 @@ poll_mock_list = [
 				},
 				'image': '',
 				'bet_type': 'radio',
-				'correct_answer': '',
+				'correct_answer': 'Lando Norris',
 				'correct_answer_confirmed': False,
 				'bet_hash': ''
 			},
@@ -596,7 +596,7 @@ poll_mock_list = [
 				},
 				'image': '',
 				'bet_type': 'radio',
-				'correct_answer': '',
+				'correct_answer': 'Oscar Piastri',
 				'correct_answer_confirmed': False,
 				'bet_hash': ''
 			},
@@ -657,7 +657,7 @@ poll_mock_list = [
 				},
 				'image': '',
 				'bet_type': 'radio',
-				'correct_answer': '',
+				'correct_answer': 'Max Verstappen',
 				'correct_answer_confirmed': False,
 				'bet_hash': ''
 			},
@@ -718,7 +718,7 @@ poll_mock_list = [
 				},
 				'image': '',
 				'bet_type': 'radio',
-				'correct_answer': '',
+				'correct_answer': 'Max Verstappen',
 				'correct_answer_confirmed': False,
 				'bet_hash': ''
 			},
@@ -779,7 +779,7 @@ poll_mock_list = [
 				},
 				'image': '',
 				'bet_type': 'radio',
-				'correct_answer': '',
+				'correct_answer': 'George Russell',
 				'correct_answer_confirmed': False,
 				'bet_hash': ''
 			},
@@ -840,7 +840,7 @@ poll_mock_list = [
 				},
 				'image': '',
 				'bet_type': 'radio',
-				'correct_answer': '',
+				'correct_answer': 'Max Verstappen',
 				'correct_answer_confirmed': False,
 				'bet_hash': ''
 			},
@@ -901,7 +901,7 @@ poll_mock_list = [
 				},
 				'image': '',
 				'bet_type': 'radio',
-				'correct_answer': '',
+				'correct_answer': 'Lando Norris',
 				'correct_answer_confirmed': False,
 				'bet_hash': ''
 			},

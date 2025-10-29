@@ -17,8 +17,7 @@ const MyPolls = (props) => {
 	useEffect(() => {
 		const fetch_data = async () => {
 			try {
-				let response = await fetch('/my-polls');
-				console.log('response:', response);
+				let response = await fetch('/get-my-polls');
 				if(response.status === 200){
 					let jsonData = await response.json();
 					console.log('Fetched data:', jsonData);

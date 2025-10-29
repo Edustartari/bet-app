@@ -17,8 +17,22 @@ def hash_id_generator():
 	return str(uuid.uuid1()).replace('-', '')
 
 def create_mock_data():
-	print('')
-	print('create_mock_data')
+	"""
+	To update data changed inside "poll_mock_list", use the commands below
+	mysql -u root -proot
+	use bet_app_database;
+
+	SET FOREIGN_KEY_CHECKS = 0;
+
+	TRUNCATE TABLE polls_user;
+	TRUNCATE TABLE polls_bet;
+	TRUNCATE TABLE polls_poll;
+	TRUNCATE TABLE polls_poll_admins;
+	TRUNCATE TABLE polls_session;
+	TRUNCATE TABLE polls_user_bet;
+
+	SET FOREIGN_KEY_CHECKS = 1;
+	"""
 
 	# Create users
 	new_user_ids = []
@@ -33,9 +47,7 @@ def create_mock_data():
 			new_user.save()
 			new_user_ids.append(new_user.id)
 
-		print('New users created: ', new_user_ids)
 		for poll_info in poll_mock_list:
-			print('')
 
 			current_path = os.path.dirname(os.path.realpath(__file__))
 			poll_hash_id = hash_id_generator()
@@ -97,7 +109,6 @@ def create_mock_data():
 				users_answers = bet_dict['bet_data']['users_answers']
 				new_dict = {}
 				for user_id, user_answer in users_answers.items():
-					print('counter: ', counter)
 					current_user_id = new_user_ids[counter]
 					new_dict[str(current_user_id)] = user_answer
 					counter += 1
@@ -170,13 +181,9 @@ def session_middleware(get_response):
 
 # Create your views here.
 def index(request):
-	print('')
-	print('index')
 	users_objects = user.objects.all()
-	print(users_objects.count())
 	users_list = []
 	# for element in users_objects:
-	# 	print('element.id: ', element.id)
 
 	# for element in users_objects:
 	#     users_dict = {}
@@ -185,7 +192,6 @@ def index(request):
 	#     users_dict['hash_id'] = element.hash_id
 	#     users_list.append(users_dict)
 	
-	# print(users_list)
 
 	# Set current session to have user_id = 71
 	# current_session = session.objects.get(hash_id = request.session['session_hash'])
@@ -199,6 +205,14 @@ def index(request):
 	}
 	return render(request, 'index.html', context)
 
+def my_polls(request):
+	context = {}
+	return render(request, 'my-polls.html', context)
+
+def poll_view(request, hash_id):
+	context = {}
+	return render(request, 'poll.html', context)
+
 def login(request):
 	response_dict = {
 		'status': 'success',
@@ -206,9 +220,7 @@ def login(request):
 	}
 	return JsonResponse(response_dict, safe=False)
 
-def my_polls(request):
-	print('')
-	print('my_polls')
+def get_my_polls(request):
 	user_id = 10
 
 	poll_admin_object = poll_admins.objects.filter(user_id=user_id)
@@ -249,9 +261,6 @@ def my_polls(request):
 
 @csrf_exempt
 def search_polls(request):
-	print('')
-	print('search_polls')
-	print(request.user.id)
 	mock_dict = {
 		"answer_options": ["1", "2"],
 		"finish_date": "2023-11-15T23:57:49.263Z",
@@ -274,8 +283,6 @@ def search_polls(request):
 			}
 		}
 	}
-	print(mock_dict)
-	print(type(mock_dict))
 	response_dict = {
 		'status': 'success',
 		'message': '',
@@ -284,8 +291,6 @@ def search_polls(request):
 	return JsonResponse(response_dict, safe=False)
 
 def settings(request):
-	print('')
-	print('settings')
 
 	user_id = 71
 	# user_id = 1
@@ -306,12 +311,8 @@ def settings(request):
 
 @csrf_exempt
 def poll_info(request):
-	print('')
-	print('poll_info')
 	post_data = json.loads(request.body.decode("utf-8"))
-	print(post_data)
 	hash_id = post_data['hash_id']
-	print('hash_id: ', hash_id)
 
 	try:
 		# Get the current session
@@ -320,17 +321,14 @@ def poll_info(request):
 		users_object = user.objects.get(id = current_session.user_id)
 		user_id = users_object.id
 	except Exception as e:
-		print(e)
 		user_id = 71
 
 	poll_object = poll.objects.filter(hash_id=hash_id)
-	print(poll_object.count())
 
 	poll_exists = False
 	poll_dict = {}
 	if poll_object.count() > 0:
 		poll_object = poll_object[0]
-		print('if')
 		poll_dict['name'] = poll_object.name
 		poll_dict['image'] = poll_object.image        
 		poll_dict['hash_id'] = poll_object.hash_id
@@ -344,10 +342,10 @@ def poll_info(request):
 		poll_dict['password'] = poll_object.password
 		poll_dict['type'] = poll_object.poll_type
 		poll_dict['user_id'] = user_id
+		poll_dict['ranking'] = {}
 		poll_exists = True
 
 		bet_objects = bet.objects.filter(poll_id=poll_object.id) 
-		print(bet_objects.count())
 		bets_list = []
 		for bet_info in bet_objects:
 			bet_dict = {}
@@ -360,6 +358,7 @@ def poll_info(request):
 			bet_dict['description'] = bet_info.bet_description
 			bet_dict['title'] = bet_info.bet_title
 			bet_dict['type'] = bet_info.bet_type
+			bet_dict['correct_answer'] = bet_info.answer
 
 			bet_dict['finish_date'] = False
 			if bet_info.finish_date:
@@ -369,9 +368,27 @@ def poll_info(request):
 			if 'users_answers' in bet_data:
 				bet_dict['users_answers'] = bet_data['users_answers']
 
+			users_ids = [int(uid) for uid in bet_dict['users_answers'].keys()]
+			users_ids.append(user_id)  # Ensure current user is included
+			users_object = user.objects.filter(id__in=users_ids)
+			for user_info in users_object:
+				if str(user_info.id) in bet_dict['users_answers']:
+					bet_dict['users_answers'][str(user_info.id)]['user_name'] = user_info.name
+					bet_dict['users_answers'][str(user_info.id)]['user_image'] = user_info.image
+
+			for user_id, user_bet_data in bet_dict['users_answers'].items():
+				if user_id not in poll_dict['ranking']:
+					poll_dict['ranking'][user_id] = {
+						'user_name': user_bet_data['user_name'],
+						'user_image': user_bet_data['user_image'],
+						'total_points': 0,
+						'position': 0
+					}
+				if bet_info.answer in bet_dict['users_answers'][user_id]['answer']:
+					poll_dict['ranking'][user_id]['total_points'] += 1
+
 			bet_dict['image'] = bet_info.image
 			bets_list.append(bet_dict)
-		
 		poll_dict['bets'] = bets_list
 
 	response_dict = {
@@ -384,14 +401,8 @@ def poll_info(request):
 
 @csrf_exempt
 def create_poll(request):
-	print('')
-	print('create_poll')
 	poll_info = request.POST['poll_info']
-	# print(poll_info)
-	print(type(poll_info))
 	poll_info = json.loads(poll_info)
-	print(poll_info)
-	print(type(poll_info))
 
 	# Get current path
 	current_path = os.path.dirname(os.path.realpath(__file__))
@@ -461,21 +472,15 @@ def create_poll(request):
 
 # def bet_page(request, hash_id):
 def bet_page(request):
-	print('')
-	print('bet_page')
 
 	# poll_object = poll.objects.filter(hash_id=hash_id)
-	# print(poll_object.count())
 	context = {}
 	return render(request, 'bet-page.html', context)
 
 @csrf_exempt
 def save_bet(request):
-	print('')
-	print('save_bet')
 	bet_info = request.POST.get('bet_info')
 	option_selected = request.POST.get('option_selected')
-	print('option_selected: ', str(option_selected))
 
 	bet_info = json.loads(bet_info)
 	option_selected = json.loads(option_selected)
@@ -489,7 +494,6 @@ def save_bet(request):
 	# 	users_object = user.objects.get(id = current_session.user_id)
 	# 	user_id = str(users_object.id)
 	# except Exception as e:
-	# 	print(e)
 	# 	user_id = 71
 	# 	return JsonResponse({'status': 'error', 'reason': 'user_not_found'}, safe=False)
 

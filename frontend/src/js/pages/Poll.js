@@ -20,20 +20,11 @@ const Poll = (props) => {
     const state = useSelector(state => state.global)
     const dispatch = useDispatch()
 
-    console.log('redux state:', state)
-
     const [loading, setLoading] = useState(true);
     const [poll_dict, setPollDict] = useState({});	
-    // console.log('')
-    // console.log('Poll')
-    // console.log('poll_dict', poll_dict)
-    // console.log('window.location.pathname', window.location.pathname)
     const poll_hash_id = window.location.pathname.split('/')[2];
-    // console.log('poll_hash_id', poll_hash_id)
 
     useEffect(() => {
-        console.log('useEffect Poll 1')
-
         const fetch_data = async () => {
             try {
                 let response = await fetch('/poll-info', {
@@ -43,15 +34,13 @@ const Poll = (props) => {
                     },
                     body: JSON.stringify({ hash_id: poll_hash_id }),
                 });
-                console.log('response:', response);
                 if(response.status === 200){
                     let data = await response.json();
-                    console.log('Fetched data:', data);
+                    console.log('Fetched poll data:', data);
                     setPollDict(data.poll_dict);
                     dispatch(update({key: 'poll_dict', value: data.poll_dict}));
                 }
             } catch (error) {
-                console.error('Error fetching data:', error);
             } finally {
                 setLoading(false);
             }
@@ -59,12 +48,8 @@ const Poll = (props) => {
         fetch_data()
     }, [])
 
-    console.log('')
-    console.log(' -------- Poll -------- ')
-    console.log('props: ', props)
     
     if (!poll_dict) {
-        console.log('if')
         return (
             <div>Loading...</div>
         )
@@ -76,6 +61,28 @@ const Poll = (props) => {
         } catch (error) {
             poll_image = default_poll_image;
         }
+
+        // Convert poll_dict.ranking from object to array and sort by total_points
+        let rankingArray = []
+        if(poll_dict?.ranking) {
+            rankingArray = Object.entries(poll_dict?.ranking).map(([user_id, user_data]) => ({
+                user_id,
+                ...user_data
+            })).sort((a, b) => b.total_points - a.total_points);
+        }
+        // Set positions in ranking
+        let position = 1;
+        rankingArray = rankingArray.map((element, index) => {
+            if(index > 0 && element.total_points < rankingArray[index - 1].total_points) {
+                position = index + 1;
+            }
+            return {
+                ...element,
+                position: position
+            }
+        });
+        console.log('rankingArray', rankingArray);
+
         return (
             <div className="poll-background">
                 <div className="poll-header">
@@ -101,18 +108,18 @@ const Poll = (props) => {
                         </Link>
                     </div>
                 </div>
-                {/* {poll_dict.ranking.length === 0 &&
+                {rankingArray.length === 0 &&
                     <div className="poll-table-empty">
                         No results yet...
                     </div>
                 }
-                {poll_dict.ranking.length > 0 &&
+                {rankingArray.length > 0 &&
                     <div className="poll-table">
                         <div className="poll-table-title">Ranking</div>
                         <div className="poll-table-container">
-                            {poll_dict.ranking.map((element) => {
+                            {rankingArray.map((element) => {
                                 return (
-                                    <div key={element.user_hash} className="poll-table-card">
+                                    <div key={element.user_id} className="poll-table-card">
                                         <div className="poll-table-card-info">
                                             <div className="poll-table-card-info-position">{element.position}º</div>
                                             <div className="poll-table-card-info-image">
@@ -126,7 +133,7 @@ const Poll = (props) => {
                             })}
                         </div>
                     </div>
-                } */}
+                }
             </div>
         )
     }

@@ -15,7 +15,7 @@ def test_login():
     assert response.status_code == 200
 
 def test_my_polls():
-    response = client.get('/my-polls')
+    response = client.get('/get-my-polls')
     assert response.status_code == 200
 
 def test_search_polls():

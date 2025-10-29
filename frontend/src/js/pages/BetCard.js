@@ -38,15 +38,10 @@ const BetCard = (props) => {
     const [option_selected, setOptionSelected] = useState([]);
 
     const change_option = (option) => {
-        console.log('')
-        console.log('change_option')
-        console.log('option', option)
         if(data.type === 'radio'){
-            console.log('if')
             setOptionSelected([option]);
         }
         else {
-            console.log('else if')
             if(option_selected.includes(option)){
                 setOptionSelected(option_selected.filter(item => item !== option));
             } else {
@@ -56,18 +51,12 @@ const BetCard = (props) => {
     }
 
     const save_bet = () => {
-        console.log('')
-        console.log('save_bet')
-        console.log('data', data)
-        console.log('option_selected', option_selected)
 
         if(option_selected.length === 0){
-            console.log('if')
             props.handle_snackbar('Please select at least one option');
             return;
         }
         else if(data.type === 'radio' && option_selected.length > 1){
-            console.log('else if')
             props.handle_snackbar('Please select one option only');
             return;
         }
@@ -103,17 +92,12 @@ const BetCard = (props) => {
 		})
     }
 
-    console.log('')
-    console.log('data', data)
-    console.log('option_selected', option_selected)
     return (
         <div className='bet-card-background'>
             <div className='bet-card-title'>{data.title}</div>
             <div className='bet-card-description'>{data.description}</div>
             <div className='bet-card-options'>
                 {data.answers.map((answer, index) => {
-                    // console.log('')
-                    // console.log('answer', answer)
                     return (
                         <div 
                             key={answer} 
