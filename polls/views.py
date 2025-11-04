@@ -470,12 +470,13 @@ def create_poll(request):
 	return JsonResponse(response_dict, safe=False)
 
 
-# def bet_page(request, hash_id):
-def bet_page(request):
-
-	# poll_object = poll.objects.filter(hash_id=hash_id)
+def bet_page(request, hash_id):
 	context = {}
 	return render(request, 'bet-page.html', context)
+
+def bet_manage(request, hash_id):
+	context = {}
+	return render(request, 'my-polls.html', context)
 
 @csrf_exempt
 def save_bet(request):

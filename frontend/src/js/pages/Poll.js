@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { update } from "../redux_folder/global_reducer.js";
 import default_poll_image from 'images//default_poll_image.png';
 import LoadingComponent from '../components/LoadingComponent.js'
+import useFetchPollInfo from '../hooks/fetch_poll_info.js';
 
 /* IF USER IS ADMIN, INCLUDE AT HEADER THE THREE DOTS OPTION SO HE CAN EDIT THE POLL BY CHANGING NAME OR ADDING MORE BETS */
 /* for all other users, create option at three dots on header to display group info, such as name, admins, number of participants, and also options(get of from group - and in case admin, delete group, specific users or alter password) */
@@ -18,38 +19,15 @@ import LoadingComponent from '../components/LoadingComponent.js'
 
 const Poll = (props) => {
     const state = useSelector(state => state.global)
+
     const dispatch = useDispatch()
 
-    const [loading, setLoading] = useState(true);
-    const [poll_dict, setPollDict] = useState({});	
     const poll_hash_id = window.location.pathname.split('/')[2];
+    const { loading, poll_dict } = useFetchPollInfo(poll_hash_id);
 
-    useEffect(() => {
-        const fetch_data = async () => {
-            try {
-                let response = await fetch('/poll-info', {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ hash_id: poll_hash_id }),
-                });
-                if(response.status === 200){
-                    let data = await response.json();
-                    console.log('Fetched poll data:', data);
-                    setPollDict(data.poll_dict);
-                    dispatch(update({key: 'poll_dict', value: data.poll_dict}));
-                }
-            } catch (error) {
-            } finally {
-                setLoading(false);
-            }
-        }
-        fetch_data()
-    }, [])
+    console.log('state: ', state)
 
-    
-    if (!poll_dict) {
+    if (loading && !poll_dict) {
         return (
             <div>Loading...</div>
         )
@@ -103,7 +81,7 @@ const Poll = (props) => {
                         <span> / 13 pts</span>
                     </div>
                     <div className="poll-header-button">
-                        <Link to="/bet-page">
+                        <Link to={"/bet-page/" + poll_dict.hash_id}>
                             <Button variant="contained">BETS</Button>
                         </Link>
                     </div>

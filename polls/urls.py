@@ -12,5 +12,6 @@ urlpatterns = [
     path('poll-info', views.poll_info, name='poll_info'),
     path('save-bet', views.save_bet, name='save_bet'),
     path('poll/<slug:hash_id>', views.poll_view, name='poll_view'),
-    # path('bet-page', views.bet_page, name='bet_page'),
+    path('bet-page/<slug:hash_id>', views.bet_page, name='bet_page'),
+    path('bet-manage/<slug:hash_id>', views.bet_manage, name='bet_manage'),
 ]

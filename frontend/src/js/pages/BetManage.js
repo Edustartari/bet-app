@@ -25,7 +25,8 @@ import {
 
 import Marquee from "react-fast-marquee";
 import {
-    Link
+    Link,
+    useNavigate
 } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { update } from "../redux_folder/global_reducer.js";
@@ -50,9 +51,23 @@ CREATE A INTERMEDIATE PAGE:
 
 const BetManage = (props) => {
     const state = useSelector(state => state.global)
-    const dispatch = useDispatch()
 
-    // let poll_dict = state.poll_dict;
+    console.log('')
+    console.log('BetManage')
+    console.log('state: ', state)
+    
+    const dispatch = useDispatch()
+    if(!state.poll_dict || Object.keys(state.poll_dict).length === 0){
+        window.location.href = '/my-polls';
+    }
+    
+    const bet_hash_id = window.location.pathname.split('/')[2];
+    const bet_info = state.poll_dict.bets ? state.poll_dict.bets.find(bet => bet.hash_id === bet_hash_id) : null;
+    console.log('bet_info: ', bet_info)
+
+    if(!bet_info){
+        window.location.href = '/my-polls';
+    }
 
     const [open_bet_card, setOpenBetCard] = useState(false);
     const [snackbar_open, setSnackbarOpen] = useState(false);
@@ -76,12 +91,49 @@ const BetManage = (props) => {
     // console.log('snackbar_open', snackbar_open)
     // console.log('poll_dict', poll_dict)
 
+    // Create a function to accept this date value format "5, Jul - 2025" and return the remaining days until that date
+    // If the date is in the past, return "Bet closed"
+    const calculate_remaining_days = (date_string) => {
+        const months = {
+            'Jan': 0,
+            'Feb': 1,
+            'Mar': 2,
+            'Apr': 3,
+            'May': 4,
+            'Jun': 5,
+            'Jul': 6,
+            'Aug': 7,
+            'Sep': 8,
+            'Oct': 9,
+            'Nov': 10,
+            'Dec': 11
+        };
+        const parts = date_string.split(' - ');
+        const day_month = parts[0].split(', ');
+        const day = parseInt(day_month[0]);
+        const month = months[day_month[1]];
+        const year = parseInt(parts[1]);
+
+        const target_date = new Date(year, month, day);
+        const current_date = new Date();
+
+        const time_difference = target_date - current_date;
+        const days_difference = Math.ceil(time_difference / (1000 * 60 * 60 * 24));
+
+        if (days_difference < 0) {
+            return "Bet finished";
+        } else {
+            return days_difference + " days until bet is closed";
+        }
+    };
+
+
     return (
         <React.Fragment>
             <div className="bet-manage-background">
 
                 <div className="bet-manage-main-header">
-                    <Link to={"/bet-page"}>
+                    <Link to={"/bet-page/" + state.poll_dict.hash_id}>
                         <div className="bet-manage-main-header-button">
                             <span className="material-icons">arrow_back</span>
                             <span className="bet-manage-main-header-button-details">BACK</span>
@@ -90,9 +142,10 @@ const BetManage = (props) => {
                 </div>
 
                 <div className="bet-manage-header">
-                    <div className="bet-manage-header-title">bet title</div>
-                    <div className="bet-manage-header-description">bet description</div>
-                    <div className="bet-manage-header-warning">7 days until bet is closed...</div>
+                    <div className="bet-manage-header-title">{bet_info.title}</div>
+                    <div className="bet-manage-header-description">{bet_info.description}</div>
+                    {/* <div className="bet-manage-header-warning">7 days until bet is closed...</div> */}
+                    <div className="bet-manage-header-warning">{calculate_remaining_days(bet_info.finish_date)}</div>
                 </div>
                 <div className="bet-manage-container">
                     <div className="bet-manage-container-buttons">

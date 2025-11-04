@@ -34,7 +34,7 @@ const App = () => {
                 <Route path="/search-polls" element={<SearchPolls />} />
                 <Route path="/terms" element={<TermsOfUse />} />
                 <Route path="/settings" element={<Settings />} />
-                <Route path="/bet-page" element={<BetPage />} />
+                <Route path="/bet-page/:slug" element={<BetPage />} />
                 <Route path="/bet-manage/:slug" element={<BetManage />} />
                 <Route path="/poll/:slug" element={<Poll />} />
                 <Route path="/" element={<Main />} />

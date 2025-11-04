@@ -12,6 +12,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { update } from "../redux_folder/global_reducer.js";
 import default_poll_image from 'images/default_poll_image.png';
+import useFetchPollInfo from '../hooks/fetch_poll_info.js';
 
 /* 
 CREATE A INTERMEDIATE PAGE: 
@@ -146,7 +147,8 @@ const BetPage = (props) => {
     const dispatch = useDispatch()
     const navigate = useNavigate();
 
-    let poll_dict = state.poll_dict;
+    const poll_hash_id = window.location.pathname.split('/')[2];
+    const { loading, poll_dict } = useFetchPollInfo(poll_hash_id);
 
     const [bet_card, setBetCard] = useState(false);
     const [snackbar_open, setSnackbarOpen] = useState(false);
@@ -166,8 +168,20 @@ const BetPage = (props) => {
     }
 
     console.log('')
-    console.log('snackbar_open', snackbar_open)
+    console.log('loading', snackbar_open)
     console.log('poll_dict', poll_dict)
+
+    if(loading) {
+        return (
+            <div>Loading...</div>
+        )
+    }
+
+    if (!poll_dict) {
+        return (
+            <div>Poll not found</div>
+        )
+    }
 
     return (
         <React.Fragment>
