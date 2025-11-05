@@ -1,0 +1,71 @@
+.modal-select-answer {
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: white;
+  width: -webkit-fill-available;
+  padding: 72px 15px 15px;
+  height: 100%;
+}
+
+.modal-select-main-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.modal-select-main-header a {
+  text-decoration: none;
+  color: black;
+}
+
+.modal-select-main-header-button {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.modal-select-main-header-button .material-icons {
+  font-size: 23px;
+}
+
+.modal-select-main-header-button-details {
+  margin: 0 0 0 5px;
+  font-size: 20px;
+}
+
+.modal-select-main-header-poll-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.modal-select-main-header-poll-info-text {
+  width: max-content;
+}
+
+.modal-select-answer-options {
+  overflow: auto;
+  padding: 0 0 160px 0;
+}
+
+.modal-select-answer-option {}
+
+.modal-select-answer-actions {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  width: calc(100% - 20px);
+  padding: 10px;
+  background-color: white;
+}
+
+.modal-select-answer-actions .MuiButton-root:nth-child(2) {
+  margin-left: 10px;
+}
